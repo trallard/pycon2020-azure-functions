@@ -1,8 +1,12 @@
 /*  */
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Open+Sans:ital,wght@0,700;1,400&family=Spartan:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Open+Sans:wght@400;600&family=Spartan:wght@400;500;700&display=swap');
+@import url("https://use.typekit.net/xei4zox.css");
 
+
+/* General styles */
 a {
     color: #D962A3;
+    text-decoration-color: #D962A3;
 }
 
 a:hover {
@@ -10,23 +14,25 @@ a:hover {
     border-bottom: 2px solid #FF99DA;
 }
 
+
 div.body h1 {
     color: #636AF2;
-    font-family: 'Spartan', sans-serif;
+    font-family: 'phoreuscherokee', serif;
     font-weight: 500;
     font-size: 200%;
 }
 
 div.body h2 {
     color: #636AF2;
-    font-family: 'Spartan', sans-serif;
+    font-family: 'phoreuscherokee', serif;
     font-weight: 500;
 }
 div.body h3 {
     color: #636AF2;
-    font-family: 'Spartan', sans-serif;
+    font-family: 'phoreuscherokee', serif;
     font-weight: 500;
 }
+/* Sidebar */
 
 div.sphinxsidebarwrapper h1.logo {
     text-align: center;
@@ -36,14 +42,14 @@ div.sphinxsidebarwrapper h1.logo {
 div.sphinxsidebar p.blurb {
     font-size: 130%;
     text-align: center;
-    font-family: 'Spartan', sans-serif;
-    color: #505391;
+    font-family: 'phoreuscherokee', serif;
+    color: #F2A0A0;
 }
 
 div.sphinxsidebar h1{
     font-size: 160%;
     color: #636AF2;
-    font-family: 'Spartan', sans-serif;
+    font-family: 'phoreuscherokee', serif;
 }
 
 div.sphinxsidebar h1 a {
@@ -51,7 +57,7 @@ div.sphinxsidebar h1 a {
     color: #636AF2;
     text-decoration: none;
     border: none;
-    font-family: 'Spartan', sans-serif;
+    font-family: 'phoreuscherokee', serif;
 }
 
 div.sphinxsidebar h1 a:hover {
@@ -75,6 +81,7 @@ th.field-name {
     color: #505391;
 }
 
+/* Code  */
 tt, code {
     color: #F8F8F2;
     background: #1d1941;
@@ -128,7 +135,7 @@ dt {
     color: rgb(96, 138, 197);
 }
 
-
+/* Footer */
 div.footer::before {
     display: block;
     content: '';
@@ -148,11 +155,12 @@ div.footer a {
 }
 
 p.caption {
-    font-family: 'Spartan', sans-serif;
+    font-family: 'phoreuscherokee', serif;
     font-size: inherit;
     font-size: 150%;
 }
 
+/* Responsive */
 @media screen and (max-width: 875px) {
     div.sphinxsidebar {
         background: #636AF2;
@@ -193,17 +201,7 @@ p.caption {
     color: rgb(128, 117, 165);
 }
 
-li{
-    text-indent: -1.3em;
-    margin-bottom: 0.5em;
-    list-style: none;
-}
-
-li::before{
-    content: '▹';
-    color: #D962A3;
-    float: left;
-    width: 1.2em;
-    font-size: 1em;
-    padding-right: 0.5em;
+.inline-image{
+    width: 50px;
+    vertical-align: middle;
 }
