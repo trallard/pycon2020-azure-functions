@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "azure-functions-dataeng"
+version = "0.1.0"
+description = "Using Azure functions with Python for data processing tasks"
+authors = ["Tania Allard <taniar.allard@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+sphinx = "^3.0.1"
+sphinx-autobuild = "^0.7.1"
+
+[tool.poetry.dev-dependencies]
+sphinx = "^3.0.1"
+nox = "^2019.11.9"
+tox = "^3.14.6"
+recommonmark = "^0.6.0"
+pydata-sphinx-theme = {git = "https://github.com/pandas-dev/pydata-sphinx-theme.git", rev = "master"}
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
