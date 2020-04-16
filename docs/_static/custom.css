@@ -90,21 +90,23 @@ tt, code {
     padding: 0.0em 0.3em;
 }
 
-a.reference, a {
-    border-bottom: none;
-    text-decoration: none;
-    color: #5DACBD;
-}
-
-a.reference.external {
+a.reference, 
+a, 
+a.reference.external,
+div.sphinxsidebar a {
     color: #5DACBD;
     text-decoration: none;
     border-bottom: none;
 }
 
-a.reference.external:hover,a.reference.internal:hover, a, a.reference, div.sphinxsidebar a{
+a.reference.external:hover,
+a.reference.internal:hover, 
+a:hover, 
+a.reference:hover, 
+div.sphinxsidebar a:hover{
     color: #79C7D9;
     border-bottom: 2px solid #79C7D9;
+    text-decoration: none;
 }
 
 a.reference.internal code.xref span.pre {
@@ -133,11 +135,13 @@ tt.xref, code.xref, a tt {
 code.literal {
     color: #F8F8F2;
     background:#1d1941;
+    padding: 2px 3px;
 }
 
 pre {
     padding: 20px 30px;
     background: #1d1941;
+    border-radius: 2px;
 }
 
 div > dl {
@@ -197,11 +201,11 @@ p.caption {
 /* other */
 
 .alert {
-  position: relative;
-  padding: 10px;
-  margin-bottom: 5px;
-  border: 2px solid transparent;
-  border-radius: 2px;
+    position: relative;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 2px solid transparent;
+    border-radius: 2px;
 }
 
 .alert-primary {
@@ -222,7 +226,19 @@ p.caption {
 }
 
 
-div.admonition{
-    background-color: none;
+div.admonition, 
+div.admonition note{
+    background-color: white;
     border: 2px dotted #415CF2;
+}
+
+p.admonition-title{
+    color: #415CF2;
+}
+
+/* code tabs */
+
+div.ui.menu{
+    font-family: 'Inconsolata', monospace;
+    color: #415CF2;
 }

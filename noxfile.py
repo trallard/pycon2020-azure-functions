@@ -16,7 +16,8 @@ def docs(session):
     else:
         sphinx_cmd = "sphinx-build"
 
-     session.run(sphinx_cmd, *sphinx_args)
+    session.run(sphinx_cmd, *sphinx_args)
+
 
 @nox.session(python="3.8")
 def blacken(session):
