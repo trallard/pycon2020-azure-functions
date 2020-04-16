@@ -160,12 +160,12 @@ div.footer::before {
 
 div.footer {
     text-align: center;
-    color: #0D0D0D; 
+    color: #262626; 
 }
 
 div.footer a {
     color: #262626;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 p.caption {
@@ -183,7 +183,7 @@ p.caption {
         text-align: left;
     }
     div.sphinxsidebar h1 a {
-        color: #3C35F2;
+        color: #262626;
     }
     div.sphinxsidebar a {
         color: white;

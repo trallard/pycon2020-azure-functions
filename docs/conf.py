@@ -95,7 +95,7 @@ html_theme_options = {
     "show_relbars": True,
     "font_family": "'Inconsolata','Obliqua','Open Sans', Georgia, sans",
     "head_font_family": "'Phoreus Cherokee','Spartan', Georgia, serif",
-    "code_font_family": "''Inconsolata','Anonymous Pro','Fira Code', 'Consolas', monospace",
+    "code_font_family": "'Inconsolata','Anonymous Pro','Fira Code', 'Consolas', monospace",
     "logo": "images/Bit_BobRoss.png",
     "github_banner": False,
     "description": "Azure sponsored workshop: PyCon 2020",
