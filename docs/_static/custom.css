@@ -135,13 +135,17 @@ tt.xref, code.xref, a tt {
 code.literal {
     color: #F8F8F2;
     background:#1d1941;
-    padding: 2px 3px;
+    padding: 3px 5px;
+    border-radius: 2px;
 }
 
 pre {
     padding: 20px 30px;
     background: #1d1941;
     border-radius: 2px;
+    -webkit-box-shadow: 2px 2px 4px 0px rgba(29,25,65,1);
+    -moz-box-shadow: 2px 2px 4px 0px rgba(29,25,65,1);
+    box-shadow: 2px 2px 4px 0px rgba(29,25,65,1);
 }
 
 div > dl {
@@ -234,6 +238,13 @@ div.admonition note{
 
 p.admonition-title{
     color: #415CF2;
+}
+
+div.code-block-caption{
+    font-size: medium;
+    border: solid 1px #1d1941;
+    border-radius: 2px;
+    color: rgb(26, 38, 107);
 }
 
 /* code tabs */

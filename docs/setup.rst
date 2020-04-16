@@ -17,7 +17,7 @@ Make sure to have one of these Python versions installed:
 
 These are the supported versions by Azure Functions. If you already have one installed jump straight to the rest of the setup instrucions.
 
-Otherwise, you can follow this fantastic install from  `Real Python <https://realpython.com/installing-python/>`_ to get a clean Python install.
+Otherwise, you can follow this fantastic tutorial from  `Real Python <https://realpython.com/installing-python/>`_ to get a clean Python install.
 
 VS Code
 --------
@@ -29,7 +29,7 @@ To get started:
 
 1. Download and install `VS Code <https://code.visualstudio.com//?WT.mc_id=?WT.mc_id=pycon_tutorial-github-taallard>`_ . When directed to the install page this sholud identify your OS. Download the install file and follow the instructions.
 2. Install the `Python VS Code extension <https://marketplace.visualstudio.com/itemdetails?itemName=ms-python.python&wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard>`_ . Click on the Install button on the extension website. This will launch VS Code and ask for your confirmation to install.
-3. Install the `Azure Functions extension <https://marketplace.visualstudio.com/itemdetails?itemName=ms-azuretools.vscode-azurefunctions&wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard>`_ 
+3. Install the `Azure Functions extension <https://marketplace.visualstudio.com/itemdetails?itemName=ms-azuretools.vscode-azurefunctions&wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard>`_
 
 Azure account and credits
 ---------------------------
@@ -116,7 +116,7 @@ Azure CLI and functions core tool
         sudo apt-get update
         sudo apt-get install azure-functions-core-tools
 
-    For more detailed instructions visit the `corresponding docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=linux%2Ccsharp%2Cbash?WT.mc_id=pycon_tutorial-github-taallard>`_ 
+    For more detailed instructions visit the `corresponding docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=linux%2Ccsharp%2Cbash?WT.mc_id=pycon_tutorial-github-taallard>`_.
 
 
 Additional packages
@@ -140,3 +140,4 @@ To install them follow these steps:
 
   .. code-block:: bash
 
+ 

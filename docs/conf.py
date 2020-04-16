@@ -56,10 +56,9 @@ html_sidebars = {
     "**": [
         "about.html",
         "localtoc.html",
+        "searchbox.html",
         "navigation.html",
         "relations.html",
-        "searchbox.html",
-        # "sidebar.html",
     ]
 }
 

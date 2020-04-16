@@ -13,8 +13,9 @@ Easy data processing on Azure with Serverless Functions
 
    self
    setup
-   functions_101
    introduction
+   functions_101
+   functions_201
 
 
 Icons
