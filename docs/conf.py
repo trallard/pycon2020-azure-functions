@@ -93,9 +93,9 @@ html_theme_options = {
     "github_type": "star",
     "github_banner": True,
     "show_relbars": True,
-    "font_family": "'Obliqua','Open Sans', Georgia, sans",
+    "font_family": "'Inconsolata','Obliqua','Open Sans', Georgia, sans",
     "head_font_family": "'Phoreus Cherokee','Spartan', Georgia, serif",
-    "code_font_family": "'Anonymous Pro','Fira Code', 'Consolas', monospace",
+    "code_font_family": "''Inconsolata','Anonymous Pro','Fira Code', 'Consolas', monospace",
     "logo": "images/Bit_BobRoss.png",
     "github_banner": False,
     "description": "Azure sponsored workshop: PyCon 2020",
@@ -105,3 +105,15 @@ html_theme_options = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+
+
+rst_epilog = """
+.. |light| image:: _static/icons/video-game.svg
+    :class: inline-image
+
+.. |floppy| image:: _static/icons/save-file.svg
+    :class: inline-image
+
+.. |foo| replace:: foo
+.. _foo: http://stackoverflow.com
+"""

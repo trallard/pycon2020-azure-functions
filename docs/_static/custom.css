@@ -1,36 +1,36 @@
 /*  */
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Open+Sans:wght@400;600&family=Spartan:wght@400;500;700&display=swap');
 @import url("https://use.typekit.net/xei4zox.css");
-
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap');
 
 /* General styles */
-a {
-    color: #D962A3;
-    text-decoration-color: #D962A3;
-}
 
-a:hover {
-    color: #FF99DA;
-    border-bottom: 2px solid #FF99DA;
+body{
+    color: #262626;
+    font-size: 18px;
 }
-
 
 div.body h1 {
     color: #636AF2;
     font-family: 'phoreuscherokee', serif;
     font-weight: 500;
     font-size: 200%;
+    box-shadow: inset 0px -12px 0px 0px #C4C6F2;
+    width: max-content;
 }
 
 div.body h2 {
     color: #636AF2;
     font-family: 'phoreuscherokee', serif;
     font-weight: 500;
+    box-shadow: inset 0px -12px 0px 0px #C4C6F2;
+    width: max-content;
 }
 div.body h3 {
     color: #636AF2;
     font-family: 'phoreuscherokee', serif;
     font-weight: 500;
+    box-shadow: inset 0px -12px 0px 0px #C4C6F2;
+    width: max-content;
 }
 /* Sidebar */
 
@@ -43,7 +43,7 @@ div.sphinxsidebar p.blurb {
     font-size: 130%;
     text-align: center;
     font-family: 'phoreuscherokee', serif;
-    color: #F2A0A0;
+    color: #415CF2;
 }
 
 div.sphinxsidebar h1{
@@ -70,6 +70,7 @@ div.sphinxsidebar h3 {
 
 div.sphinxsidebar a {
     color: #636AF2;
+    border-bottom: none;
 }
 
 code.descname {
@@ -81,12 +82,29 @@ th.field-name {
     color: #505391;
 }
 
-/* Code  */
+/*  Code and references */
 tt, code {
     color: #F8F8F2;
     background: #1d1941;
     border-radius: 0.3em;
     padding: 0.0em 0.3em;
+}
+
+a.reference, a {
+    border-bottom: none;
+    text-decoration: none;
+    color: #5DACBD;
+}
+
+a.reference.external {
+    color: #5DACBD;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+a.reference.external:hover,a.reference.internal:hover, a, a.reference, div.sphinxsidebar a{
+    color: #79C7D9;
+    border-bottom: 2px solid #79C7D9;
 }
 
 a.reference.internal code.xref span.pre {
@@ -97,17 +115,13 @@ a.reference.internal code.xref span.pre {
     padding: 0;
 }
 
-a.reference.internal, a.reference.internal:hover {
-    border-bottom: none;
-}
-
 a.reference.internal:hover code {
-    background: #027bab
+    background: #79C7D9;
 }
 
 a.reference.internal:hover code.xref span.pre {
     color: #F8F8F2;
-    background: #027bab;
+    background: #79C7D9;
     border-bottom: none;
 }
 
@@ -139,7 +153,7 @@ dt {
 div.footer::before {
     display: block;
     content: '';
-    border-top: 2px solid #F2A0A0;
+    border-top: 2px solid #79C7D9;
     width: 50%;
     margin: 2em auto 2em auto;
 }
@@ -150,7 +164,7 @@ div.footer {
 }
 
 div.footer a {
-    color: #0D0D0D;
+    color: #262626;
     text-decoration: underline;
 }
 
@@ -163,13 +177,13 @@ p.caption {
 /* Responsive */
 @media screen and (max-width: 875px) {
     div.sphinxsidebar {
-        background: #636AF2;
+        background: rgb(101, 168, 184);
     }
     div.sphinxsidebar h1.logo, div.sphinxsidebar p.blurb{
         text-align: left;
     }
     div.sphinxsidebar h1 a {
-        color: #D962A3;
+        color: #3C35F2;
     }
     div.sphinxsidebar a {
         color: white;
@@ -202,6 +216,13 @@ p.caption {
 }
 
 .inline-image{
-    width: 50px;
+    width: 40px;
     vertical-align: middle;
+    padding: 5px;
+}
+
+
+div.admonition{
+    background-color: none;
+    border: 2px dotted #415CF2;
 }

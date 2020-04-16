@@ -400,6 +400,17 @@ tornado = ">=3.2"
 watchdog = ">=0.7.1"
 
 [[package]]
+category = "dev"
+description = "Add a copy button to each of your code cells."
+name = "sphinx-copybutton"
+optional = false
+python-versions = "*"
+version = "0.2.10"
+
+[package.dependencies]
+sphinx = ">=1.8"
+
+[[package]]
 category = "main"
 description = "sphinxcontrib-applehelp is a sphinx extension which outputs Apple help books"
 name = "sphinxcontrib-applehelp"
@@ -575,7 +586,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "46bf11f7c0d7c45ed62e7c24ba92ffd951522e7942720267cd562f00a9b5b6ec"
+content-hash = "754c7370c164eb2d59f2f29f9df5da68d99210a4349d1b9cb1e2cf1ca3253efe"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -756,6 +767,10 @@ sphinx = [
 sphinx-autobuild = [
     {file = "sphinx-autobuild-0.7.1.tar.gz", hash = "sha256:66388f81884666e3821edbe05dd53a0cfb68093873d17320d0610de8db28c74e"},
     {file = "sphinx_autobuild-0.7.1-py2-none-any.whl", hash = "sha256:e60aea0789cab02fa32ee63c7acae5ef41c06f1434d9fd0a74250a61f5994692"},
+]
+sphinx-copybutton = [
+    {file = "sphinx-copybutton-0.2.10.tar.gz", hash = "sha256:78d8ab9aded92275d2de8986e78c3857b9bdf5c5e0feac96a792a772f73bdf5d"},
+    {file = "sphinx_copybutton-0.2.10-py3-none-any.whl", hash = "sha256:049c803e780b00dad6810d5a1cf48eeea225976aaafb6dbdd30e1484614e379a"},
 ]
 sphinxcontrib-applehelp = [
     {file = "sphinxcontrib-applehelp-1.0.2.tar.gz", hash = "sha256:a072735ec80e7675e3f432fcae8610ecf509c5f1869d17e2eecff44389cdbc58"},
