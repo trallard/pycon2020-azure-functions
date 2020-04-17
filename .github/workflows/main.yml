@@ -1,0 +1,39 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  docs:
+    name: Build docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - continue-on-error: false
+      - uses: actions/checkout@v1
+
+      - name: Set Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip 
+          python -m pip install poetry
+          poetry install
+
+      - name: Build docs
+        run: |
+          nox -s docs
+
+      - name: Deploy to GH Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_build/html
+          commit_message: "📝 Build - ${{github.event.head_commit.message}}"
+          user_name: "GitHub Action bot"
+          user_email: "action@github.com"
