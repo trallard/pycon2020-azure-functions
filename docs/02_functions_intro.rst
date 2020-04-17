@@ -8,9 +8,9 @@ We will make use of VS Code to create a function that works every day at the sam
 Creating your local project
 ----------------------------
 
-#. Create a new folder in your local computer. This is where your function project will live.
+#. Create a new folder on your local computer. This is where your function project will live.
 
-    For example if using the command line (bash):
+    For example, if using the command line (bash):
 
     .. code-block:: bash
 
@@ -41,7 +41,7 @@ Creating your local project
     - **Select a Python alias to create a virtual environment**: Select your preferred Python interpreter (needs to be supported)
     - **Select a template**: Timer trigger
     - **Provide a function name**: type a name for your project (I chose ``timer-function``)
-    - **Enter a chron expresion**: We need to specify when the function will be executed, we do this through chron expressions. A cron expression is a string with 6 separate expressions which represent a given schedule via patterns. For this example I want it to run every day at 9:00 am so I am using: ``0 9 * * * *``
+    - **Enter a chron expression**: We need to specify when the function will be executed, we do this through chron expressions. A chron expression is a string with 6 separate expressions which represent a given schedule via patterns. For this example I want it to run every day at 9:00 am so I am using: ``0 9 * * * *``
 
     .. image:: _static/images/snaps/chron.png
         :align: center
@@ -49,7 +49,7 @@ Creating your local project
 
 .. note:: The default time zone for Azure Functions is UTC. Depending on your timezone and purpose you might need to adjust this.
 
-The extension will create a `Python virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ as well as a number of files for the function:
+The extension will create a `Python virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ as well as several files for the function:
 
 .. code-block:: bash
 
@@ -87,8 +87,8 @@ The ``function.json`` file provides main configuration for your function:
         ]
     }
 
-You will notice that there is a ``bindings`` element. This is marked as ``"direction":"in"`` which will correspond to the incoming signal to trigger the function.
-In this case we are using a chron expression to trigger the funcion every day at 9:00am.
+You will notice that there is a ``bindings`` element. This is marked as ``"direction": "in"`` which will correspond to the incoming signal to trigger the function.
+In this case, we are using a chron expression to trigger the function every day at 9:00am.
 
 You will also notice that there is a ``__init__.py`` script (which is also the script file described in the ``function.json`` above).
 
@@ -117,31 +117,31 @@ You will also notice that there is a ``__init__.py`` script (which is also the s
 Running your function locally
 -------------------------------
 
-Now that we have inspected the function we are ready to run it locally. You can do so by pressing :kbd:`F5`.
+Now that we have inspected the function, we are ready to run it locally. You can do so by pressing :kbd:`F5`.
 This will launch the debugging extension.
-Since we are using the timer trigger we need to set up an Azure storage account. This is mainly to keep logs and other outputs. 
+Since we are using the timer trigger, we need to set up an Azure storage account. This is mainly to keep logs and other outputs. 
 So you might get the following warning the first time you try and run your function locally.
 
 .. image:: _static/images/snaps/storage.png
     :align: center
     :alt: VS code debugger - add storage
 
-In the following windows select this options:
+In the following windows, select these options:
 
-- Create new storage account: make sure to give it a meaningful name (note only letters and numbers are accepted)
-- **Resource group**: we want all of our services to be together so choose create anew resource group and give it a name
+- Create a new storage account: make sure to give it a meaningful name (note only letters and numbers are accepted)
+- **Resource group**: we want all of our services to be together so choose to create a new resource group and give it a name
 - **Region**: this corresponds to the datacentre where your resources will be located (for example Central US)
 
 .. note:: You will need to be logged into Azure for you to be able to create your Storage Account. If you need help with this check :ref:`login_azure`.
 
-Once your storage account is created (if needed) you should see the Azure functions output in your terminal.
+Once your storage account is created (if needed), you should see the output of the Azure function in your terminal.
 
 .. image:: _static/images/snaps/functions_debug.png
     :align: center
     :alt: Running functions locally
 
 
-To stop the function you can press :kbd:`CTRL + C`.
+To stop the function, you can press kbd:`CTRL + C`.
 
 
 
@@ -150,14 +150,14 @@ To stop the function you can press :kbd:`CTRL + C`.
 Log into Azure from VS Code
 -----------------------------
 
-1. If you aren't already signed in, choose the Azure icon in the Activity bar, then in the Azure: Functions area, choose Sign in to Azure.
+1. If you aren't already signed in, choose the Azure icon in the Activity bar. In the Azure: Functions area, select Sign in to Azure.
 
     .. image:: https://docs.microsoft.com/en-us/azure/includes/media/functions-sign-in-vs-code/functions-sign-into-azure.png
         :alt: VS code sign in
         :align: center
 
 2. When prompted in the browser, choose your Azure account and sign in using your Azure account credentials.
-3. After you've successfully signed in, you can close the new browser window. The subscriptions that belong to your Azure account are displayed in the Side bar. You should also be able to see the email you have logged into on the bottom status bar in VSCode.
+3. After you've successfully signed in, you can close the new browser window. The subscriptions that belong to your Azure account are displayed in the Sidebar. You should also be able to see the email you have logged into on the bottom status bar in VSCode.
 
 
 |floppy| Additional resources and docs
