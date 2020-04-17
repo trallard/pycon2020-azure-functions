@@ -26,6 +26,7 @@ jobs:
 
       - name: Build docs
         run: |
+          poetry shell
           nox -s docs
 
       - name: Deploy to GH Pages
