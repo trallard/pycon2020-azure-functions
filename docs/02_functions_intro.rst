@@ -1,4 +1,4 @@
-Your first Azure function
+|light| Your first Azure function
 =====================================
 
 We will start by creating your first Azure function.
@@ -140,6 +140,27 @@ Once your storage account is created (if needed), you should see the output of t
     :align: center
     :alt: Running functions locally
 
+If I change the chron expression to run every hour at 10 mins past the hour ``10 */1 * * * *`` for demo purposes. Then in the console output I should see when the fynction is due:
+
+.. code-block:: bash
+
+    [15/04/2020 19:28:58] The next 5 occurrences of the 'timer-function' schedule (Cron: '10 * * * * *') will be:
+    [15/04/2020 19:28:58] 04/15/2020 20:29:10+01:00 (04/15/2020 19:29:10Z)
+    [15/04/2020 19:28:58] 04/15/2020 20:30:10+01:00 (04/15/2020 19:30:10Z)
+    [15/04/2020 19:28:58] 04/15/2020 20:31:10+01:00 (04/15/2020 19:31:10Z)
+    [15/04/2020 19:28:58] 04/15/2020 20:32:10+01:00 (04/15/2020 19:32:10Z)
+    [15/04/2020 19:28:58] 04/15/2020 20:33:10+01:00 (04/15/2020 19:33:10Z)
+    [15/04/2020 19:28:58] 
+    [15/04/2020 19:28:58] Host started (1961ms)
+    [15/04/2020 19:28:58] Job host started
+    Hosting environment: Production
+    Content root path: /myuser/demos/functions-python
+    Now listening on: http://0.0.0.0:7071
+    Application started. Press Ctrl+C to shut down.
+
+
+
+Further down the output you should see when the function is next due:
 
 To stop the function, you can press kbd:`CTRL + C`.
 
@@ -163,8 +184,9 @@ Log into Azure from VS Code
 |floppy| Additional resources and docs
 ---------------------------------------
 - `Time trigger for Azure functions official docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=csharp?WT.mc_id=pycon_tutorial-github-taallard>`_ 
-- `Azure functions chron cheatsheet <https://arminreiter.com/2017/02/azure-functions-time-trigger-cron-cheat-sheet/>`_ 
+- `Azure functions chron cheatsheet <https://arminreiter.com/2015/02/azure-functions-time-trigger-cron-cheat-sheet/>`_ 
 - `Chron generator <https://crontab.guru/#0_9_*_*_*>`_
 - `Chron tab cheatsheet <https://www.codementor.io/@akul08/the-ultimate-crontab-cheatsheet-5op0f7o4r>`_
 - A handy blog about dealing with `Time Zones <https://dev.to/azure/getting-rid-of-time-zone-issues-within-azure-functions-4066>`_ in Azure functions
 - Azure functions `project structure docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp#generated-project-files?WT.mc_id=pycon_tutorial-github-taallard>`_
+- Human Cron expression `descriptor <https://cronexpressiondescriptor.azurewebsites.net/>`_  super handy if you are only getting familiar with cron expressions
