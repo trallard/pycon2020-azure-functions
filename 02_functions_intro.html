@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Your first Azure function &#8212; Easy data processing on Azure with Serverless Functions  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Adding functions" href="03_functionsdeploy.html" />
+    <link rel="prev" title="Introduction to serverless and Azure functions" href="01_introduction.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="01_introduction.html" title="Previous document">Introduction to serverless and Azure functions</a>
+        </li>
+        <li>
+          <a href="03_functionsdeploy.html" title="Next document">Adding functions</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="your-first-azure-function">
+<h1>Your first Azure function<a class="headerlink" href="#your-first-azure-function" title="Permalink to this headline">¶</a></h1>
+<p>We will start by creating your first Azure function.
+We will make use of VS Code to create a function that works every day at the same time.</p>
+<div class="section" id="creating-your-local-project">
+<h2>Creating your local project<a class="headerlink" href="#creating-your-local-project" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Create a new folder in your local computer. This is where your function project will live.</p>
+<blockquote>
+<div><p>For example if using the command line (bash):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir python-functions
+
+<span class="nb">cd</span> python-functions
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Start VS Code in the project folder (workspace)</p>
+<blockquote>
+<div><p>You can use the command line like so:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code .
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Click on the Azure icon on your activity bar (3 in the image)</p></li>
+<li><p>Then, in the Azure functions area select the Create new project icon (4 in the image)</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/vs_code_functions1.png"><img alt="VS code sidebar icons" class="align-center" src="_images/vs_code_functions1.png" style="height: 600px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Provide the following information:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Select the folder that will contain your project</strong>: either choose the current folder or select a different one</p></li>
+<li><p><strong>Select a language</strong>: Python</p></li>
+<li><p><strong>Select a Python alias to create a virtual environment</strong>: Select your preferred Python interpreter (needs to be supported)</p></li>
+<li><p><strong>Select a template</strong>: Timer trigger</p></li>
+<li><p><strong>Provide a function name</strong>: type a name for your project (I chose <code class="docutils literal notranslate"><span class="pre">timer-function</span></code>)</p></li>
+<li><p><strong>Enter a chron expresion</strong>: We need to specify when the function will be executed, we do this through chron expressions. A cron expression is a string with 6 separate expressions which represent a given schedule via patterns. For this example I want it to run every day at 9:00 am so I am using: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">9</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></code></p></li>
+</ul>
+<img alt="chron expresion example" class="align-center" src="_images/chron.png" />
+</div></blockquote>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default time zone for Azure Functions is UTC. Depending on your timezone and purpose you might need to adjust this.</p>
+</div>
+<p>The extension will create a <a class="reference external" href="https://docs.python.org/3/tutorial/venv.html">Python virtual environment</a> as well as a number of files for the function:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.
+├── timer-function
+│   ├── __init__.py
+│   ├── <span class="k">function</span>.json
+│   ├── readme.md
+│   └── sample.dat
+├── .funcignore
+├── .gitignore
+├── host.json
+├── local.settings.json
+├── proxies.json
+└── requirements.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-basics-of-your-new-function">
+<h2>The basics of your new function<a class="headerlink" href="#the-basics-of-your-new-function" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">function.json</span></code> file provides main configuration for your function:</p>
+<div class="literal-block-wrapper docutils container" id="function-json">
+<div class="code-block-caption"><span class="caption-text">function.json</span><a class="headerlink" href="#function-json" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;scriptFile&quot;</span><span class="p">:</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;bindings&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;mytimer&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;timerTrigger&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;schedule&quot;</span><span class="p">:</span> <span class="s2">&quot;0 9 * * * *&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>You will notice that there is a <code class="docutils literal notranslate"><span class="pre">bindings</span></code> element. This is marked as <code class="docutils literal notranslate"><span class="pre">&quot;direction&quot;:&quot;in&quot;</span></code> which will correspond to the incoming signal to trigger the function.
+In this case we are using a chron expression to trigger the funcion every day at 9:00am.</p>
+<p>You will also notice that there is a <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> script (which is also the script file described in the <code class="docutils literal notranslate"><span class="pre">function.json</span></code> above).</p>
+<div class="literal-block-wrapper docutils container" id="init-py">
+<div class="code-block-caption"><span class="caption-text">__init__.py</span><a class="headerlink" href="#init-py" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">azure.functions</span> <span class="k">as</span> <span class="nn">func</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">mytimer</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">TimerRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">utc_timestamp</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">mytimer</span><span class="o">.</span><span class="n">past_due</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The timer is past due!&quot;</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Python timer trigger function ran at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">utc_timestamp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="running-your-function-locally">
+<h2>Running your function locally<a class="headerlink" href="#running-your-function-locally" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have inspected the function we are ready to run it locally. You can do so by pressing <kbd class="kbd docutils literal notranslate">F5</kbd>.
+This will launch the debugging extension.
+Since we are using the timer trigger we need to set up an Azure storage account. This is mainly to keep logs and other outputs.
+So you might get the following warning the first time you try and run your function locally.</p>
+<img alt="VS code debugger - add storage" class="align-center" src="_images/storage.png" />
+<p>In the following windows select this options:</p>
+<ul class="simple">
+<li><p>Create new storage account: make sure to give it a meaningful name (note only letters and numbers are accepted)</p></li>
+<li><p><strong>Resource group</strong>: we want all of our services to be together so choose create anew resource group and give it a name</p></li>
+<li><p><strong>Region</strong>: this corresponds to the datacentre where your resources will be located (for example Central US)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will need to be logged into Azure for you to be able to create your Storage Account. If you need help with this check <a class="reference internal" href="#login-azure"><span class="std std-ref">Log into Azure from VS Code</span></a>.</p>
+</div>
+<p>Once your storage account is created (if needed) you should see the Azure functions output in your terminal.</p>
+<img alt="Running functions locally" class="align-center" src="_images/functions_debug.png" />
+<p>To stop the function you can press <kbd class="kbd docutils literal notranslate">CTRL + C</kbd>.</p>
+</div>
+<div class="section" id="log-into-azure-from-vs-code">
+<span id="login-azure"></span><h2>Log into Azure from VS Code<a class="headerlink" href="#log-into-azure-from-vs-code" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>If you aren’t already signed in, choose the Azure icon in the Activity bar, then in the Azure: Functions area, choose Sign in to Azure.</p>
+<blockquote>
+<div><img alt="VS code sign in" class="align-center" src="https://docs.microsoft.com/en-us/azure/includes/media/functions-sign-in-vs-code/functions-sign-into-azure.png" />
+</div></blockquote>
+</li>
+<li><p>When prompted in the browser, choose your Azure account and sign in using your Azure account credentials.</p></li>
+<li><p>After you’ve successfully signed in, you can close the new browser window. The subscriptions that belong to your Azure account are displayed in the Side bar. You should also be able to see the email you have logged into on the bottom status bar in VSCode.</p></li>
+</ol>
+</div>
+<div class="section" id="floppy-additional-resources-and-docs">
+<h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=csharp?WT.mc_id=pycon_tutorial-github-taallard">Time trigger for Azure functions official docs</a></p></li>
+<li><p><a class="reference external" href="https://arminreiter.com/2017/02/azure-functions-time-trigger-cron-cheat-sheet/">Azure functions chron cheatsheet</a></p></li>
+<li><p><a class="reference external" href="https://crontab.guru/#0_9_*_*_*">Chron generator</a></p></li>
+<li><p><a class="reference external" href="https://www.codementor.io/&#64;akul08/the-ultimate-crontab-cheatsheet-5op0f7o4r">Chron tab cheatsheet</a></p></li>
+<li><p>A handy blog about dealing with <a class="reference external" href="https://dev.to/azure/getting-rid-of-time-zone-issues-within-azure-functions-4066">Time Zones</a> in Azure functions</p></li>
+<li><p>Azure functions <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp#generated-project-files?WT.mc_id=pycon_tutorial-github-taallard">project structure docs</a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="01_introduction.html" title="Previous document">Introduction to serverless and Azure functions</a>
+        </li>
+        <li>
+          <a href="03_functionsdeploy.html" title="Next document">Adding functions</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/images/Bit_BobRoss.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Azure sponsored workshop: PyCon 2020</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=trallard&repo=pycon2020-azure-functions&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Your first Azure function</a><ul>
+<li><a class="reference internal" href="#creating-your-local-project">Creating your local project</a></li>
+<li><a class="reference internal" href="#the-basics-of-your-new-function">The basics of your new function</a></li>
+<li><a class="reference internal" href="#running-your-function-locally">Running your function locally</a></li>
+<li><a class="reference internal" href="#log-into-azure-from-vs-code">Log into Azure from VS Code</a></li>
+<li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Easy data processing on Azure with Serverless Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Your first Azure function</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-your-local-project">Creating your local project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-basics-of-your-new-function">The basics of your new function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-your-function-locally">Running your function locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#log-into-azure-from-vs-code">Log into Azure from VS Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html">Adding functions</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="01_introduction.html" title="previous chapter">Introduction to serverless and Azure functions</a></li>
+      <li>Next: <a href="03_functionsdeploy.html" title="next chapter">Adding functions</a></li>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Tania Allard.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/02_functions_intro.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Setup and installation &#8212; Easy data processing on Azure with Serverless Functions  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_tabs/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.js"></script>
+    <script src="_static/sphinx_tabs/tabs.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction to serverless and Azure functions" href="01_introduction.html" />
+    <link rel="prev" title="Easy data processing on Azure with Serverless Functions" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document">Easy data processing on Azure with Serverless Functions</a>
+        </li>
+        <li>
+          <a href="01_introduction.html" title="Next document">Introduction to serverless and Azure functions</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="setup-and-installation">
+<span id="setup"></span><h1>Setup and installation<a class="headerlink" href="#setup-and-installation" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the Azure sponsored workshop for PyCon 2020 (now online)!</p>
+<p>This section will guide you through the pre requisites for the workshop.</p>
+<p>Each requirement is outlined here with detailed instructions on their installation.</p>
+<div class="section" id="python-3-x">
+<h2>Python 3.x<a class="headerlink" href="#python-3-x" title="Permalink to this headline">¶</a></h2>
+<p>Make sure to have one of these Python versions installed:</p>
+<ul class="simple">
+<li><p>3.6</p></li>
+<li><p>3.7</p></li>
+<li><p>3.8</p></li>
+</ul>
+<p>These are the supported versions by Azure Functions. If you already have one installed jump straight to the rest of the setup instrucions.</p>
+<p>Otherwise, you can follow this fantastic tutorial from  <a class="reference external" href="https://realpython.com/installing-python/">Real Python</a> to get a clean Python install.</p>
+</div>
+<div class="section" id="vs-code">
+<h2>VS Code<a class="headerlink" href="#vs-code" title="Permalink to this headline">¶</a></h2>
+<p>We will be using Visual Studio Code (or VS Code for short).
+VS Code is an Open Source IDE that can be easily extended or enhanced with extensions.
+For this particular tutorial, we will use the Python and the Azure functions extensions.
+To get started:</p>
+<ol class="arabic simple">
+<li><p>Download and install <a class="reference external" href="https://code.visualstudio.com//?WT.mc_id=?WT.mc_id=pycon_tutorial-github-taallard">VS Code</a> . When directed to the install page this sholud identify your OS. Download the install file and follow the instructions.</p></li>
+<li><p>Install the <a class="reference external" href="https://marketplace.visualstudio.com/itemdetails?itemName=ms-python.python&amp;wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard">Python VS Code extension</a> . Click on the Install button on the extension website. This will launch VS Code and ask for your confirmation to install.</p></li>
+<li><p>Install the <a class="reference external" href="https://marketplace.visualstudio.com/itemdetails?itemName=ms-azuretools.vscode-azurefunctions&amp;wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard">Azure Functions extension</a></p></li>
+</ol>
+</div>
+<div class="section" id="azure-account-and-credits">
+<h2>Azure account and credits<a class="headerlink" href="#azure-account-and-credits" title="Permalink to this headline">¶</a></h2>
+<p>You can sign up to your Azure account and receive 12 months of some free services as well as 200 USD in credits.
+To get started with Azure visit  <a class="reference external" href="https://cda.ms/1fM">this link</a>.</p>
+</div>
+<div class="section" id="azure-cli-and-functions-core-tool">
+<h2>Azure CLI and functions core tool<a class="headerlink" href="#azure-cli-and-functions-core-tool" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>We first need to install the Azure cli  to be able to deploy our functions</p></li>
+</ul>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-TWFjIE9TWA== docutils container">
+<div class="docutils container">
+<p>Mac OSX</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-V2luZG93cw== docutils container">
+<div class="docutils container">
+<p>Windows</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-TGludXg= docutils container">
+<div class="docutils container">
+<p>Linux</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-TWFjIE9TWA== active docutils container">
+<ol class="arabic simple">
+<li><p>Install homebrew</p></li>
+<li><p>Install the CLI</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">brew</span> <span class="n">install</span> <span class="n">azure</span><span class="o">-</span><span class="n">cli</span>
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-V2luZG93cw== docutils container">
+<ol class="arabic simple">
+<li><p>Download the installer from <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest?WT.mc_id=pycon_tutorial-github-taallard">the docs page</a></p></li>
+<li><p>When downloaded, open the installer follow the instructions</p></li>
+</ol>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-TGludXg= docutils container">
+<p>The instructions vary depending on your distribution. Please follow the
+instructions in the <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest?WT.mc_id=pycon_tutorial-github-taallard">official docs</a></p>
+</div>
+</div>
+<ul class="simple">
+<li><p>To be able to run and test your functions locally we need to install the Azure functions core tools:</p></li>
+</ul>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-TWFjIE9TWA== docutils container">
+<div class="docutils container">
+<p>Mac OSX</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-V2luZG93cw== docutils container">
+<div class="docutils container">
+<p>Windows</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-TGludXg= docutils container">
+<div class="docutils container">
+<p>Linux</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-TWFjIE9TWA== active docutils container">
+<ol class="arabic simple">
+<li><p>Install homebrew</p></li>
+<li><p>Install the CLI</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">tap</span> <span class="n">azure</span><span class="o">/</span><span class="n">functions</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">azure</span><span class="o">-</span><span class="n">functions</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="n">tools</span><span class="o">@</span><span class="mi">3</span>
+<span class="c1"># if upgrading on a machine that has 2.x installed</span>
+<span class="n">brew</span> <span class="n">link</span> <span class="o">--</span><span class="n">overwrite</span> <span class="n">azure</span><span class="o">-</span><span class="n">functions</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="n">tools</span><span class="o">@</span><span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-V2luZG93cw== docutils container">
+<ol class="arabic simple">
+<li><p>Install <a class="reference external" href="https://docs.npmjs.com/getting-started/installing-node#osx-or-windows">Node.js</a></p></li>
+<li><p>Install the core tools package</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span> <span class="n">azure</span><span class="o">-</span><span class="n">functions</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="n">tools</span><span class="o">@</span><span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-TGludXg= docutils container">
+<p>For Debian/Ubuntu distributions:</p>
+<ol class="arabic simple">
+<li><p>Install  Microsoft package repository GPG key, to validate package integrity:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keys</span><span class="o">/</span><span class="n">microsoft</span><span class="o">.</span><span class="n">asc</span> <span class="o">|</span> <span class="n">gpg</span> <span class="o">--</span><span class="n">dearmor</span> <span class="o">&gt;</span> <span class="n">microsoft</span><span class="o">.</span><span class="n">gpg</span>
+<span class="n">sudo</span> <span class="n">mv</span> <span class="n">microsoft</span><span class="o">.</span><span class="n">gpg</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">trusted</span><span class="o">.</span><span class="n">gpg</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">microsoft</span><span class="o">.</span><span class="n">gpg</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>Set up the .NET development source list before doing an APT update.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ubuntu</span>
+<span class="n">sudo</span> <span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;echo &quot;deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod $(lsb_release -cs) main&quot; &gt; /etc/apt/sources.list.d/dotnetdev.list&#39;</span>
+
+<span class="c1"># Debian</span>
+
+<span class="n">sudo</span> <span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;echo &quot;deb [arch=amd64] https://packages.microsoft.com/debian/$(lsb_release -rs | cut -d&#39;</span><span class="o">.</span><span class="s1">&#39; -f 1)/prod $(lsb_release -cs) main&quot; &gt; /etc/apt/sources.list.d/dotnetdev.list&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>Start the APT source update and install the tools</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">azure</span><span class="o">-</span><span class="n">functions</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="n">tools</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>For more detailed instructions visit the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=linux%2Ccsharp%2Cbash?WT.mc_id=pycon_tutorial-github-taallard">corresponding docs</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="additional-packages">
+<h2>Additional packages<a class="headerlink" href="#additional-packages" title="Permalink to this headline">¶</a></h2>
+<p>You will need to install a number of packages to follow along this tutorial.
+To install them follow these steps:</p>
+<ol class="arabic simple">
+<li><p>Clone the tutorial repository <a class="reference external" href="https://github.com/trallard">Repo</a></p></li>
+</ol>
+<blockquote>
+<div><p>From the command line (bash):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github/trallard
+
+<span class="c1"># change to the directory</span>
+<span class="nb">cd</span> azure-functions-pycon
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>Install the main dependencies:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document">Easy data processing on Azure with Serverless Functions</a>
+        </li>
+        <li>
+          <a href="01_introduction.html" title="Next document">Introduction to serverless and Azure functions</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/images/Bit_BobRoss.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Azure sponsored workshop: PyCon 2020</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=trallard&repo=pycon2020-azure-functions&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setup and installation</a><ul>
+<li><a class="reference internal" href="#python-3-x">Python 3.x</a></li>
+<li><a class="reference internal" href="#vs-code">VS Code</a></li>
+<li><a class="reference internal" href="#azure-account-and-credits">Azure account and credits</a></li>
+<li><a class="reference internal" href="#azure-cli-and-functions-core-tool">Azure CLI and functions core tool</a></li>
+<li><a class="reference internal" href="#additional-packages">Additional packages</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Easy data processing on Azure with Serverless Functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup and installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python-3-x">Python 3.x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vs-code">VS Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#azure-account-and-credits">Azure account and credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#azure-cli-and-functions-core-tool">Azure CLI and functions core tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#additional-packages">Additional packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html">Your first Azure function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html">Adding functions</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Easy data processing on Azure with Serverless Functions</a></li>
+      <li>Next: <a href="01_introduction.html" title="next chapter">Introduction to serverless and Azure functions</a></li>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Tania Allard.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/setup.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

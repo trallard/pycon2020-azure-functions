@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Easy data processing on Azure with Serverless Functions &#8212; Easy data processing on Azure with Serverless Functions  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Setup and installation" href="setup.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          <a href="setup.html" title="Next document">Setup and installation</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="easy-data-processing-on-azure-with-serverless-functions">
+<h1>Easy data processing on Azure with Serverless Functions<a class="headerlink" href="#easy-data-processing-on-azure-with-serverless-functions" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>Welcome to the Azure functions sponsored workshop for PyCon 2020.
+You can follow at home with the contents in this site.</p>
+</div>
+<div class="section" id="description">
+<h1>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h1>
+<p>Serverless computing (also known as function as a service, FaaS) is a design patters where applications are hosted by a third-party service (i.e. Azure) eliminating the need for server software and hardware management by the developer.</p>
+<p>Serverless can be an excellent alternative for Pythonistas interested in data processing as it allows them to focus on their code rather than the cloud infrastructure. This workshop will introduce attendees to Azure Functions for data processing scenarios (including data acquisition, cleaning and transformation and storage for subsequent usage).</p>
+<p>After this tutorial, attendees will have had practical experience with Azure functions for data processing scenarios. Also, they will leave the workshop with a basic function for data processing that could be further modified/extended to suit their needs/requirements.</p>
+<div class="section" id="outline">
+<h2>Outline<a class="headerlink" href="#outline" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Introduction to serverless and Azure functions</p></li>
+<li><p>Creating your first Azure function:
+- Create a simple scheduled function using the VS Code extension
+- Familiarise with functions projects and structure
+- Running and debugging locally</p></li>
+<li><p>Functions deployment
+- Deploy your function to Azure
+- Familiarise with the Azure portal</p></li>
+<li><p>Data processing use case
+- Updating your function to collect data
+- Data cleaning, agreggation and storage</p></li>
+</ol>
+</div>
+<div class="section" id="pre-requisites">
+<h2>Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permalink to this headline">¶</a></h2>
+<p>This workshop is aimed at folks interested in data processing, data engineering
+or data science. The goal is to provide a practical introduction to serverless for data processing scenarios.</p>
+<p>We assume that you:</p>
+<ul>
+<li><p>Have intermediate Python knowledge:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Have a good understanding on how to write and call functions</p></li>
+<li><p>Have a good understanding on how Python modules and scripts work</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Have some experience with data wrangling and/or data processing (not extensive experience required but have, for example, used libraries like pandas and requests for data wrangling and API access)</p></li>
+<li><p>Are comfortable using the command line/terminal (no need to be an expert but should be comfortable enough to navigate file systems and perform necessary Git tasks)</p></li>
+</ul>
+<p>The setup and other instructions to set your development environment can be found in the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">Setup and installation</span></a> section of this tutorial.
+Make sure to follow these intructions before continuing with the rest of the tutorial.</p>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          <a href="setup.html" title="Next document">Setup and installation</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="#">
+    <img class="logo" src="_static/images/Bit_BobRoss.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Azure sponsored workshop: PyCon 2020</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=trallard&repo=pycon2020-azure-functions&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Easy data processing on Azure with Serverless Functions</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#outline">Outline</a></li>
+<li><a class="reference internal" href="#pre-requisites">Pre-requisites</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Easy data processing on Azure with Serverless Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html">Your first Azure function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html">Adding functions</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="setup.html" title="next chapter">Setup and installation</a></li>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Tania Allard.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
