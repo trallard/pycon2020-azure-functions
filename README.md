@@ -1,4 +1,4 @@
-# Easy data processing with Azure functions and Python
+# ⚡️ 🐍 Easy data processing with Azure functions and Python
 
 [![License](https://img.shields.io/badge/License-MIT-gray.svg?colorA=2D2A56&colorB=7A76C2&style=flat.svg)]((https://opensource.org/licenses/MIT))
 
@@ -31,27 +31,21 @@ After this tutorial, attendees will have had practical experience with Azure fun
    - Data cleaning, agreggation and storage
 
 
-Pre-requisites
-*********************
+## 💻 Pre-requisites
 
 This workshop is aimed at folks interested in data processing, data engineering 
-or data science. The goal is to provide a practical introduction to serverless for data processing scenarios. 
-
+or data science. The goal is to provide a practical introduction to serverless for data processing scenarios.
 
 We assume that you:
 
 - Have intermediate Python knowledge:
-
    - Have a good understanding on how to write and call functions
    - Have a good understanding on how Python modules and scripts work
 
-- Have some experience with data wrangling and/or data processing (not extensive experience required but have, for example, used libraries like pandas and requests for data wrangling and API access) 
+- Have some experience with data wrangling and/or data processing (not extensive experience required but have, for example, used libraries like pandas and requests for data wrangling and API access)
 
-- Are comfortable using the command line/terminal (no need to be an expert but should be comfortable enough to navigate file systems and perform necessary Git tasks) 
-
-The setup and other instructions to set your development environment can be found in the :ref:`setup` section of this tutorial.
-Make sure to follow these intructions before continuing with the rest of the tutorial.
-
-## License 
+- Are comfortable using the command line/terminal (no need to be an expert but should be comfortable enough to navigate file systems and perform necessary Git tasks)
+  
+## License
 
 The contents in this repo are licensed under the [(https://opensource.org/licenses/MIT)](MIT OSI license.)

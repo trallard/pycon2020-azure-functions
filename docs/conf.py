@@ -113,6 +113,18 @@ rst_epilog = """
 .. |floppy| image:: _static/icons/save-file.svg
     :class: inline-image
 
+.. |laptop| image:: _static/icons/laptop.svg
+    :class: inline-image
+
+.. |cloud-computing| image:: _static/icons/cloud-computing.svg
+    :class: inline-image
+
+.. |3d| image:: _static/icons/3d.svg
+    :class: inline-image
+    
+.. |faas| image:: _static/icons/functions.svg
+    :class: inline-image
+
 .. |foo| replace:: foo
 .. _foo: http://stackoverflow.com
 """

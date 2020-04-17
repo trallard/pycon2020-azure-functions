@@ -43,6 +43,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/_build/html
-          commit_message: "📝 Build - ${{github.event.head_commit.message}}"
+          commit_message: "Build - ${{github.event.head_commit.message}}"
           user_name: "GitHub Action bot"
           user_email: "action@github.com"
