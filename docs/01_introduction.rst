@@ -23,6 +23,15 @@ The following infographic provides more details about serverless:
 .. image:: _static/images/serverless.png
     :alt: serverless infographic
 
+Good use cases 
+****************
+
+Some good use cases for serverless are:
+
+- **Image and video processing**: you can couple Azure functions with Azure Blob Storage and use a storage trigger for your function. Then your function can do the processing asynchronously.
+- **Internet of Things**: IoT applications can generate a lot of data through the sensors. You can use functions to process the data in a scalable manner.
+- **Data pipelines**: you can integrate multiple services to build scalable data pipelines.
+
 |faas| Azure functions and serverless
 ----------------------------------------
 
