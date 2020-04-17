@@ -18,7 +18,7 @@
     <script src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Adding functions" href="03_functionsdeploy.html" />
+    <link rel="next" title="Deploy your first function" href="03_functionsdeploy.html" />
     <link rel="prev" title="Introduction to serverless and Azure functions" href="01_introduction.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -41,7 +41,7 @@
           <a href="01_introduction.html" title="Previous document">Introduction to serverless and Azure functions</a>
         </li>
         <li>
-          <a href="03_functionsdeploy.html" title="Next document">Adding functions</a>
+          <a href="03_functionsdeploy.html" title="Next document"> Deploy your first function</a>
           &rarr;
         </li>
     </ul>
@@ -51,16 +51,16 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="your-first-azure-function">
-<h1>Your first Azure function<a class="headerlink" href="#your-first-azure-function" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="light-your-first-azure-function">
+<h1><img alt="light" class="inline-image" src="_images/video-game.svg" /> Your first Azure function<a class="headerlink" href="#light-your-first-azure-function" title="Permalink to this headline">¶</a></h1>
 <p>We will start by creating your first Azure function.
 We will make use of VS Code to create a function that works every day at the same time.</p>
 <div class="section" id="creating-your-local-project">
 <h2>Creating your local project<a class="headerlink" href="#creating-your-local-project" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p>Create a new folder in your local computer. This is where your function project will live.</p>
+<li><p>Create a new folder on your local computer. This is where your function project will live.</p>
 <blockquote>
-<div><p>For example if using the command line (bash):</p>
+<div><p>For example, if using the command line (bash):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir python-functions
 
 <span class="nb">cd</span> python-functions
@@ -90,7 +90,7 @@ We will make use of VS Code to create a function that works every day at the sam
 <li><p><strong>Select a Python alias to create a virtual environment</strong>: Select your preferred Python interpreter (needs to be supported)</p></li>
 <li><p><strong>Select a template</strong>: Timer trigger</p></li>
 <li><p><strong>Provide a function name</strong>: type a name for your project (I chose <code class="docutils literal notranslate"><span class="pre">timer-function</span></code>)</p></li>
-<li><p><strong>Enter a chron expresion</strong>: We need to specify when the function will be executed, we do this through chron expressions. A cron expression is a string with 6 separate expressions which represent a given schedule via patterns. For this example I want it to run every day at 9:00 am so I am using: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">9</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></code></p></li>
+<li><p><strong>Enter a chron expression</strong>: We need to specify when the function will be executed, we do this through chron expressions. A chron expression is a string with 6 separate expressions which represent a given schedule via patterns. For this example I want it to run every day at 9:00 am so I am using: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">9</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></code></p></li>
 </ul>
 <img alt="chron expresion example" class="align-center" src="_images/chron.png" />
 </div></blockquote>
@@ -100,7 +100,7 @@ We will make use of VS Code to create a function that works every day at the sam
 <p class="admonition-title">Note</p>
 <p>The default time zone for Azure Functions is UTC. Depending on your timezone and purpose you might need to adjust this.</p>
 </div>
-<p>The extension will create a <a class="reference external" href="https://docs.python.org/3/tutorial/venv.html">Python virtual environment</a> as well as a number of files for the function:</p>
+<p>The extension will create a <a class="reference external" href="https://docs.python.org/3/tutorial/venv.html">Python virtual environment</a> as well as several files for the function:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.
 ├── timer-function
 │   ├── __init__.py
@@ -135,8 +135,8 @@ We will make use of VS Code to create a function that works every day at the sam
 </pre></div>
 </div>
 </div>
-<p>You will notice that there is a <code class="docutils literal notranslate"><span class="pre">bindings</span></code> element. This is marked as <code class="docutils literal notranslate"><span class="pre">&quot;direction&quot;:&quot;in&quot;</span></code> which will correspond to the incoming signal to trigger the function.
-In this case we are using a chron expression to trigger the funcion every day at 9:00am.</p>
+<p>You will notice that there is a <code class="docutils literal notranslate"><span class="pre">bindings</span></code> element. This is marked as <code class="docutils literal notranslate"><span class="pre">&quot;direction&quot;:</span> <span class="pre">&quot;in&quot;</span></code> which will correspond to the incoming signal to trigger the function.
+In this case, we are using a chron expression to trigger the function every day at 9:00am.</p>
 <p>You will also notice that there is a <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> script (which is also the script file described in the <code class="docutils literal notranslate"><span class="pre">function.json</span></code> above).</p>
 <div class="literal-block-wrapper docutils container" id="init-py">
 <div class="code-block-caption"><span class="caption-text">__init__.py</span><a class="headerlink" href="#init-py" title="Permalink to this code">¶</a></div>
@@ -161,46 +161,64 @@ In this case we are using a chron expression to trigger the funcion every day at
 </div>
 <div class="section" id="running-your-function-locally">
 <h2>Running your function locally<a class="headerlink" href="#running-your-function-locally" title="Permalink to this headline">¶</a></h2>
-<p>Now that we have inspected the function we are ready to run it locally. You can do so by pressing <kbd class="kbd docutils literal notranslate">F5</kbd>.
+<p>Now that we have inspected the function, we are ready to run it locally. You can do so by pressing <kbd class="kbd docutils literal notranslate">F5</kbd>.
 This will launch the debugging extension.
-Since we are using the timer trigger we need to set up an Azure storage account. This is mainly to keep logs and other outputs.
+Since we are using the timer trigger, we need to set up an Azure storage account. This is mainly to keep logs and other outputs.
 So you might get the following warning the first time you try and run your function locally.</p>
 <img alt="VS code debugger - add storage" class="align-center" src="_images/storage.png" />
-<p>In the following windows select this options:</p>
+<p>In the following windows, select these options:</p>
 <ul class="simple">
-<li><p>Create new storage account: make sure to give it a meaningful name (note only letters and numbers are accepted)</p></li>
-<li><p><strong>Resource group</strong>: we want all of our services to be together so choose create anew resource group and give it a name</p></li>
+<li><p>Create a new storage account: make sure to give it a meaningful name (note only letters and numbers are accepted)</p></li>
+<li><p><strong>Resource group</strong>: we want all of our services to be together so choose to create a new resource group and give it a name</p></li>
 <li><p><strong>Region</strong>: this corresponds to the datacentre where your resources will be located (for example Central US)</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You will need to be logged into Azure for you to be able to create your Storage Account. If you need help with this check <a class="reference internal" href="#login-azure"><span class="std std-ref">Log into Azure from VS Code</span></a>.</p>
 </div>
-<p>Once your storage account is created (if needed) you should see the Azure functions output in your terminal.</p>
+<p>Once your storage account is created (if needed), you should see the output of the Azure function in your terminal.</p>
 <img alt="Running functions locally" class="align-center" src="_images/functions_debug.png" />
-<p>To stop the function you can press <kbd class="kbd docutils literal notranslate">CTRL + C</kbd>.</p>
+<p>If I change the chron expression to run every hour at 10 mins past the hour <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">*/1</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></code> for demo purposes. Then in the console output I should see when the fynction is due:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> The next <span class="m">5</span> occurrences of the <span class="s1">&#39;timer-function&#39;</span> schedule <span class="o">(</span>Cron: <span class="s1">&#39;10 * * * * *&#39;</span><span class="o">)</span> will be:
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> <span class="m">04</span>/15/2020 <span class="m">20</span>:29:10+01:00 <span class="o">(</span><span class="m">04</span>/15/2020 <span class="m">19</span>:29:10Z<span class="o">)</span>
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> <span class="m">04</span>/15/2020 <span class="m">20</span>:30:10+01:00 <span class="o">(</span><span class="m">04</span>/15/2020 <span class="m">19</span>:30:10Z<span class="o">)</span>
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> <span class="m">04</span>/15/2020 <span class="m">20</span>:31:10+01:00 <span class="o">(</span><span class="m">04</span>/15/2020 <span class="m">19</span>:31:10Z<span class="o">)</span>
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> <span class="m">04</span>/15/2020 <span class="m">20</span>:32:10+01:00 <span class="o">(</span><span class="m">04</span>/15/2020 <span class="m">19</span>:32:10Z<span class="o">)</span>
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> <span class="m">04</span>/15/2020 <span class="m">20</span>:33:10+01:00 <span class="o">(</span><span class="m">04</span>/15/2020 <span class="m">19</span>:33:10Z<span class="o">)</span>
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span>
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> Host started <span class="o">(</span>1961ms<span class="o">)</span>
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> Job host started
+Hosting environment: Production
+Content root path: /myuser/demos/functions-python
+Now listening on: http://0.0.0.0:7071
+Application started. Press Ctrl+C to shut down.
+</pre></div>
+</div>
+<p>Further down the output you should see when the function is next due:</p>
+<p>To stop the function, you can press kbd:<cite>CTRL + C</cite>.</p>
 </div>
 <div class="section" id="log-into-azure-from-vs-code">
 <span id="login-azure"></span><h2>Log into Azure from VS Code<a class="headerlink" href="#log-into-azure-from-vs-code" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p>If you aren’t already signed in, choose the Azure icon in the Activity bar, then in the Azure: Functions area, choose Sign in to Azure.</p>
+<li><p>If you aren’t already signed in, choose the Azure icon in the Activity bar. In the Azure: Functions area, select Sign in to Azure.</p>
 <blockquote>
 <div><img alt="VS code sign in" class="align-center" src="https://docs.microsoft.com/en-us/azure/includes/media/functions-sign-in-vs-code/functions-sign-into-azure.png" />
 </div></blockquote>
 </li>
 <li><p>When prompted in the browser, choose your Azure account and sign in using your Azure account credentials.</p></li>
-<li><p>After you’ve successfully signed in, you can close the new browser window. The subscriptions that belong to your Azure account are displayed in the Side bar. You should also be able to see the email you have logged into on the bottom status bar in VSCode.</p></li>
+<li><p>After you’ve successfully signed in, you can close the new browser window. The subscriptions that belong to your Azure account are displayed in the Sidebar. You should also be able to see the email you have logged into on the bottom status bar in VSCode.</p></li>
 </ol>
 </div>
 <div class="section" id="floppy-additional-resources-and-docs">
 <h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=csharp?WT.mc_id=pycon_tutorial-github-taallard">Time trigger for Azure functions official docs</a></p></li>
-<li><p><a class="reference external" href="https://arminreiter.com/2017/02/azure-functions-time-trigger-cron-cheat-sheet/">Azure functions chron cheatsheet</a></p></li>
+<li><p><a class="reference external" href="https://arminreiter.com/2015/02/azure-functions-time-trigger-cron-cheat-sheet/">Azure functions chron cheatsheet</a></p></li>
 <li><p><a class="reference external" href="https://crontab.guru/#0_9_*_*_*">Chron generator</a></p></li>
 <li><p><a class="reference external" href="https://www.codementor.io/&#64;akul08/the-ultimate-crontab-cheatsheet-5op0f7o4r">Chron tab cheatsheet</a></p></li>
 <li><p>A handy blog about dealing with <a class="reference external" href="https://dev.to/azure/getting-rid-of-time-zone-issues-within-azure-functions-4066">Time Zones</a> in Azure functions</p></li>
 <li><p>Azure functions <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp#generated-project-files?WT.mc_id=pycon_tutorial-github-taallard">project structure docs</a></p></li>
+<li><p>Human Cron expression <a class="reference external" href="https://cronexpressiondescriptor.azurewebsites.net/">descriptor</a>  super handy if you are only getting familiar with cron expressions</p></li>
 </ul>
 </div>
 </div>
@@ -216,7 +234,7 @@ So you might get the following warning the first time you try and run your funct
           <a href="01_introduction.html" title="Previous document">Introduction to serverless and Azure functions</a>
         </li>
         <li>
-          <a href="03_functionsdeploy.html" title="Next document">Adding functions</a>
+          <a href="03_functionsdeploy.html" title="Next document"> Deploy your first function</a>
           &rarr;
         </li>
     </ul>
@@ -253,7 +271,7 @@ So you might get the following warning the first time you try and run your funct
 
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Your first Azure function</a><ul>
+<li><a class="reference internal" href="#"> Your first Azure function</a><ul>
 <li><a class="reference internal" href="#creating-your-local-project">Creating your local project</a></li>
 <li><a class="reference internal" href="#the-basics-of-your-new-function">The basics of your new function</a></li>
 <li><a class="reference internal" href="#running-your-function-locally">Running your function locally</a></li>
@@ -275,10 +293,10 @@ So you might get the following warning the first time you try and run your funct
 <script>$('#searchbox').show(0);</script><h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Table of Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="index.html">Easy data processing on Azure with Serverless Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html"> Easy data processing on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html"> Setup and installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Your first Azure function</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Your first Azure function</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#creating-your-local-project">Creating your local project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-basics-of-your-new-function">The basics of your new function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-your-function-locally">Running your function locally</a></li>
@@ -286,7 +304,8 @@ So you might get the following warning the first time you try and run your funct
 <li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html">Adding functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html"> Deploy your first function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 </ul>
 
 <div class="relations">
@@ -294,7 +313,7 @@ So you might get the following warning the first time you try and run your funct
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="01_introduction.html" title="previous chapter">Introduction to serverless and Azure functions</a></li>
-      <li>Next: <a href="03_functionsdeploy.html" title="next chapter">Adding functions</a></li>
+      <li>Next: <a href="03_functionsdeploy.html" title="next chapter"> Deploy your first function</a></li>
   </ul></li>
 </ul>
 </div>

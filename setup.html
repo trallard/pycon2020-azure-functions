@@ -25,7 +25,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Introduction to serverless and Azure functions" href="01_introduction.html" />
-    <link rel="prev" title="Easy data processing on Azure with Serverless Functions" href="index.html" />
+    <link rel="prev" title="Easy data processing on Azure" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -44,7 +44,7 @@
     <ul>
         <li>
           &larr;
-          <a href="index.html" title="Previous document">Easy data processing on Azure with Serverless Functions</a>
+          <a href="index.html" title="Previous document"> Easy data processing on Azure</a>
         </li>
         <li>
           <a href="01_introduction.html" title="Next document">Introduction to serverless and Azure functions</a>
@@ -57,10 +57,10 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="setup-and-installation">
-<span id="setup"></span><h1>Setup and installation<a class="headerlink" href="#setup-and-installation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="laptop-setup-and-installation">
+<span id="setup"></span><h1><img alt="laptop" class="inline-image" src="_images/laptop.svg" /> Setup and installation<a class="headerlink" href="#laptop-setup-and-installation" title="Permalink to this headline">¶</a></h1>
 <p>Welcome to the Azure sponsored workshop for PyCon 2020 (now online)!</p>
-<p>This section will guide you through the pre requisites for the workshop.</p>
+<p>This section will guide you through the prerequisites for the workshop.</p>
 <p>Each requirement is outlined here with detailed instructions on their installation.</p>
 <div class="section" id="python-3-x">
 <h2>Python 3.x<a class="headerlink" href="#python-3-x" title="Permalink to this headline">¶</a></h2>
@@ -70,7 +70,7 @@
 <li><p>3.7</p></li>
 <li><p>3.8</p></li>
 </ul>
-<p>These are the supported versions by Azure Functions. If you already have one installed jump straight to the rest of the setup instrucions.</p>
+<p>These are the supported versions by Azure Functions. If you already have one installed jump straight to the rest of the setup instructions.</p>
 <p>Otherwise, you can follow this fantastic tutorial from  <a class="reference external" href="https://realpython.com/installing-python/">Real Python</a> to get a clean Python install.</p>
 </div>
 <div class="section" id="vs-code">
@@ -80,7 +80,7 @@ VS Code is an Open Source IDE that can be easily extended or enhanced with exten
 For this particular tutorial, we will use the Python and the Azure functions extensions.
 To get started:</p>
 <ol class="arabic simple">
-<li><p>Download and install <a class="reference external" href="https://code.visualstudio.com//?WT.mc_id=?WT.mc_id=pycon_tutorial-github-taallard">VS Code</a> . When directed to the install page this sholud identify your OS. Download the install file and follow the instructions.</p></li>
+<li><p>Download and install <a class="reference external" href="https://code.visualstudio.com//?WT.mc_id=?WT.mc_id=pycon_tutorial-github-taallard">VS Code</a> . When directed to the install page, this should identify your OS. Download the install file and follow the instructions.</p></li>
 <li><p>Install the <a class="reference external" href="https://marketplace.visualstudio.com/itemdetails?itemName=ms-python.python&amp;wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard">Python VS Code extension</a> . Click on the Install button on the extension website. This will launch VS Code and ask for your confirmation to install.</p></li>
 <li><p>Install the <a class="reference external" href="https://marketplace.visualstudio.com/itemdetails?itemName=ms-azuretools.vscode-azurefunctions&amp;wt.mc_id=?WT.mc_id=pycon_tutorial-github-taallard">Azure Functions extension</a></p></li>
 </ol>
@@ -93,7 +93,7 @@ To get started with Azure visit  <a class="reference external" href="https://cda
 <div class="section" id="azure-cli-and-functions-core-tool">
 <h2>Azure CLI and functions core tool<a class="headerlink" href="#azure-cli-and-functions-core-tool" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>We first need to install the Azure cli  to be able to deploy our functions</p></li>
+<li><p>We first need to install the Azure CLI  to be able to deploy our functions</p></li>
 </ul>
 <div class="sphinx-tabs docutils container">
 <div class="ui top attached tabular menu sphinx-menu docutils container">
@@ -125,7 +125,7 @@ To get started with Azure visit  <a class="reference external" href="https://cda
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-V2luZG93cw== docutils container">
 <ol class="arabic simple">
 <li><p>Download the installer from <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest?WT.mc_id=pycon_tutorial-github-taallard">the docs page</a></p></li>
-<li><p>When downloaded, open the installer follow the instructions</p></li>
+<li><p>When downloaded, open the driver to follow the instructions.</p></li>
 </ol>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-TGludXg= docutils container">
@@ -134,7 +134,7 @@ instructions in the <a class="reference external" href="https://docs.microsoft.c
 </div>
 </div>
 <ul class="simple">
-<li><p>To be able to run and test your functions locally we need to install the Azure functions core tools:</p></li>
+<li><p>To be able to run and test your functions locally, we need to install the Azure functions core tools:</p></li>
 </ul>
 <div class="sphinx-tabs docutils container">
 <div class="ui top attached tabular menu sphinx-menu docutils container">
@@ -208,13 +208,13 @@ instructions in the <a class="reference external" href="https://docs.microsoft.c
 </pre></div>
 </div>
 </div></blockquote>
-<p>For more detailed instructions visit the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=linux%2Ccsharp%2Cbash?WT.mc_id=pycon_tutorial-github-taallard">corresponding docs</a>.</p>
+<p>For more detailed instructions, visit the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=linux%2Ccsharp%2Cbash?WT.mc_id=pycon_tutorial-github-taallard">corresponding docs</a>.</p>
 </div>
 </div>
 </div>
 <div class="section" id="additional-packages">
 <h2>Additional packages<a class="headerlink" href="#additional-packages" title="Permalink to this headline">¶</a></h2>
-<p>You will need to install a number of packages to follow along this tutorial.
+<p>You will need to install some packages to follow along with this tutorial.
 To install them follow these steps:</p>
 <ol class="arabic simple">
 <li><p>Clone the tutorial repository <a class="reference external" href="https://github.com/trallard">Repo</a></p></li>
@@ -223,7 +223,7 @@ To install them follow these steps:</p>
 <div><p>From the command line (bash):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github/trallard
 
-<span class="c1"># change to the directory</span>
+<span class="c1"># Change to the directory</span>
 <span class="nb">cd</span> azure-functions-pycon
 </pre></div>
 </div>
@@ -247,7 +247,7 @@ To install them follow these steps:</p>
     <ul>
         <li>
           &larr;
-          <a href="index.html" title="Previous document">Easy data processing on Azure with Serverless Functions</a>
+          <a href="index.html" title="Previous document"> Easy data processing on Azure</a>
         </li>
         <li>
           <a href="01_introduction.html" title="Next document">Introduction to serverless and Azure functions</a>
@@ -287,7 +287,7 @@ To install them follow these steps:</p>
 
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Setup and installation</a><ul>
+<li><a class="reference internal" href="#"> Setup and installation</a><ul>
 <li><a class="reference internal" href="#python-3-x">Python 3.x</a></li>
 <li><a class="reference internal" href="#vs-code">VS Code</a></li>
 <li><a class="reference internal" href="#azure-account-and-credits">Azure account and credits</a></li>
@@ -309,8 +309,8 @@ To install them follow these steps:</p>
 <script>$('#searchbox').show(0);</script><h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Table of Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="index.html">Easy data processing on Azure with Serverless Functions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup and installation</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html"> Easy data processing on Azure</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Setup and installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#python-3-x">Python 3.x</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vs-code">VS Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#azure-account-and-credits">Azure account and credits</a></li>
@@ -319,15 +319,16 @@ To install them follow these steps:</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html">Your first Azure function</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html">Adding functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html"> Your first Azure function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html"> Deploy your first function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Easy data processing on Azure with Serverless Functions</a></li>
+      <li>Previous: <a href="index.html" title="previous chapter"> Easy data processing on Azure</a></li>
       <li>Next: <a href="01_introduction.html" title="next chapter">Introduction to serverless and Azure functions</a></li>
   </ul></li>
 </ul>

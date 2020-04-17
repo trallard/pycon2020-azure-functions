@@ -38,10 +38,10 @@
     <ul>
         <li>
           &larr;
-          <a href="setup.html" title="Previous document">Setup and installation</a>
+          <a href="setup.html" title="Previous document"> Setup and installation</a>
         </li>
         <li>
-          <a href="02_functions_intro.html" title="Next document">Your first Azure function</a>
+          <a href="02_functions_intro.html" title="Next document"> Your first Azure function</a>
           &rarr;
         </li>
     </ul>
@@ -53,19 +53,45 @@
             
   <div class="section" id="introduction-to-serverless-and-azure-functions">
 <h1>Introduction to serverless and Azure functions<a class="headerlink" href="#introduction-to-serverless-and-azure-functions" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="light-what-are-functions">
-<h2><img alt="light" class="inline-image" src="_images/video-game.svg" /> What are functions?<a class="headerlink" href="#light-what-are-functions" title="Permalink to this headline">¶</a></h2>
-<p>Functions allow you to run code in a serveless fashion. This means two things:</p>
+<div class="section" id="light-what-is-serverless-computing">
+<h2><img alt="light" class="inline-image" src="_images/video-game.svg" /> What is serverless computing?<a class="headerlink" href="#light-what-is-serverless-computing" title="Permalink to this headline">¶</a></h2>
+<p>Serverless is also known as Function as a Service (FaaS).</p>
+<p>In a nutshell:</p>
 <ol class="arabic simple">
-<li><p>The infrastructure is abstracted from the developer (you) as it is dynamically assigned by Azure.</p></li>
-<li><p>It is completely on demand you only pay for what you consume.</p></li>
+<li><p>Serverless architecture makes use of third-party services. They might, for example, run your code on managed, ephemeral containers in a FaaS platform (Azure functions).</p></li>
+<li><p>Servers are still used to run your applications. But in this case, your cloud provider takes care of the management, provisioning and scaling (Microsoft Azure in this case).</p></li>
 </ol>
-<p>The following infographic provides more details on how serverless functions work:</p>
-<img alt="serveless infographic" src="_images/serverless.png" />
-<p>Functions are very versatile - you can use a variety of triggers to call your functiond and execute your code.
+<p>This allows you to focus on the code and deploy when ready, while your provider takes care of the infrastructure.</p>
+<p>Some of the advantages of serverless are:</p>
+<ul class="simple">
+<li><p>They are scalable: not only this scales automatically based on the increase and decrease in usage but also is highly available.</p></li>
+<li><p>It can save you money: you pay only for the usage (number of executions) instead of for having a server running 24/7.</p></li>
+</ul>
+<p>The following infographic provides more details about serverless:</p>
+<img alt="serverless infographic" src="_images/serverless.png" />
+<div class="section" id="good-use-cases">
+<h3>Good use cases<a class="headerlink" href="#good-use-cases" title="Permalink to this headline">¶</a></h3>
+<p>Some good use cases for serverless are:</p>
+<ul class="simple">
+<li><p><strong>Image and video processing</strong>: you can couple Azure functions with Azure Blob Storage and use a storage trigger for your function. Then your function can do the processing asynchronously.</p></li>
+<li><p><strong>Internet of Things</strong>: IoT applications can generate a lot of data through the sensors. You can use functions to process the data in a scalable manner.</p></li>
+<li><p><strong>Data pipelines</strong>: you can integrate multiple services to build scalable data pipelines.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="faas-azure-functions-and-serverless">
+<h2><img alt="faas" class="inline-image" src="_images/functions.svg" /> Azure functions and serverless<a class="headerlink" href="#faas-azure-functions-and-serverless" title="Permalink to this headline">¶</a></h2>
+<p>FaaS allows you to run self-contained code snippets called <strong>functions</strong> in the cloud.
+Your functions are idle until particular events trigger them.
+Functions are self-contained, small, short-lived, and single-purpose.
+They disappear after execution - hence why they are called ephemeral.</p>
+<p>Functions are very versatile - you can use a variety of triggers to call your function and execute your code.
 They can be set so that they always run the same task or to run specific tasks based on inputs.</p>
+<p>Microsoft Azure’s FaaS is called <a class="reference external" href="https://azure.microsoft.com/en-gb/services/functions?WT.mc_id=pycon_tutorial-github-taallard">Azure Functions</a>.
+This FaaS already supports multiple programming languages:</p>
+<img alt="Functions languages" src="https://azurecomcdn.azureedge.net/cvt-e918f8bc2be525756af58617c14443351ac83a8fd87a0b28d31919d627969098/images/page/services/functions/value-prop-5.svg" /><p>So we are going to take advantage of the Python support for this tutorial.</p>
 <p>Azure provides three main plans for functions, which will determine the kind of instances used, execution times and pricing.</p>
-<p>For more details check the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale?WT.mc_id=pycon_tutorial-github-taallard">Azure functions consumption plans</a> docs.</p>
+<p>For more details, check the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale?WT.mc_id=pycon_tutorial-github-taallard">Azure functions consumption plans</a> docs.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since serverless functions are meant to be stateless, the resources inside the function will disappear once the code had finished executing (or the timeout is reached).</p>
@@ -78,6 +104,7 @@ They can be set so that they always run the same task or to run specific tasks b
 <li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale?WT.mc_id=pycon_tutorial-github-taallard">Azure functions consumption plans</a></p></li>
 <li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale#timeout?WT.mc_id=pycon_tutorial-github-taallard">Functions app timeout</a></p></li>
 <li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-introduction#core-storage-services?WT.mc_id=pycon_tutorial-github-taallard">Azure Storage docs</a></p></li>
+<li><p><a class="reference external" href="https://github.com/trallard/tech-bites/tree/master/EN/serverless">Infographic high-res pdf</a>  CC-BY</p></li>
 </ul>
 </div>
 </div>
@@ -90,10 +117,10 @@ They can be set so that they always run the same task or to run specific tasks b
     <ul>
         <li>
           &larr;
-          <a href="setup.html" title="Previous document">Setup and installation</a>
+          <a href="setup.html" title="Previous document"> Setup and installation</a>
         </li>
         <li>
-          <a href="02_functions_intro.html" title="Next document">Your first Azure function</a>
+          <a href="02_functions_intro.html" title="Next document"> Your first Azure function</a>
           &rarr;
         </li>
     </ul>
@@ -131,7 +158,11 @@ They can be set so that they always run the same task or to run specific tasks b
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Introduction to serverless and Azure functions</a><ul>
-<li><a class="reference internal" href="#light-what-are-functions"> What are functions?</a></li>
+<li><a class="reference internal" href="#light-what-is-serverless-computing"> What is serverless computing?</a><ul>
+<li><a class="reference internal" href="#good-use-cases">Good use cases</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faas-azure-functions-and-serverless"> Azure functions and serverless</a></li>
 <li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
@@ -149,23 +180,25 @@ They can be set so that they always run the same task or to run specific tasks b
 <script>$('#searchbox').show(0);</script><h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Table of Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="index.html">Easy data processing on Azure with Serverless Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html"> Easy data processing on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html"> Setup and installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction to serverless and Azure functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#light-what-are-functions"> What are functions?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#light-what-is-serverless-computing"> What is serverless computing?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#faas-azure-functions-and-serverless"> Azure functions and serverless</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html">Your first Azure function</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html">Adding functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html"> Your first Azure function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html"> Deploy your first function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="setup.html" title="previous chapter">Setup and installation</a></li>
-      <li>Next: <a href="02_functions_intro.html" title="next chapter">Your first Azure function</a></li>
+      <li>Previous: <a href="setup.html" title="previous chapter"> Setup and installation</a></li>
+      <li>Next: <a href="02_functions_intro.html" title="next chapter"> Your first Azure function</a></li>
   </ul></li>
 </ul>
 </div>
