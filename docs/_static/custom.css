@@ -73,6 +73,12 @@ div.sphinxsidebar a {
     border-bottom: none;
 }
 
+div.sphinxsidebar ul.current {
+    list-style: decimal-leading-zero!important;
+    color: rgb(62, 118, 131);
+}
+
+/*  Code and references */
 code.descname {
     color: #505391;
 }
@@ -81,8 +87,6 @@ th.field-name {
     min-width: 100px;
     color: #505391;
 }
-
-/*  Code and references */
 tt, code {
     color: #F8F8F2;
     background: #1d1941;
@@ -249,7 +253,15 @@ div.code-block-caption{
 
 /* code tabs */
 
-div.ui.menu{
+.sphinx-tabs .sphinx-menu a.item {
     font-family: 'Inconsolata', monospace;
     color: #415CF2;
+}
+
+.sphinx-tabs .sphinx-menu {
+    border-bottom-color: #1d1941 !important;
+}
+
+.sphinx-tabs .sphinx-menu a.active.item {
+    border-color: #1d1941 !important;
 }

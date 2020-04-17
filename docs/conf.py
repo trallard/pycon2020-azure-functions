@@ -89,15 +89,14 @@ html_theme = "alabaster"
 
 html_theme_options = {
     "github_user": "trallard",
-    "github_repo": "mentored-sprints-website",
+    "github_repo": "pycon2020-azure-functions",
     "github_type": "star",
-    "github_banner": True,
     "show_relbars": True,
+    "github_banner": False,
     "font_family": "'Inconsolata','Obliqua','Open Sans', Georgia, sans",
     "head_font_family": "'Phoreus Cherokee','Spartan', Georgia, serif",
     "code_font_family": "'Inconsolata','Anonymous Pro','Fira Code', 'Consolas', monospace",
     "logo": "images/Bit_BobRoss.png",
-    "github_banner": False,
     "description": "Azure sponsored workshop: PyCon 2020",
 }
 

@@ -1,5 +1,5 @@
-Introduction to Azure Functions
-==================================
+Introduction to serverless and Azure functions
+================================================
 
 |light| What are functions?
 ----------------------------
@@ -11,7 +11,7 @@ Functions allow you to run code in a serveless fashion. This means two things:
 
 The following infographic provides more details on how serverless functions work:
 
-.. image:: _static/images/serverless.png 
+.. image:: _static/images/serverless.png
     :alt: serveless infographic
 
 

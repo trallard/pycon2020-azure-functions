@@ -1,4 +1,4 @@
-Creating your first Azure function
+Your first Azure function
 =====================================
 
 We will start by creating your first Azure function.
@@ -134,11 +134,30 @@ In the following windows select this options:
 
 .. note:: You will need to be logged into Azure for you to be able to create your Storage Account. If you need help with this check :ref:`login_azure`.
 
+Once your storage account is created (if needed) you should see the Azure functions output in your terminal.
+
+.. image:: _static/images/snaps/functions_debug.png
+    :align: center
+    :alt: Running functions locally
+
+
+To stop the function you can press :kbd:`CTRL + C`.
+
+
+
 .. _login_azure:
 
 Log into Azure from VS Code
-=============================
+-----------------------------
 
+1. If you aren't already signed in, choose the Azure icon in the Activity bar, then in the Azure: Functions area, choose Sign in to Azure.
+
+    .. image:: https://docs.microsoft.com/en-us/azure/includes/media/functions-sign-in-vs-code/functions-sign-into-azure.png
+        :alt: VS code sign in
+        :align: center
+
+2. When prompted in the browser, choose your Azure account and sign in using your Azure account credentials.
+3. After you've successfully signed in, you can close the new browser window. The subscriptions that belong to your Azure account are displayed in the Side bar. You should also be able to see the email you have logged into on the bottom status bar in VSCode.
 
 
 |floppy| Additional resources and docs
