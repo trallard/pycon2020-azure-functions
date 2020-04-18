@@ -90,9 +90,9 @@ We will make use of VS Code to create a function that works every day at the sam
 <li><p><strong>Select a Python alias to create a virtual environment</strong>: Select your preferred Python interpreter (needs to be supported)</p></li>
 <li><p><strong>Select a template</strong>: Timer trigger</p></li>
 <li><p><strong>Provide a function name</strong>: type a name for your project (I chose <code class="docutils literal notranslate"><span class="pre">timer-function</span></code>)</p></li>
-<li><p><strong>Enter a chron expression</strong>: We need to specify when the function will be executed, we do this through chron expressions. A chron expression is a string with 6 separate expressions which represent a given schedule via patterns. For this example I want it to run every day at 9:00 am so I am using: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">9</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></code></p></li>
+<li><p><strong>Enter a cron expression</strong>: We need to specify when the function will be executed, we do this through cron expressions. A cron expression is a string with 6 separate expressions which represent a given schedule via patterns. For this example I want it to run every day at 9:00 am so I am using: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">9</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></code></p></li>
 </ul>
-<img alt="chron expresion example" class="align-center" src="_images/chron.png" />
+<img alt="cron expresion example" class="align-center" src="_images/chron.png" />
 </div></blockquote>
 </li>
 </ol>
@@ -136,7 +136,7 @@ We will make use of VS Code to create a function that works every day at the sam
 </div>
 </div>
 <p>You will notice that there is a <code class="docutils literal notranslate"><span class="pre">bindings</span></code> element. This is marked as <code class="docutils literal notranslate"><span class="pre">&quot;direction&quot;:</span> <span class="pre">&quot;in&quot;</span></code> which will correspond to the incoming signal to trigger the function.
-In this case, we are using a chron expression to trigger the function every day at 9:00am.</p>
+In this case, we are using a cron expression to trigger the function every day at 9:00am.</p>
 <p>You will also notice that there is a <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> script (which is also the script file described in the <code class="docutils literal notranslate"><span class="pre">function.json</span></code> above).</p>
 <div class="literal-block-wrapper docutils container" id="init-py">
 <div class="code-block-caption"><span class="caption-text">__init__.py</span><a class="headerlink" href="#init-py" title="Permalink to this code">¶</a></div>
@@ -178,7 +178,7 @@ So you might get the following warning the first time you try and run your funct
 </div>
 <p>Once your storage account is created (if needed), you should see the output of the Azure function in your terminal.</p>
 <img alt="Running functions locally" class="align-center" src="_images/functions_debug.png" />
-<p>If I change the chron expression to run every hour at 10 mins past the hour <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">*/1</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></code> for demo purposes. Then in the console output I should see when the fynction is due:</p>
+<p>If I change the cron expression to run every hour at 10 mins past the hour <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">*/1</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span> <span class="pre">*</span></code> for demo purposes. Then in the console output I should see when the fynction is due:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> The next <span class="m">5</span> occurrences of the <span class="s1">&#39;timer-function&#39;</span> schedule <span class="o">(</span>Cron: <span class="s1">&#39;10 * * * * *&#39;</span><span class="o">)</span> will be:
 <span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> <span class="m">04</span>/15/2020 <span class="m">20</span>:29:10+01:00 <span class="o">(</span><span class="m">04</span>/15/2020 <span class="m">19</span>:29:10Z<span class="o">)</span>
 <span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">19</span>:28:58<span class="o">]</span> <span class="m">04</span>/15/2020 <span class="m">20</span>:30:10+01:00 <span class="o">(</span><span class="m">04</span>/15/2020 <span class="m">19</span>:30:10Z<span class="o">)</span>
@@ -213,9 +213,9 @@ Application started. Press Ctrl+C to shut down.
 <h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=csharp?WT.mc_id=pycon_tutorial-github-taallard">Time trigger for Azure functions official docs</a></p></li>
-<li><p><a class="reference external" href="https://arminreiter.com/2015/02/azure-functions-time-trigger-cron-cheat-sheet/">Azure functions chron cheatsheet</a></p></li>
-<li><p><a class="reference external" href="https://crontab.guru/#0_9_*_*_*">Chron generator</a></p></li>
-<li><p><a class="reference external" href="https://www.codementor.io/&#64;akul08/the-ultimate-crontab-cheatsheet-5op0f7o4r">Chron tab cheatsheet</a></p></li>
+<li><p><a class="reference external" href="https://arminreiter.com/2015/02/azure-functions-time-trigger-cron-cheat-sheet/">Azure functions cron cheatsheet</a></p></li>
+<li><p><a class="reference external" href="https://crontab.guru/#0_9_*_*_*">Cron generator</a></p></li>
+<li><p><a class="reference external" href="https://www.codementor.io/&#64;akul08/the-ultimate-crontab-cheatsheet-5op0f7o4r">Cron tab cheatsheet</a></p></li>
 <li><p>A handy blog about dealing with <a class="reference external" href="https://dev.to/azure/getting-rid-of-time-zone-issues-within-azure-functions-4066">Time Zones</a> in Azure functions</p></li>
 <li><p>Azure functions <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp#generated-project-files?WT.mc_id=pycon_tutorial-github-taallard">project structure docs</a></p></li>
 <li><p>Human Cron expression <a class="reference external" href="https://cronexpressiondescriptor.azurewebsites.net/">descriptor</a>  super handy if you are only getting familiar with cron expressions</p></li>
