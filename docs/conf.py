@@ -105,6 +105,8 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
+# Change copybutton icon
+copybutton_image_path = "./icons/copy.svg"
 
 rst_epilog = """
 .. |light| image:: _static/icons/video-game.svg
@@ -121,7 +123,7 @@ rst_epilog = """
 
 .. |3d| image:: _static/icons/3d.svg
     :class: inline-image
-    
+
 .. |faas| image:: _static/icons/functions.svg
     :class: inline-image
 

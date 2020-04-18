@@ -41,11 +41,11 @@ Creating your local project
     - **Select a Python alias to create a virtual environment**: Select your preferred Python interpreter (needs to be supported)
     - **Select a template**: Timer trigger
     - **Provide a function name**: type a name for your project (I chose ``timer-function``)
-    - **Enter a chron expression**: We need to specify when the function will be executed, we do this through chron expressions. A chron expression is a string with 6 separate expressions which represent a given schedule via patterns. For this example I want it to run every day at 9:00 am so I am using: ``0 9 * * * *``
+    - **Enter a cron expression**: We need to specify when the function will be executed, we do this through cron expressions. A cron expression is a string with 6 separate expressions which represent a given schedule via patterns. For this example I want it to run every day at 9:00 am so I am using: ``0 9 * * * *``
 
     .. image:: _static/images/snaps/chron.png
         :align: center
-        :alt: chron expresion example
+        :alt: cron expresion example
 
 .. note:: The default time zone for Azure Functions is UTC. Depending on your timezone and purpose you might need to adjust this.
 
@@ -88,7 +88,7 @@ The ``function.json`` file provides main configuration for your function:
     }
 
 You will notice that there is a ``bindings`` element. This is marked as ``"direction": "in"`` which will correspond to the incoming signal to trigger the function.
-In this case, we are using a chron expression to trigger the function every day at 9:00am.
+In this case, we are using a cron expression to trigger the function every day at 9:00am.
 
 You will also notice that there is a ``__init__.py`` script (which is also the script file described in the ``function.json`` above).
 
@@ -140,7 +140,7 @@ Once your storage account is created (if needed), you should see the output of t
     :align: center
     :alt: Running functions locally
 
-If I change the chron expression to run every hour at 10 mins past the hour ``10 */1 * * * *`` for demo purposes. Then in the console output I should see when the fynction is due:
+If I change the cron expression to run every hour at 10 mins past the hour ``10 */1 * * * *`` for demo purposes. Then in the console output I should see when the fynction is due:
 
 .. code-block:: bash
 
@@ -184,9 +184,9 @@ Log into Azure from VS Code
 |floppy| Additional resources and docs
 ---------------------------------------
 - `Time trigger for Azure functions official docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=csharp?WT.mc_id=pycon_tutorial-github-taallard>`_ 
-- `Azure functions chron cheatsheet <https://arminreiter.com/2015/02/azure-functions-time-trigger-cron-cheat-sheet/>`_ 
-- `Chron generator <https://crontab.guru/#0_9_*_*_*>`_
-- `Chron tab cheatsheet <https://www.codementor.io/@akul08/the-ultimate-crontab-cheatsheet-5op0f7o4r>`_
+- `Azure functions cron cheatsheet <https://arminreiter.com/2015/02/azure-functions-time-trigger-cron-cheat-sheet/>`_ 
+- `Cron generator <https://crontab.guru/#0_9_*_*_*>`_
+- `Cron tab cheatsheet <https://www.codementor.io/@akul08/the-ultimate-crontab-cheatsheet-5op0f7o4r>`_
 - A handy blog about dealing with `Time Zones <https://dev.to/azure/getting-rid-of-time-zone-issues-within-azure-functions-4066>`_ in Azure functions
 - Azure functions `project structure docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp#generated-project-files?WT.mc_id=pycon_tutorial-github-taallard>`_
 - Human Cron expression `descriptor <https://cronexpressiondescriptor.azurewebsites.net/>`_  super handy if you are only getting familiar with cron expressions

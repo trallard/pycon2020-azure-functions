@@ -32,6 +32,13 @@ div.body h3 {
     box-shadow: inset 0px -12px 0px 0px #C4C6F2;
     width: max-content;
 }
+
+div.body h1, 
+div.body h2, 
+div.body h3 {
+    max-width: fit-content;
+    overflow: hidden;
+} 
 /* Sidebar */
 
 div.sphinxsidebarwrapper h1.logo {
@@ -143,6 +150,13 @@ code.literal {
     border-radius: 2px;
 }
 
+div.code-block-caption{
+    font-size: medium;
+    border: solid 1px #1d1941;
+    border-radius: 2px;
+    color: rgb(26, 38, 107);
+}
+
 pre {
     padding: 20px 30px;
     background: #1d1941;
@@ -233,6 +247,7 @@ p.caption {
     padding: 5px;
 }
 
+/* Admonitions: notes */
 
 div.admonition, 
 div.admonition note{
@@ -244,24 +259,29 @@ p.admonition-title{
     color: #415CF2;
 }
 
-div.code-block-caption{
-    font-size: medium;
-    border: solid 1px #1d1941;
-    border-radius: 2px;
-    color: rgb(26, 38, 107);
-}
-
 /* code tabs */
 
 .sphinx-tabs .sphinx-menu a.item {
     font-family: 'Inconsolata', monospace;
-    color: #415CF2;
+    color: #415CF2 !important;
+    border-bottom: 1px solid #415CF2;
 }
 
 .sphinx-tabs .sphinx-menu {
     border-bottom-color: #1d1941 !important;
 }
 
-.sphinx-tabs .sphinx-menu a.active.item {
+.sphinx-tabs .sphinx-menu a.active.item{
     border-color: #1d1941 !important;
+}
+
+.sphinx-tab {
+    border-color: #1d1941 !important;
+    box-sizing: border-box;
+}
+
+/* Copy buttton */
+
+a.copybutton{
+    opacity: .5;
 }

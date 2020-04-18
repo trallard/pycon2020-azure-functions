@@ -129,3 +129,6 @@ appsettings.json
 local.settings.json
 .python_packages
 .vscode/
+
+# Mac
+.DS_Store
