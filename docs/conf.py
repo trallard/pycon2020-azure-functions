@@ -127,6 +127,9 @@ rst_epilog = """
 .. |faas| image:: _static/icons/functions.svg
     :class: inline-image
 
+.. |pipe| image:: _static/icons/pipe.svg
+    :class: inline-image
+
 .. |foo| replace:: foo
 .. _foo: http://stackoverflow.com
 """

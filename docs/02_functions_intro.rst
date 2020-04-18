@@ -183,8 +183,9 @@ Log into Azure from VS Code
 
 |floppy| Additional resources and docs
 ---------------------------------------
-- `Time trigger for Azure functions official docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=csharp?WT.mc_id=pycon_tutorial-github-taallard>`_ 
-- `Azure functions cron cheatsheet <https://arminreiter.com/2015/02/azure-functions-time-trigger-cron-cheat-sheet/>`_ 
+
+- `Time trigger for Azure functions official docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=csharp?WT.mc_id=pycon_tutorial-github-taallard>`_
+- `Azure functions cron cheatsheet <https://arminreiter.com/2015/02/azure-functions-time-trigger-cron-cheat-sheet/>`_
 - `Cron generator <https://crontab.guru/#0_9_*_*_*>`_
 - `Cron tab cheatsheet <https://www.codementor.io/@akul08/the-ultimate-crontab-cheatsheet-5op0f7o4r>`_
 - A handy blog about dealing with `Time Zones <https://dev.to/azure/getting-rid-of-time-zone-issues-within-azure-functions-4066>`_ in Azure functions

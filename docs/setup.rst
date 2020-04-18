@@ -141,3 +141,29 @@ To install them follow these steps:
 2. Install the main dependencies:
 
   .. code-block:: bash
+
+
+Other accounts
+----------------
+
+StackOverFlow API 
+*******************
+
+We will use the StackOverFlow API to collect data. For this you will need to register for an app key.
+
+#. Head over to `<https://api.stackexchange.com/>`_ and click on Register for an App Key. Note that you will need to log into StackOverFlow to get a ner key.
+#. In the following screen you will need to provide the details of the app. They do not have to be extensive but you can always go back and change them later. Once filled in, click on the Register app button.
+
+    .. image:: _static/images/snaps/stack.png
+            :align: center
+            :alt: StackOverFlow
+#. The next screen will display your apps details. Make sure to keep the key and the client secret safe at all times.
+
+
+GitHub
+*******************
+
+You will need a GitHub account also to keep your code in version control and to create a GitHub action to deploy your function.
+
+If you do not have an account yet head over to `<https://github.com>`_  and register for a new account.
+

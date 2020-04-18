@@ -33,12 +33,6 @@ div.body h3 {
     width: max-content;
 }
 
-div.body h1, 
-div.body h2, 
-div.body h3 {
-    max-width: fit-content;
-    overflow: hidden;
-} 
 /* Sidebar */
 
 div.sphinxsidebarwrapper h1.logo {
@@ -161,9 +155,9 @@ pre {
     padding: 20px 30px;
     background: #1d1941;
     border-radius: 2px;
-    -webkit-box-shadow: 2px 2px 4px 0px rgba(29,25,65,1);
-    -moz-box-shadow: 2px 2px 4px 0px rgba(29,25,65,1);
-    box-shadow: 2px 2px 4px 0px rgba(29,25,65,1);
+    -webkit-box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    -moz-box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
 }
 
 div > dl {
@@ -245,6 +239,9 @@ p.caption {
     width: 40px;
     vertical-align: middle;
     padding: 5px;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 0px;
 }
 
 /* Admonitions: notes */
@@ -284,4 +281,23 @@ p.admonition-title{
 
 a.copybutton{
     opacity: .5;
+}
+
+a.copybtn > img {
+    box-shadow: none;
+}
+
+/* image */
+
+img{
+    margin-bottom:  15px;
+    -webkit-box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    -moz-box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    border: 1px solid #262626;
+}
+
+div.sphinxsidebar h1.logo, div.sphinxsidebar logo {
+    box-shadow: none;
+    border: none;
 }

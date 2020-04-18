@@ -19,6 +19,7 @@ with Serverless Functions
    01_introduction
    02_functions_intro
    03_functionsdeploy
+   04_datafunction
    glossary
 
 
