@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Completing the data scenario &#8212; Easy data processing on Azure with Serverless Functions  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Glossary" href="glossary.html" />
+    <link rel="prev" title="Data acquisition with functions" href="04_datafunction.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="04_datafunction.html" title="Previous document"> Data acquisition with functions</a>
+        </li>
+        <li>
+          <a href="glossary.html" title="Next document">Glossary</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pipe-completing-the-data-scenario">
+<h1><img alt="pipe" class="inline-image" src="_images/pipe.svg" /> Completing the data scenario<a class="headerlink" href="#pipe-completing-the-data-scenario" title="Permalink to this headline">¶</a></h1>
+<p>You should now have working function that collects data from the StackExchange API.</p>
+<p>In this section we will:</p>
+<ul class="simple">
+<li><p>Complete the function to store the data in AzureBlob storage</p></li>
+<li><p>Create a second function that identifies the addition of a file to Azure Blob storage and triggers a second function</p></li>
+<li><p>Create a dabatase to store our cleaned data and modify the function to store the dabatase</p></li>
+</ul>
+<div class="section" id="light-triggers-and-bindings">
+<h2><img alt="light" class="inline-image" src="_images/video-game.svg" /> Triggers and bindings<a class="headerlink" href="#light-triggers-and-bindings" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Triggers</strong>: these cause a function to run. They can be a HTTP request, a queue message or an event grid. Each function <strong>must</strong> have one trigger.</p></li>
+<li><p><strong>Binding</strong>: is a connection between a function and another resource or function. They can be <em>input bindings, output bindings</em> or both. These are optional and a function can have one or more bindings.</p></li>
+</ul>
+<div class="section" id="add-azure-blob-storage">
+<h3>1. Add Azure Blob Storage<a class="headerlink" href="#add-azure-blob-storage" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="floppy-additional-resources-and-docs">
+<h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings?WT.mc_id=pycon_tutorial-github-taallard">Azure functions triggers and bindings</a></p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings#supported-bindings?WT.mc_id=pycon_tutorial-github-taallard">Azure functions supported bindings</a></p></li>
+<li><p><a class="reference external" href="http://azure.microsoft.com/documentation/articles/storage-create-storage-account?WT.mc_id=pycon_tutorial-github-taallard">Azure Storage documentation</a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="04_datafunction.html" title="Previous document"> Data acquisition with functions</a>
+        </li>
+        <li>
+          <a href="glossary.html" title="Next document">Glossary</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/images/Bit_BobRoss.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Azure sponsored workshop: PyCon 2020</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=trallard&repo=pycon2020-azure-functions&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"> Completing the data scenario</a><ul>
+<li><a class="reference internal" href="#light-triggers-and-bindings"> Triggers and bindings</a><ul>
+<li><a class="reference internal" href="#add-azure-blob-storage">1. Add Azure Blob Storage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html"> Easy data processing on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html"> Setup and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html"> Your first Azure function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html"> Deploy your first function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_datafunction.html"> Data acquisition with functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Completing the data scenario</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#light-triggers-and-bindings"> Triggers and bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="04_datafunction.html" title="previous chapter"> Data acquisition with functions</a></li>
+      <li>Next: <a href="glossary.html" title="next chapter">Glossary</a></li>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Tania Allard.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/05_dataexport.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

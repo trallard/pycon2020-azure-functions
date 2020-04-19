@@ -20,6 +20,7 @@ with Serverless Functions
    02_functions_intro
    03_functionsdeploy
    04_datafunction
+   05_dataexport
    glossary
 
 

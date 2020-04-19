@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Data processing with functions &#8212; Easy data processing on Azure with Serverless Functions  documentation</title>
+    <title>Data acquisition with functions &#8212; Easy data processing on Azure with Serverless Functions  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
@@ -18,7 +18,7 @@
     <script src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Glossary" href="glossary.html" />
+    <link rel="next" title="Completing the data scenario" href="05_dataexport.html" />
     <link rel="prev" title="Deploy your first function" href="03_functionsdeploy.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -41,7 +41,7 @@
           <a href="03_functionsdeploy.html" title="Previous document"> Deploy your first function</a>
         </li>
         <li>
-          <a href="glossary.html" title="Next document">Glossary</a>
+          <a href="05_dataexport.html" title="Next document"> Completing the data scenario</a>
           &rarr;
         </li>
     </ul>
@@ -51,8 +51,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pipe-data-processing-with-functions">
-<h1><img alt="pipe" class="inline-image" src="_images/pipe.svg" /> Data processing with functions<a class="headerlink" href="#pipe-data-processing-with-functions" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="api-data-acquisition-with-functions">
+<h1><img alt="api" class="inline-image" src="_images/api.svg" /> Data acquisition with functions<a class="headerlink" href="#api-data-acquisition-with-functions" title="Permalink to this headline">¶</a></h1>
 <p>We already have a working and deployed function, but so far it is not doing anything exciting.</p>
 <p>Let’s start working on the data processing part of the function.</p>
 <div class="admonition tip">
@@ -242,7 +242,7 @@ touch &lt;your-function-dir&gt;/utils/stack.py
 </ol>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>You also need to change the name of the <code class="docutils literal notranslate"><span class="pre">scriptFile</span></code> in the <code class="docutils literal notranslate"><span class="pre">function.json</span></code> file. Otherwise, your function is  not able to locate the file.</p>
+<p>You also need to change the name of the <code class="docutils literal notranslate"><span class="pre">scriptFile</span></code> in the <code class="docutils literal notranslate"><span class="pre">function.json</span></code> file. Otherwise, your function is not able to locate the file.</p>
 </div>
 <ol class="arabic simple" start="2">
 <li><p>Since we are using <em>requests</em> and <em>python-dotenv</em> we need to update the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file:</p></li>
@@ -270,18 +270,18 @@ touch &lt;your-function-dir&gt;/utils/stack.py
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p><strong>Do not</strong> commit this .env file to version control. We will see further in the tutorial how to securely add variables to your Azure functions.</p>
+<p><strong>Do not</strong> commit this .env file to version control. We will learn later on the tutorial how to securely add variables to your Azure functions.</p>
 </div>
 </div>
 <div class="section" id="debugging-and-executing-locally">
 <h3>4. Debugging and executing locally<a class="headerlink" href="#debugging-and-executing-locally" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
-<li><p>Start the debugging sessio in VS Code by pressing <kbd class="kbd docutils literal notranslate">F5</kbd>. You should see the function output in the integrated terminal.</p></li>
+<li><p>Start the debugging session in VS Code by pressing <kbd class="kbd docutils literal notranslate">F5</kbd>. You should see the function output in the integrated terminal.</p></li>
 <li><p>Click on the <strong>Azure</strong> extension on the VS Code sidebar and then expand the Functions section.</p></li>
-<li><p>Right click on your function name (timer-function) and click on <strong>Execute function now</strong>.</p></li>
+<li><p>Right-click on your function name (timer-function) and click on <strong>Execute function now</strong>.</p></li>
 </ol>
 <img alt="Function debugger" class="align-center" src="_images/debug_function.png" />
-<p>If everything was correctly updated then you should see the function output in the VS code integrated terminal.</p>
+<p>If everything was correctly updated, then you should see the function output in the VS code integrated terminal.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">14</span>:03:34<span class="o">]</span> Executing <span class="s1">&#39;Functions.timer-function&#39;</span> <span class="o">(</span><span class="nv">Reason</span><span class="o">=</span><span class="s1">&#39;This function was programmatically called via the host APIs.&#39;</span>, <span class="nv">Id</span><span class="o">=</span>d900f28c-10e5-4e40-8de1-a17079674139<span class="o">)</span>
 <span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">14</span>:03:34<span class="o">]</span>  INFO: Received FunctionInvocationRequest, request ID: 4bab6cbc-a5eb-4ce9-9cb5-4580ca431de3, <span class="k">function</span> ID: c8491e7b-4c49-4546-9a0a-5a07ba7e2020, invocation ID: d900f28c-10e5-4e40-8de1-a17079674139
 <span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">14</span>:03:34<span class="o">]</span> Function executing at <span class="m">2020</span>-04-15T14:03:34.755770+00:00
@@ -294,7 +294,7 @@ touch &lt;your-function-dir&gt;/utils/stack.py
 </div>
 <div class="section" id="deploying-your-updated-function">
 <h3>5. Deploying your updated function<a class="headerlink" href="#deploying-your-updated-function" title="Permalink to this headline">¶</a></h3>
-<p>First make sure to stop the local host. You can do this either pressing the <kbd class="kbd docutils literal notranslate">Ctrl + C</kbd> keys or clicking on the disconnect button from the debugging bar:</p>
+<p>First, make sure to stop the localhost. You can do this either pressing the <kbd class="kbd docutils literal notranslate">Ctrl + C</kbd> keys or clicking on the disconnect button from the debugging bar:</p>
 <img alt="Disconnect" class="align-center" src="_images/disconnect.png" />
 <p>To deploy your updated function:</p>
 <ol class="arabic">
@@ -316,7 +316,7 @@ Add one by one as a separate value-pair (should look like 2 in image).</p>
 <div><img alt="Variables settings" class="align-center" src="_images/vars.png" />
 </div></blockquote>
 <ol class="arabic" start="5">
-<li><p>Once completed, click on the save button on the top bar (3 in image above).</p></li>
+<li><p>Once completed, click on the Save button on the top bar (3 in image above).</p></li>
 <li><p>Execute your function on the cloud: go back to your function main page in <a class="reference external" href="https://ms.portal.azure.com">portal.azure.com</a>. Then click on the name of your function (1 in the image below) and then on the <strong>Run</strong> button on the top right (2 in image).</p>
 <blockquote>
 <div><img alt="Run function on the cloud" class="align-center" src="_images/cloud_run.png" />
@@ -346,7 +346,7 @@ Add one by one as a separate value-pair (should look like 2 in image).</p>
           <a href="03_functionsdeploy.html" title="Previous document"> Deploy your first function</a>
         </li>
         <li>
-          <a href="glossary.html" title="Next document">Glossary</a>
+          <a href="05_dataexport.html" title="Next document"> Completing the data scenario</a>
           &rarr;
         </li>
     </ul>
@@ -383,7 +383,7 @@ Add one by one as a separate value-pair (should look like 2 in image).</p>
 
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#"> Data processing with functions</a><ul>
+<li><a class="reference internal" href="#"> Data acquisition with functions</a><ul>
 <li><a class="reference internal" href="#the-details">The details</a></li>
 <li><a class="reference internal" href="#connecting-to-the-stackexchange-api">Connecting to the StackExchange API</a><ul>
 <li><a class="reference internal" href="#create-necessary-files-and-dirs">1. Create necessary files and dirs</a></li>
@@ -415,12 +415,13 @@ Add one by one as a separate value-pair (should look like 2 in image).</p>
 <li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html"> Your first Azure function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html"> Deploy your first function</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Data processing with functions</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Data acquisition with functions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-details">The details</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#connecting-to-the-stackexchange-api">Connecting to the StackExchange API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="05_dataexport.html"> Completing the data scenario</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 </ul>
 
@@ -429,7 +430,7 @@ Add one by one as a separate value-pair (should look like 2 in image).</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="03_functionsdeploy.html" title="previous chapter"> Deploy your first function</a></li>
-      <li>Next: <a href="glossary.html" title="next chapter">Glossary</a></li>
+      <li>Next: <a href="05_dataexport.html" title="next chapter"> Completing the data scenario</a></li>
   </ul></li>
 </ul>
 </div>
