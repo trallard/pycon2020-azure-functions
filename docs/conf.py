@@ -130,8 +130,8 @@ rst_epilog = """
 .. |pipe| image:: _static/icons/pipe.svg
     :class: inline-image
 
-.. |foo| replace:: foo
-.. _foo: http://stackoverflow.com
+.. |api| image:: _static/icons/api.svg
+    :class: inline-image
 
 .. |azureportal| replace:: `portal.azure.com`_
 .. _portal.azure.com: https://ms.portal.azure.com

@@ -1,4 +1,4 @@
-|pipe| Data processing with functions
+|api| Data acquisition with functions
 =========================================
 
 We already have a working and deployed function, but so far it is not doing anything exciting.
@@ -196,7 +196,7 @@ So we need to modify the main script for our function too:
             :align: center
             :alt: Function name
 
-.. warning:: You also need to change the name of the ``scriptFile`` in the ``function.json`` file. Otherwise, your function is  not able to locate the file.
+.. warning:: You also need to change the name of the ``scriptFile`` in the ``function.json`` file. Otherwise, your function is not able to locate the file.
 
 2. Since we are using *requests* and *python-dotenv* we need to update the ``requirements.txt`` file:
 
@@ -219,20 +219,20 @@ So we need to modify the main script for our function too:
     SE_key = <your secret>
 
 
-.. warning:: **Do not** commit this .env file to version control. We will see further in the tutorial how to securely add variables to your Azure functions. 
+.. warning:: **Do not** commit this .env file to version control. We will learn later on the tutorial how to securely add variables to your Azure functions. 
 
 4. Debugging and executing locally
 *************************************
 
-#. Start the debugging sessio in VS Code by pressing :kbd:`F5`. You should see the function output in the integrated terminal. 
+#. Start the debugging session in VS Code by pressing :kbd:`F5`. You should see the function output in the integrated terminal. 
 #. Click on the **Azure** extension on the VS Code sidebar and then expand the Functions section.
-#. Right click on your function name (timer-function) and click on **Execute function now**. 
+#. Right-click on your function name (timer-function) and click on **Execute function now**. 
 
 .. image:: _static/images/snaps/debug_function.png
             :align: center
             :alt: Function debugger
 
-If everything was correctly updated then you should see the function output in the VS code integrated terminal.
+If everything was correctly updated, then you should see the function output in the VS code integrated terminal.
 
 .. code-block:: bash
 
@@ -247,7 +247,7 @@ If everything was correctly updated then you should see the function output in t
 5. Deploying your updated function
 ************************************
 
-First make sure to stop the local host. You can do this either pressing the :kbd:`Ctrl + C` keys or clicking on the disconnect button from the debugging bar:
+First, make sure to stop the localhost. You can do this either pressing the :kbd:`Ctrl + C` keys or clicking on the disconnect button from the debugging bar:
 
 .. image:: _static/images/snaps/disconnect.png
             :align: center
@@ -276,7 +276,7 @@ Add one by one as a separate value-pair (should look like 2 in image).
                     :align: center
                     :alt: Variables settings 
 
-5. Once completed, click on the save button on the top bar (3 in image above).
+5. Once completed, click on the Save button on the top bar (3 in image above).
 6. Execute your function on the cloud: go back to your function main page in |azureportal|. Then click on the name of your function (1 in the image below) and then on the **Run** button on the top right (2 in image).
 
     .. image:: _static/images/snaps/cloud_run.png
