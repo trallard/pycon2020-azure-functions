@@ -33,12 +33,6 @@ div.body h3 {
     width: max-content;
 }
 
-div.body h1, 
-div.body h2, 
-div.body h3 {
-    max-width: fit-content;
-    overflow: hidden;
-} 
 /* Sidebar */
 
 div.sphinxsidebarwrapper h1.logo {
@@ -160,10 +154,16 @@ div.code-block-caption{
 pre {
     padding: 20px 30px;
     background: #1d1941;
-    border-radius: 2px;
-    -webkit-box-shadow: 2px 2px 4px 0px rgba(29,25,65,1);
-    -moz-box-shadow: 2px 2px 4px 0px rgba(29,25,65,1);
-    box-shadow: 2px 2px 4px 0px rgba(29,25,65,1);
+    -webkit-box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    -moz-box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    border: solid 1px #1d1941;
+    height: auto;
+    max-height: 250px;
+    overflow: auto;
+    word-break: normal !important;
+    word-wrap: normal !important;
+    white-space: pre !important;
 }
 
 div > dl {
@@ -245,18 +245,39 @@ p.caption {
     width: 40px;
     vertical-align: middle;
     padding: 5px;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 0px;
 }
 
-/* Admonitions: notes */
+/* Admonitions */
 
-div.admonition, 
-div.admonition note{
+
+div.note{
     background-color: white;
     border: 2px dotted #415CF2;
 }
 
-p.admonition-title{
+div.warning{
+    background-color: white;
+    border: 2px dotted #f18fac;
+}
+
+div.tip{
+    background-color: white;
+    border: 2px dotted #C4C6F2;
+}
+
+div.note p.admonition-title{
     color: #415CF2;
+}
+
+div.warning p.admonition-title{
+    color: #f18fac;
+}
+
+div.tip p.admonition-title{
+    color: #C4C6F2;
 }
 
 /* code tabs */
@@ -282,6 +303,27 @@ p.admonition-title{
 
 /* Copy buttton */
 
-a.copybutton{
+a.copybtn{
     opacity: .5;
+    right: 1em;
+
+}
+
+a.copybtn > img {
+    box-shadow: none;
+}
+
+/* image */
+
+img{
+    margin-bottom:  15px;
+    -webkit-box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    -moz-box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    border: 1px solid #262626;
+}
+
+div.sphinxsidebar h1.logo, div.sphinxsidebar logo {
+    box-shadow: none;
+    border: none;
 }

@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Data processing with functions &#8212; Easy data processing on Azure with Serverless Functions  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Glossary" href="glossary.html" />
+    <link rel="prev" title="Deploy your first function" href="03_functionsdeploy.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="03_functionsdeploy.html" title="Previous document"> Deploy your first function</a>
+        </li>
+        <li>
+          <a href="glossary.html" title="Next document">Glossary</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pipe-data-processing-with-functions">
+<h1><img alt="pipe" class="inline-image" src="_images/pipe.svg" /> Data processing with functions<a class="headerlink" href="#pipe-data-processing-with-functions" title="Permalink to this headline">¶</a></h1>
+<p>We already have a working and deployed function, but so far it is not doing anything exciting.</p>
+<p>Let’s start working on the data processing part of the function.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The repository containing all the scripts and solutions to this tutorial can be found at <a class="reference external" href="https://github.com/trallard/pycon2020-azure-functions">https://github.com/trallard/pycon2020-azure-functions</a>.</p>
+</div>
+<div class="section" id="the-details">
+<h2>The details<a class="headerlink" href="#the-details" title="Permalink to this headline">¶</a></h2>
+<p>To demonstrate the capabilities of Azure functions for data processing scenarios, we will build the following pipeline:</p>
+<ol class="arabic simple">
+<li><p>Collect data from the <a class="reference external" href="https://api.stackexchange.com/">StackExchange API</a> using the timer trigger. We will focus on extracting questions from StackOverflow within a time range and with specific tags.</p></li>
+<li><p>Store the raw data in our Azure storage account.</p></li>
+<li><p>Trigger the processing function that cleans the data and leaves it in a usable format.</p></li>
+</ol>
+<p>Let’s get started!</p>
+</div>
+<div class="section" id="connecting-to-the-stackexchange-api">
+<h2>Connecting to the StackExchange API<a class="headerlink" href="#connecting-to-the-stackexchange-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-necessary-files-and-dirs">
+<h3>1. Create necessary files and dirs<a class="headerlink" href="#create-necessary-files-and-dirs" title="Permalink to this headline">¶</a></h3>
+<p>In the <a class="reference internal" href="02_functions_intro.html#functions101"><span class="std std-ref"> Your first Azure function</span></a> section we created a basic timer function and explored the generated files.</p>
+<p>To keep things neat we are going to create a <code class="docutils literal notranslate"><span class="pre">utils</span></code> folder as well and <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> and <code class="docutils literal notranslate"><span class="pre">stack.py</span></code> file in it. From the command line (bash):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir -p &lt;your-function-dir&gt;/utils
+touch &lt;your-function-dir&gt;/utils/__init__.py
+touch &lt;your-function-dir&gt;/utils/stack.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-methods">
+<h3>2. Add methods<a class="headerlink" href="#add-methods" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have the necessary files we have to update  <code class="docutils literal notranslate"><span class="pre">utils/stack.py</span></code> to handle the requests to the StackExchange API:</p>
+<div class="literal-block-wrapper docutils container" id="utils-stack-py">
+<div class="code-block-caption"><span class="caption-text">utils/stack.py</span><a class="headerlink" href="#utils-stack-py" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">JSONDecodeError</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">se_object</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class to deal with StackExchage data collection and manipulation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">search_terms</span><span class="p">:</span> <span class="nb">list</span>
+    <span class="n">main_uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;https://api.stackexchange.com/2.2/questions&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;Object for site </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">main_uri</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_questions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Collect questions from SE and returns a list</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n (int, optional): Number of questions to collect from the last 24 hours. Defaults to 100.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># note that this needs to be in epoch</span>
+        <span class="n">time_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time_now</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;fromdate&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()),</span>
+            <span class="s2">&quot;todate&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_now</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()),</span>
+            <span class="s2">&quot;site&quot;</span><span class="p">:</span> <span class="s2">&quot;stackoverflow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sort&quot;</span><span class="p">:</span> <span class="s2">&quot;votes&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="s2">&quot;desc&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tagged&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_terms</span><span class="p">,</span>
+            <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SE_client_id&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SE_client_secret&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SE_key&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SE_key&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No StackExchange API key provided, limited use may apply&quot;</span><span class="p">)</span>
+
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_uri</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">new_questions</span> <span class="o">=</span> <span class="p">[</span><span class="n">q</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;items&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;🐍 Collected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">new_questions</span><span class="p">)</span><span class="si">}</span><span class="s2"> new questions for the search term&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">new_questions</span>
+
+            <span class="k">except</span> <span class="p">(</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;error_message&quot;</span><span class="p">]</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;(Unable to connect to Stack Exchage: status code </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Note how we use the trigger time to set the <code class="docutils literal notranslate"><span class="pre">todate</span></code> and <code class="docutils literal notranslate"><span class="pre">fromdate</span></code> in the StackExchange query.</p>
+<p>So we need to modify the main script for our function too:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">__init__.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">azure.functions</span> <span class="k">as</span> <span class="nn">func</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">find_dotenv</span><span class="p">,</span> <span class="n">load_dotenv</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">stack</span>
+
+<span class="c1"># --------------------------</span>
+<span class="c1"># Helper methods</span>
+<span class="c1"># --------------------------</span>
+
+
+<span class="k">def</span> <span class="nf">get_vars</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Collect the needed keys to call the APIs and access storage accounts.</span>
+
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Optional - if dotenv file is present then this is loaded, else the</span>
+<span class="sd">        vars are used directly from the system env</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dotenv_path</span> <span class="o">=</span> <span class="n">find_dotenv</span><span class="p">(</span><span class="s2">&quot;.env&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Dotenv located, loading vars from local instance&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">load_dotenv</span><span class="p">(</span><span class="n">dotenv_path</span><span class="p">)</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading directly from the system&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># -----------------------------------------</span>
+<span class="c1"># Main method - executed by the function</span>
+<span class="c1"># -----------------------------------------</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">mytimer</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">TimerRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Main function to collect questions from stackexchange.</span>
+<span class="sd">    Note that right now the site is harcoded to &quot;StackOverflow&quot; but this</span>
+<span class="sd">    can be changed in stack.py</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mytimer (func.TimerRequest): Timer trigger for the function, for more</span>
+<span class="sd">        details check function.json</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># collect timestamp for the function that is being called</span>
+    <span class="n">utc_timestamp</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function executing at </span><span class="si">{</span><span class="n">utc_timestamp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">get_vars</span><span class="p">()</span>
+
+    <span class="c1"># as many search terms as wanted - must be a list</span>
+    <span class="n">stackexchange</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">se_object</span><span class="p">([</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;azure-functions&quot;</span><span class="p">])</span>
+
+    <span class="n">se_questions</span> <span class="o">=</span> <span class="n">stackexchange</span><span class="o">.</span><span class="n">get_questions</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># set logging format - personal preference</span>
+    <span class="n">log_fmt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">log_fmt</span><span class="p">)</span>
+
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tidying-and-finishing-off">
+<h3>3. Tidying and finishing off<a class="headerlink" href="#tidying-and-finishing-off" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>To make it easier to identify files we will rename the function script to <code class="docutils literal notranslate"><span class="pre">main_function.py</span></code>:</p>
+<blockquote>
+<div><img alt="Function name" class="align-center" src="_images/main_function.png" />
+</div></blockquote>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You also need to change the name of the <code class="docutils literal notranslate"><span class="pre">scriptFile</span></code> in the <code class="docutils literal notranslate"><span class="pre">function.json</span></code> file. Otherwise, your function is  not able to locate the file.</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Since we are using <em>requests</em> and <em>python-dotenv</em> we need to update the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file:</p></li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">requirements.txt</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">azure</span><span class="o">-</span><span class="n">functions</span>
+<span class="n">python</span><span class="o">-</span><span class="n">dotenv</span><span class="o">==</span><span class="mf">0.13</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">requests</span><span class="o">==</span><span class="mf">2.23</span><span class="o">.</span><span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Finally, we need to create a <code class="docutils literal notranslate"><span class="pre">.env</span></code> file to store API keys and other environment variables for local development and debugging.</p></li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">.env</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stackexchange</span>
+
+<span class="n">SE_client_id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">secret</span><span class="o">&gt;</span>
+<span class="n">SE_client_secret</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">secret</span><span class="o">&gt;</span>
+<span class="n">SE_key</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">secret</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Do not</strong> commit this .env file to version control. We will see further in the tutorial how to securely add variables to your Azure functions.</p>
+</div>
+</div>
+<div class="section" id="debugging-and-executing-locally">
+<h3>4. Debugging and executing locally<a class="headerlink" href="#debugging-and-executing-locally" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Start the debugging sessio in VS Code by pressing <kbd class="kbd docutils literal notranslate">F5</kbd>. You should see the function output in the integrated terminal.</p></li>
+<li><p>Click on the <strong>Azure</strong> extension on the VS Code sidebar and then expand the Functions section.</p></li>
+<li><p>Right click on your function name (timer-function) and click on <strong>Execute function now</strong>.</p></li>
+</ol>
+<img alt="Function debugger" class="align-center" src="_images/debug_function.png" />
+<p>If everything was correctly updated then you should see the function output in the VS code integrated terminal.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">14</span>:03:34<span class="o">]</span> Executing <span class="s1">&#39;Functions.timer-function&#39;</span> <span class="o">(</span><span class="nv">Reason</span><span class="o">=</span><span class="s1">&#39;This function was programmatically called via the host APIs.&#39;</span>, <span class="nv">Id</span><span class="o">=</span>d900f28c-10e5-4e40-8de1-a17079674139<span class="o">)</span>
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">14</span>:03:34<span class="o">]</span>  INFO: Received FunctionInvocationRequest, request ID: 4bab6cbc-a5eb-4ce9-9cb5-4580ca431de3, <span class="k">function</span> ID: c8491e7b-4c49-4546-9a0a-5a07ba7e2020, invocation ID: d900f28c-10e5-4e40-8de1-a17079674139
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">14</span>:03:34<span class="o">]</span> Function executing at <span class="m">2020</span>-04-15T14:03:34.755770+00:00
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">14</span>:03:34<span class="o">]</span> Dotenv located, loading vars from <span class="nb">local</span> instance
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">14</span>:03:35<span class="o">]</span> 🐍 Collected <span class="m">30</span> new questions <span class="k">for</span> the search term
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">14</span>:03:35<span class="o">]</span>  INFO: Successfully processed FunctionInvocationRequest, request ID: 4bab6cbc-a5eb-4ce9-9cb5-4580ca431de3, <span class="k">function</span> ID: c8491e7b-4c49-4546-9a0a-5a07ba7e2020, invocation ID: d900f28c-10e5-4e40-8de1-a17079674139
+<span class="o">[</span><span class="m">15</span>/04/2020 <span class="m">14</span>:03:35<span class="o">]</span> Executed <span class="s1">&#39;Functions.timer-function&#39;</span> <span class="o">(</span>Succeeded, <span class="nv">Id</span><span class="o">=</span>d900f28c-10e5-4e40-8de1-a17079674139<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deploying-your-updated-function">
+<h3>5. Deploying your updated function<a class="headerlink" href="#deploying-your-updated-function" title="Permalink to this headline">¶</a></h3>
+<p>First make sure to stop the local host. You can do this either pressing the <kbd class="kbd docutils literal notranslate">Ctrl + C</kbd> keys or clicking on the disconnect button from the debugging bar:</p>
+<img alt="Disconnect" class="align-center" src="_images/disconnect.png" />
+<p>To deploy your updated function:</p>
+<ol class="arabic">
+<li><p>Click on the Azure extension on the VS Code sidebar and then click on the deploy to function app on the Azure functions section.</p></li>
+<li><p>Select the name of the app that you used before (since we want to update the existing instance).</p>
+<blockquote>
+<div><img alt="Confirm deployment" class="align-center" src="_images/redeploy.png" />
+</div></blockquote>
+</li>
+<li><p>Head over to <a class="reference external" href="https://ms.portal.azure.com">portal.azure.com</a> and follow the same instructions as in <a class="reference internal" href="03_functionsdeploy.html#portalinst"><span class="std std-ref">Using the Azure portal</span></a> to get to your function main page:</p>
+<blockquote>
+<div><img alt="Function config" class="align-center" src="_images/configuration.png" />
+</div></blockquote>
+</li>
+</ol>
+<p>4. Click on <strong>Configuration</strong> and in the following screen click on + <strong>New application setting</strong> (1 in the image) to add the keys you stored in your local <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.
+Add one by one as a separate value-pair (should look like 2 in image).</p>
+<blockquote>
+<div><img alt="Variables settings" class="align-center" src="_images/vars.png" />
+</div></blockquote>
+<ol class="arabic" start="5">
+<li><p>Once completed, click on the save button on the top bar (3 in image above).</p></li>
+<li><p>Execute your function on the cloud: go back to your function main page in <a class="reference external" href="https://ms.portal.azure.com">portal.azure.com</a>. Then click on the name of your function (1 in the image below) and then on the <strong>Run</strong> button on the top right (2 in image).</p>
+<blockquote>
+<div><img alt="Run function on the cloud" class="align-center" src="_images/cloud_run.png" />
+</div></blockquote>
+</li>
+</ol>
+<p>You can now head to the monitor section of your function and see the logs and status of the run you just started.</p>
+</div>
+</div>
+<div class="section" id="floppy-additional-resources-and-docs">
+<h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://api.stackexchange.com/docs/">Stack Exchange API docs</a></p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?WT.mc_id=pycon_tutorial-github-taallard">Azure functions management</a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="03_functionsdeploy.html" title="Previous document"> Deploy your first function</a>
+        </li>
+        <li>
+          <a href="glossary.html" title="Next document">Glossary</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/images/Bit_BobRoss.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Azure sponsored workshop: PyCon 2020</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=trallard&repo=pycon2020-azure-functions&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"> Data processing with functions</a><ul>
+<li><a class="reference internal" href="#the-details">The details</a></li>
+<li><a class="reference internal" href="#connecting-to-the-stackexchange-api">Connecting to the StackExchange API</a><ul>
+<li><a class="reference internal" href="#create-necessary-files-and-dirs">1. Create necessary files and dirs</a></li>
+<li><a class="reference internal" href="#add-methods">2. Add methods</a></li>
+<li><a class="reference internal" href="#tidying-and-finishing-off">3. Tidying and finishing off</a></li>
+<li><a class="reference internal" href="#debugging-and-executing-locally">4. Debugging and executing locally</a></li>
+<li><a class="reference internal" href="#deploying-your-updated-function">5. Deploying your updated function</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html"> Easy data processing on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html"> Setup and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html"> Your first Azure function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html"> Deploy your first function</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Data processing with functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-details">The details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connecting-to-the-stackexchange-api">Connecting to the StackExchange API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="03_functionsdeploy.html" title="previous chapter"> Deploy your first function</a></li>
+      <li>Next: <a href="glossary.html" title="next chapter">Glossary</a></li>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Tania Allard.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/04_datafunction.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

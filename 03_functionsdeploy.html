@@ -18,7 +18,7 @@
     <script src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Glossary" href="glossary.html" />
+    <link rel="next" title="Data processing with functions" href="04_datafunction.html" />
     <link rel="prev" title="Your first Azure function" href="02_functions_intro.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -41,7 +41,7 @@
           <a href="02_functions_intro.html" title="Previous document"> Your first Azure function</a>
         </li>
         <li>
-          <a href="glossary.html" title="Next document">Glossary</a>
+          <a href="04_datafunction.html" title="Next document"> Data processing with functions</a>
           &rarr;
         </li>
     </ul>
@@ -55,16 +55,51 @@
 <h1><img alt="cloud-computing" class="inline-image" src="_images/cloud-computing.svg" /> Deploy your first function<a class="headerlink" href="#cloud-computing-deploy-your-first-function" title="Permalink to this headline">¶</a></h1>
 <p>The next step will be to deploy your function to Azure. We will use the VS Code extension again.</p>
 <ol class="arabic">
-<li><p>Click on the Azure extension on the VS Code side bar (1 in image) and then click on the deploy to function app on ther Azure functions section (2 in image).</p>
+<li><p>Click on the Azure extension on the VS Code sidebar (1 in image) and then click on the deploy to function app on the Azure functions section (2 in image).</p>
 <blockquote>
 <div><img alt="Prepare for deploy" class="align-center" src="_images/deploy1.png" />
 </div></blockquote>
 </li>
 <li><p>Select the <strong>Create new app option</strong> and then provide a name for your app.</p></li>
 <li><p>Select the correct Python runtime version.</p></li>
-<li><p>Select a location for your resources.</p></li>
-<li><p>Wait for deployment to complete. You can see the progress on the pop up window or on your output console.</p></li>
+<li><p>Select a location for your resources (this the datacentre where all your resources will be located e.g. Western Europe).</p></li>
+<li><p>Wait for the deployment to complete. You can see the progress on the pop-up window or on your output console.</p></li>
 </ol>
+<div class="section" id="using-the-azure-portal">
+<span id="portalinst"></span><h2>Using the Azure portal<a class="headerlink" href="#using-the-azure-portal" title="Permalink to this headline">¶</a></h2>
+<p>There are multiple ways to check the status of your function. We will do this from the Azure portal.</p>
+<ol class="arabic">
+<li><p>Head to <a class="reference external" href="https://ms.portal.azure.com">portal.azure.com</a>.</p></li>
+<li><p>Click on the home icon on the sidebar (if the sidebar is hidden you need to click on the <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code> icon on the top left corner).</p></li>
+<li><p>The default view should show your new resources. For me, it shows the resource group called <code class="docutils literal notranslate"><span class="pre">pycon2020</span></code> as this is the name I gave it.</p>
+<blockquote>
+<div><img alt="Azure portal home" class="align-center" src="_images/portal_01.png" />
+</div></blockquote>
+</li>
+<li><p>Click on the resource group that contains your function. You should see the following screen displaying all your resources.</p>
+<blockquote>
+<div><img alt="Resource group" class="align-center" src="_images/portal_02.png" />
+</div></blockquote>
+</li>
+<li><p>Click on your function name (see image above) and then on the <strong>monitor</strong> section of the sidebar.</p>
+<blockquote>
+<div><img alt="Monitor function" class="align-center" src="_images/portal_03.png" />
+</div></blockquote>
+</li>
+<li><p>In the following screen, you should be able to see the status of your function, the runs and their statuses as well as the URL for your app. You can also click on each individual run to check the logs output.</p>
+<blockquote>
+<div><img alt="Resource group" class="align-center" src="_images/portal_02.png" />
+</div></blockquote>
+</li>
+</ol>
+<p>🎉 Congratulations you have deployed your first serverless function! 🥳</p>
+</div>
+<div class="section" id="floppy-additional-resources-and-docs">
+<h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.microsoft.com/azure/azure-functions/functions-monitoring?tabs=cmd&amp;WT.mc_id=pycon_tutorial-github-taallard">Monitoring Azure functions</a></p></li>
+</ul>
+</div>
 </div>
 
 
@@ -78,7 +113,7 @@
           <a href="02_functions_intro.html" title="Previous document"> Your first Azure function</a>
         </li>
         <li>
-          <a href="glossary.html" title="Next document">Glossary</a>
+          <a href="04_datafunction.html" title="Next document"> Data processing with functions</a>
           &rarr;
         </li>
     </ul>
@@ -113,6 +148,15 @@
 
 
 
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"> Deploy your first function</a><ul>
+<li><a class="reference internal" href="#using-the-azure-portal">Using the Azure portal</a></li>
+<li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -129,7 +173,12 @@
 <li class="toctree-l1"><a class="reference internal" href="setup.html"> Setup and installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html"> Your first Azure function</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Deploy your first function</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Deploy your first function</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-azure-portal">Using the Azure portal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_datafunction.html"> Data processing with functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 </ul>
 
@@ -138,7 +187,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="02_functions_intro.html" title="previous chapter"> Your first Azure function</a></li>
-      <li>Next: <a href="glossary.html" title="next chapter">Glossary</a></li>
+      <li>Next: <a href="04_datafunction.html" title="next chapter"> Data processing with functions</a></li>
   </ul></li>
 </ul>
 </div>

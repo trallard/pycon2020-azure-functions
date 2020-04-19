@@ -23,7 +23,7 @@ The following infographic provides more details about serverless:
 .. image:: _static/images/serverless.png
     :alt: serverless infographic
 
-Good use cases 
+Good use cases
 ****************
 
 Some good use cases for serverless are:
@@ -35,12 +35,12 @@ Some good use cases for serverless are:
 |faas| Azure functions and serverless
 ----------------------------------------
 
-FaaS allows you to run self-contained code snippets called **functions** in the cloud. 
-Your functions are idle until particular events trigger them. 
-Functions are self-contained, small, short-lived, and single-purpose. 
+FaaS allows you to run self-contained code snippets called **functions** in the cloud.
+Your functions are idle until particular events trigger them.
+Functions are self-contained, small, short-lived, and single-purpose.
 They disappear after execution - hence why they are called ephemeral.
 
-Functions are very versatile - you can use a variety of triggers to call your function and execute your code. 
+Functions are very versatile - you can use a variety of triggers to call your function and execute your code.
 They can be set so that they always run the same task or to run specific tasks based on inputs.
 
 Microsoft Azure's FaaS is called `Azure Functions <https://azure.microsoft.com/en-gb/services/functions?WT.mc_id=pycon_tutorial-github-taallard>`_.
@@ -62,8 +62,8 @@ For more details, check the `Azure functions consumption plans <https://docs.mic
 ---------------------------------------
 
 
-- `Introduction to Azure functions <https://docs.microsoft.com/azure/azure-functions/functions-overview?WT.mc_id=pycon_tutorial-github-taallard>`_ 
-- `Azure functions consumption plans <https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale?WT.mc_id=pycon_tutorial-github-taallard>`_ 
-- `Functions app timeout <https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale#timeout?WT.mc_id=pycon_tutorial-github-taallard>`_ 
-- `Azure Storage docs <https://docs.microsoft.com/en-us/azure/storage/common/storage-introduction#core-storage-services?WT.mc_id=pycon_tutorial-github-taallard>`_ 
+- `Introduction to Azure functions <https://docs.microsoft.com/azure/azure-functions/functions-overview?WT.mc_id=pycon_tutorial-github-taallard>`_
+- `Azure functions consumption plans <https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale?WT.mc_id=pycon_tutorial-github-taallard>`_
+- `Functions app timeout <https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale#timeout?WT.mc_id=pycon_tutorial-github-taallard>`_
+- `Azure Storage docs <https://docs.microsoft.com/en-us/azure/storage/common/storage-introduction#core-storage-services?WT.mc_id=pycon_tutorial-github-taallard>`_
 - `Infographic high-res pdf <https://github.com/trallard/tech-bites/tree/master/EN/serverless>`_  CC-BY
