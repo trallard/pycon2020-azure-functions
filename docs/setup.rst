@@ -56,13 +56,13 @@ Azure CLI and functions core tool
 
   .. group-tab:: Windows
 
-      #. Download the installer from `the docs page <https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest?WT.mc_id=pycon_tutorial-github-taallard>`_ 
+      #. Download the installer from `the docs page <https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest?WT.mc_id=pycon_tutorial-github-taallard>`_
       #. When downloaded, open the driver to follow the instructions.
 
   .. group-tab:: Linux
 
     The instructions vary depending on your distribution. Please follow the
-    instructions in the `official docs <https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest?WT.mc_id=pycon_tutorial-github-taallard>`_ 
+    instructions in the `official docs <https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest?WT.mc_id=pycon_tutorial-github-taallard>`_
 
 - To be able to run and test your functions locally, we need to install the Azure functions core tools:
 
@@ -82,7 +82,7 @@ Azure CLI and functions core tool
 
   .. group-tab:: Windows
 
-      #. Install `Node.js <https://docs.npmjs.com/getting-started/installing-node#osx-or-windows>`_ 
+      #. Install `Node.js <https://docs.npmjs.com/getting-started/installing-node#osx-or-windows>`_
       #. Install the core tools package
 
       .. code-block::
@@ -124,10 +124,10 @@ Azure CLI and functions core tool
 Additional packages
 ---------------------
 
-You will need to install some packages to follow along with this tutorial. 
+You will need to install some packages to follow along with this tutorial.
 To install them follow these steps:
 
-1. Clone the tutorial repository `Repo <https://github.com/trallard>`_ 
+1. Clone the tutorial repository `Repo <https://github.com/trallard>`_
 
   From the command line (bash):
 
@@ -146,7 +146,7 @@ To install them follow these steps:
 Other accounts
 ----------------
 
-StackOverFlow API 
+StackOverFlow API
 *******************
 
 We will use the StackOverFlow API to collect data. For this you will need to register for an app key.

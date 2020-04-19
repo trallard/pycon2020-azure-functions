@@ -154,10 +154,16 @@ div.code-block-caption{
 pre {
     padding: 20px 30px;
     background: #1d1941;
-    border-radius: 2px;
     -webkit-box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
     -moz-box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
     box-shadow: 6px 6px 0px 0px rgba(196,198,242,1);
+    border: solid 1px #1d1941;
+    height: auto;
+    max-height: 250px;
+    overflow: auto;
+    word-break: normal !important;
+    word-wrap: normal !important;
+    white-space: pre !important;
 }
 
 div > dl {
@@ -246,14 +252,32 @@ p.caption {
 
 /* Admonitions: notes */
 
-div.admonition, 
-div.admonition note{
+
+div.note{
     background-color: white;
     border: 2px dotted #415CF2;
 }
 
+div.warning{
+    background-color: white;
+    border: 2px dotted #f18fac;
+}
+
+div.tip{
+    background-color: white;
+    border: 2px dotted #91C5F2;
+}
+
 p.admonition-title{
     color: #415CF2;
+}
+
+div.warning p.admonition-title{
+    color: #f18fac;
+}
+
+div.tip p.admonition-title{
+    color: #91C5F2;
 }
 
 /* code tabs */
@@ -279,8 +303,10 @@ p.admonition-title{
 
 /* Copy buttton */
 
-a.copybutton{
+a.copybtn{
     opacity: .5;
+    right: 1em;
+
 }
 
 a.copybtn > img {

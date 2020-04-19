@@ -9,7 +9,7 @@ The details
 -------------
 To demonstrate the capabilities of Azure functions for data processing scenarios, we will build the following pipeline:
 
-#. Collect data from the `StackExchange API <https://api.stackexchange.com/>`_ using the timer trigger. We will focus on etxracting questions from StackOverflow within a time range and with specific tags.
+#. Collect data from the `StackExchange API <https://api.stackexchange.com/>`_ using the timer trigger. We will focus on extracting questions from StackOverflow within a time range and with specific tags.
 #. Store the raw data in our Azure storage account.
 #. Trigger the processing function that cleans the data and leaves it in a usable format.
 
@@ -18,9 +18,12 @@ Let's get started!
 Connecting to the StackExchange API
 -------------------------------------
 
-In the :ref:`function101` section we created a basic timer function and explored the generated files.
+1. Create necessary files and dirs
+*********************************** 
 
-To keep things neat we are going to create a ``utils`` folder as well and and ``__init__.py`` and ``stack.py`` file in it. From the command line (bash):
+In the :ref:`functions101` section we created a basic timer function and explored the generated files.
+
+To keep things neat we are going to create a ``utils`` folder as well and ``__init__.py`` and ``stack.py`` file in it. From the command line (bash):
 
 .. code-block:: bash
 
@@ -28,7 +31,11 @@ To keep things neat we are going to create a ``utils`` folder as well and and ``
     touch <your-function-dir>/utils/__init__.py 
     touch <your-function-dir>/utils/stack.py 
 
-And in the ``utils/stack.py`` script:
+
+2. Add methods 
+*****************************
+
+Now that we have the necessary files we have to update  ``utils/stack.py`` to handle the requests to the StackExchange API:
 
 .. code-block:: python
     :name: utils/stack.py
@@ -106,7 +113,6 @@ Note how we use the trigger time to set the ``todate`` and ``fromdate`` in the S
 So we need to modify the main script for our function too:
 
 .. code-block:: python
-    :name: __init__.py 
     :caption: __init__.py 
 
     import datetime
@@ -137,7 +143,7 @@ So we need to modify the main script for our function too:
             return load_dotenv(dotenv_path)
 
         except:
-            logging.info("Loading directlyb fron system")
+            logging.info("Loading directly from the system")
 
 
     # -----------------------------------------
@@ -177,3 +183,37 @@ So we need to modify the main script for our function too:
         logging.basicConfig(level=logging.INFO, format=log_fmt)
 
         main()
+
+3. Tidying and finishing off
+*****************************
+
+To make it easier to identify files we will rename the function script to ``main_function.py``:
+
+    .. image:: _static/images/snaps/main_function.png
+            :align: center
+            :alt: Function name
+
+.. warning:: You also need to change the name of the ``scriptFile`` in the ``function.json`` file. Otherwise, your function is  not able to locate the file.
+
+
+
+Finally, we need to create a ``.env`` file to store API keys and other environment variables for local development and debugging. 
+
+.. code-block:: 
+    :caption: .env
+
+    # Stackexchange
+
+    SE_client_id = <your secret>
+    SE_client_secret = <your secret>
+    SE_key = <your secret>
+
+
+.. warning:: **Do not** commit this file to version control. Make sure to add ``.env`` to your ``.gitignore`` file.
+
+
+
+|floppy| Additional resources and docs
+---------------------------------------
+
+- `Stack Exchange API docs <https://api.stackexchange.com/docs/>`_ 
