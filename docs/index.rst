@@ -75,4 +75,3 @@ We assume that you:
 
 The setup and other instructions to set your development environment can be found in the :ref:`setup` section of this tutorial.
 Make sure to follow these instructions before continuing with the rest of the tutorial.
-

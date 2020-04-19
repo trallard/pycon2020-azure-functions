@@ -1,3 +1,5 @@
+.. _functions101:
+
 |light| Your first Azure function
 =====================================
 
