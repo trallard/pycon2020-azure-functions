@@ -132,4 +132,7 @@ rst_epilog = """
 
 .. |foo| replace:: foo
 .. _foo: http://stackoverflow.com
+
+.. |azureportal| replace:: `portal.azure.com`_
+.. _portal.azure.com: https://ms.portal.azure.com
 """

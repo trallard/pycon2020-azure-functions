@@ -250,7 +250,7 @@ p.caption {
     margin-bottom: 0px;
 }
 
-/* Admonitions: notes */
+/* Admonitions */
 
 
 div.note{
@@ -265,10 +265,10 @@ div.warning{
 
 div.tip{
     background-color: white;
-    border: 2px dotted #91C5F2;
+    border: 2px dotted #C4C6F2;
 }
 
-p.admonition-title{
+div.note p.admonition-title{
     color: #415CF2;
 }
 
@@ -277,7 +277,7 @@ div.warning p.admonition-title{
 }
 
 div.tip p.admonition-title{
-    color: #91C5F2;
+    color: #C4C6F2;
 }
 
 /* code tabs */
