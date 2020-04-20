@@ -3,7 +3,11 @@
 [![License](https://img.shields.io/badge/License-MIT-gray.svg?colorA=2D2A56&colorB=7A76C2&style=flat.svg)]((https://opensource.org/licenses/MIT))
 ![docs](https://github.com/trallard/pycon2020-azure-functions/workflows/docs/badge.svg)
 
-This repository contains the tutorial for the Azure Sponsored workshop as well as the solutions.
+This repository contains the tutorial for the Microsoft Azure Sponsored workshop as well as all the solutions to the different sections. 
+
+<div align="center">
+<img src="./docs/_static/icons/MSFT_Logo_Color.png" width="400px">
+</div>
 
 :sparkles: You can access  the tutorial (self-paced) at <https://aka.ms/pycon2020-azurefunctions>.
 
@@ -67,9 +71,8 @@ The solutions can be found in the [solutions directory](./solutions) in thid rep
 ARM templates included:
 - [Storage account and Blob Storage](./solutions/../storage-blob-container/azuredeploy.json)
 
-
 ## License
 
-The contents in this repo are licensed under the (https://opensource.org/licenses/MIT)(MIT) OSI license.
+The contents in this repo are licensed under the [https://opensource.org/licenses/MIT](MIT) OSI license.
 
 The icons used in the tutorial were created by [Smashicons](https://www.flaticon.com/authors/smashicons) from [Flaticon](https://www.flaticon.com/).
