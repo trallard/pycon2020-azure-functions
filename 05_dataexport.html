@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Completing the data scenario &#8212; Easy data processing on Azure with Serverless Functions  documentation</title>
+    <title>Blob storage binding &#8212; Easy data processing on Azure with Serverless Functions  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
@@ -51,8 +51,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pipe-completing-the-data-scenario">
-<h1><img alt="pipe" class="inline-image" src="_images/pipe.svg" /> Completing the data scenario<a class="headerlink" href="#pipe-completing-the-data-scenario" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="pipe-blob-storage-binding">
+<h1><img alt="pipe" class="inline-image" src="_images/pipe.svg" /> Blob storage binding<a class="headerlink" href="#pipe-blob-storage-binding" title="Permalink to this headline">¶</a></h1>
 <p>You should now have a working function that collects data from the StackExchange API.</p>
 <p>In this section, we will:</p>
 <ul class="simple">
@@ -372,6 +372,16 @@
 </div>
 </div>
 </div></blockquote>
+<p>If you want, you can follow the steps in section <a class="reference internal" href="04_datafunction.html#localdebug"><span class="std std-ref">4. Debugging and executing locally</span></a> to run and debug your function locally.</p>
+<p>Otherwise, you can deploy and execute your function as we did in section <a class="reference internal" href="04_datafunction.html#deployandrun"><span class="std std-ref">5. Deploying your updated function</span></a> (except for the variables setting section as your storage details should be there already).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>When deploying your function, you can click on the pop-up window <strong>output window</strong> link to track the deployment status/progress.</p>
+<img alt="Explore deploy" class="align-center" src="_images/explore.png" />
+</div>
+<p>After running your function you can head over to <strong>Storage accounts &gt; &lt;your account&gt; &gt; Containers</strong> and click on your function Blob container.</p>
+<p>If all runs smoothly, you should be able to see the created file.</p>
+<img alt="Blob file" class="align-center" src="_images/blob_file.png" />
 </div>
 </div>
 <div class="section" id="floppy-additional-resources-and-docs">
@@ -436,7 +446,7 @@
 
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#"> Completing the data scenario</a><ul>
+<li><a class="reference internal" href="#"> Blob storage binding</a><ul>
 <li><a class="reference internal" href="#light-triggers-and-bindings"> Triggers and bindings</a><ul>
 <li><a class="reference internal" href="#create-azure-blob-storage">1. Create Azure Blob Storage</a></li>
 <li><a class="reference internal" href="#attach-blob-binding">2. Attach Blob binding</a></li>
@@ -466,7 +476,7 @@
 <li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html"> Your first Azure function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html"> Deploy your first function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_datafunction.html"> Data acquisition with functions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Completing the data scenario</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Blob storage binding</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#light-triggers-and-bindings"> Triggers and bindings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
