@@ -53,29 +53,337 @@
             
   <div class="section" id="pipe-completing-the-data-scenario">
 <h1><img alt="pipe" class="inline-image" src="_images/pipe.svg" /> Completing the data scenario<a class="headerlink" href="#pipe-completing-the-data-scenario" title="Permalink to this headline">¶</a></h1>
-<p>You should now have working function that collects data from the StackExchange API.</p>
-<p>In this section we will:</p>
+<p>You should now have a working function that collects data from the StackExchange API.</p>
+<p>In this section, we will:</p>
 <ul class="simple">
 <li><p>Complete the function to store the data in AzureBlob storage</p></li>
 <li><p>Create a second function that identifies the addition of a file to Azure Blob storage and triggers a second function</p></li>
-<li><p>Create a dabatase to store our cleaned data and modify the function to store the dabatase</p></li>
+<li><p>Create a database to store our cleaned data and modify the function to store the database</p></li>
 </ul>
 <div class="section" id="light-triggers-and-bindings">
 <h2><img alt="light" class="inline-image" src="_images/video-game.svg" /> Triggers and bindings<a class="headerlink" href="#light-triggers-and-bindings" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Triggers</strong>: these cause a function to run. They can be a HTTP request, a queue message or an event grid. Each function <strong>must</strong> have one trigger.</p></li>
-<li><p><strong>Binding</strong>: is a connection between a function and another resource or function. They can be <em>input bindings, output bindings</em> or both. These are optional and a function can have one or more bindings.</p></li>
+<li><p><strong>Triggers</strong>: these cause a function to run. They can be an HTTP request, a queue message or an event grid. Each function <strong>must</strong> have one trigger.</p></li>
+<li><p><strong>Binding</strong>: is a connection between a function and another resource or function. They can be <em>input bindings, output bindings</em> or both. These are optional, and a function can have one or more bindings.</p></li>
 </ul>
-<div class="section" id="add-azure-blob-storage">
-<h3>1. Add Azure Blob Storage<a class="headerlink" href="#add-azure-blob-storage" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="create-azure-blob-storage">
+<h3>1. Create Azure Blob Storage<a class="headerlink" href="#create-azure-blob-storage" title="Permalink to this headline">¶</a></h3>
+<p>We already created a Storage Account in the <a class="reference internal" href="03_functionsdeploy.html#deployfn"><span class="std std-ref"> Deploy your first function</span></a> section. The next step is to create a Blob Storage container so we can start saving the data collected through your function.</p>
+<ol class="arabic">
+<li><p>Head over to <a class="reference external" href="https://ms.portal.azure.com">portal.azure.com</a> and click on <strong>Storage accounts</strong> on the left sidebar and then on your function storage account.</p>
+<blockquote>
+<div><img alt="Storager dashboard" class="align-center" src="_images/storagedashboard.png" />
+</div></blockquote>
+</li>
+<li><p>Click on either of the <strong>Containers</strong> section (see image).</p>
+<blockquote>
+<div><img alt="Containers screenshot" class="align-center" src="_images/containers.png" />
+</div></blockquote>
+</li>
+<li><p>Click on <strong>+ Container</strong> at the top of the bar and provide a name for your Blob container.</p></li>
+<li><p>Without leaving your dashboard, click on <strong>Access keys</strong> on the sidebar menu and copy the Connection string.</p>
+<blockquote>
+<div><img alt="Storage dashboard access" class="align-center" src="_images/access.png" />
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="attach-blob-binding">
+<h3>2. Attach Blob binding<a class="headerlink" href="#attach-blob-binding" title="Permalink to this headline">¶</a></h3>
+<p>Now that you created the Blob container, you need to add the binding to your function.</p>
+<ol class="arabic">
+<li><p>Back in VS Code click on the <strong>Azure</strong> extension on the sidebar and then right-click on your function name &gt; <strong>Add binding</strong>.</p></li>
+<li><p>Since we want to store the outputs in the container, we need to select the <strong>OUT</strong> direction followed by <strong>Azure Blob Storage</strong>.</p></li>
+<li><p>Assign a name for the binding a path for the blob:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">functionblob</span><span class="o">/</span><span class="p">{</span><span class="n">DateTime</span><span class="p">}</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+<p>Notice that I am using the name of the container I created before and the binding expression <code class="docutils literal notranslate"><span class="pre">DateTime</span></code> which resolves to <code class="docutils literal notranslate"><span class="pre">DateTime.UtcNow</span></code>. The following blob path in a <code class="docutils literal notranslate"><span class="pre">function.json</span></code> file creates a blob with a name like <code class="docutils literal notranslate"><span class="pre">2020-04-16T17-59-55Z.txt</span></code>.</p>
+</div></blockquote>
+</li>
+<li><p>Select <strong>AzureWebJobsStorage</strong> for your local settings.</p></li>
+</ol>
+<p>Once completed, your <code class="docutils literal notranslate"><span class="pre">function.json</span></code> file should look like this:</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">function.json</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;scriptFile&quot;</span><span class="p">:</span> <span class="s2">&quot;main_function.py&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;bindings&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;mytimer&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;timerTrigger&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;schedule&quot;</span><span class="p">:</span> <span class="s2">&quot;0 0 9 * * *&quot;</span>
+        <span class="p">},</span>
+<span class="hll">        <span class="p">{</span>
+</span><span class="hll">        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blob&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;outputBlob&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{DateTime}.csv&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
+</span><span class="hll">        <span class="p">}</span>
+</span>    <span class="p">]</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="5">
+<li><p>Add the <strong>Storage access key</strong> that you copied before to your <code class="docutils literal notranslate"><span class="pre">local.settings.json</span></code>. If you added your storage account through the Azure functions extensions, this should already be populated.</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">local.settings.json</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;IsEncrypted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;Values&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="hll">        <span class="s2">&quot;AzureWebJobsStorage&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Your</span> <span class="n">key</span><span class="o">&gt;</span><span class="p">,</span>
+</span>        <span class="s2">&quot;FUNCTIONS_WORKER_RUNTIME&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AzureWebJobs.timer-function.Disabled&quot;</span><span class="p">:</span> <span class="s2">&quot;false&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="update-your-function">
+<h3>3. Update your function<a class="headerlink" href="#update-your-function" title="Permalink to this headline">¶</a></h3>
+<p>We now need to update the function so that:</p>
+<ul>
+<li><p>Save the collected API items in a CSV file</p></li>
+<li><p>Store the file in the Blob container</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">main_funtion.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="kn">import</span> <span class="nn">azure.functions</span> <span class="k">as</span> <span class="nn">func</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">find_dotenv</span><span class="p">,</span> <span class="n">load_dotenv</span>
+<span class="hll"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Iterator</span>
+</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">stack</span>
+
+<span class="c1"># --------------------------</span>
+<span class="c1"># Helper methods</span>
+<span class="c1"># --------------------------</span>
+
+
+<span class="k">def</span> <span class="nf">get_vars</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Collect the needed keys to call the APIs and access storage accounts.</span>
+
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Optional - if dotenv file is present then this is loaded, else the</span>
+<span class="sd">        vars are used directly from the system env</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dotenv_path</span> <span class="o">=</span> <span class="n">find_dotenv</span><span class="p">(</span><span class="s2">&quot;.env&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Dotenv located, loading vars from local instance&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">load_dotenv</span><span class="p">(</span><span class="n">dotenv_path</span><span class="p">)</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading directly from the system&quot;</span><span class="p">)</span>
+
+
+<span class="hll"><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span><span class="n">se_iterator</span><span class="p">):</span>
+</span><span class="hll">    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class="hll">        <span class="s2">&quot;question_id&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="s2">&quot;title&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="s2">&quot;is_answered&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="s2">&quot;link&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="s2">&quot;owner_reputation&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="s2">&quot;score&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="s2">&quot;tags&quot;</span><span class="p">,</span>
+</span><span class="hll">    <span class="p">]</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="k">try</span><span class="p">:</span>
+</span><span class="hll">
+</span><span class="hll">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;out.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class="hll">            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+</span><span class="hll">            <span class="n">writer</span><span class="o">.</span><span class="n">writeheader</span><span class="p">()</span>
+</span><span class="hll">            <span class="k">for</span> <span class="n">question</span> <span class="ow">in</span> <span class="n">se_iterator</span><span class="p">:</span>
+</span><span class="hll">                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+</span><span class="hll">        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Cannot write, IOError&quot;</span><span class="p">)</span>
+</span>
+
+<span class="c1"># -----------------------------------------</span>
+<span class="c1"># Main method - executed by the function</span>
+<span class="c1"># -----------------------------------------</span>
+
+
+<span class="hll"><span class="k">def</span> <span class="nf">main</span><span class="p">(</span>
+</span><span class="hll">    <span class="n">mytimer</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">TimerRequest</span><span class="p">,</span> <span class="n">outputBlob</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">Out</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">context</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">Context</span>
+</span><span class="hll"><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span>    <span class="sd">&quot;&quot;&quot;Main function to collect questions from stackexchange.</span>
+<span class="sd">    Note that right now the site is harcoded to &quot;StackOverflow&quot; but this</span>
+<span class="sd">    can be changed in stack.py</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mytimer (func.TimerRequest): Timer trigger for the function, for more</span>
+<span class="sd">        details check function.json</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># collect timestamp for the function that is being called</span>
+    <span class="n">utc_timestamp</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function executing at </span><span class="si">{</span><span class="n">utc_timestamp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">get_vars</span><span class="p">()</span>
+
+    <span class="c1"># as many search terms as wanted - must be a list</span>
+    <span class="n">stackexchange</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">se_object</span><span class="p">([</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;azure-functions&quot;</span><span class="p">])</span>
+
+    <span class="n">se_questions</span> <span class="o">=</span> <span class="n">stackexchange</span><span class="o">.</span><span class="n">get_questions</span><span class="p">()</span>
+
+<span class="hll">    <span class="n">write_file</span><span class="p">(</span><span class="n">se_questions</span><span class="p">)</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="c1"># stores in the Blob container</span>
+</span><span class="hll">    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;out.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class="hll">        <span class="n">outputBlob</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</span><span class="hll">        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># set logging format - personal preference</span>
+    <span class="n">log_fmt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">log_fmt</span><span class="p">)</span>
+
+    <span class="c1"># call main function</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>Notice these lines in the above code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span>
+    <span class="n">mytimer</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">TimerRequest</span><span class="p">,</span>
+    <span class="n">outputBlob</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">Out</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span>
+    <span class="n">context</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">Context</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">outputBlob:</span> <span class="pre">func.Out[bytes]</span></code> specifies the binding we just created and <code class="docutils literal notranslate"><span class="pre">context:</span> <span class="pre">func.Context</span></code> allows the function to get the context from the <cite>host.json</cite> file.</p>
+<p>And also the StackExchage script:</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">stack.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">JSONDecodeError</span>
+<span class="hll"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Iterator</span>
+</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">se_object</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class to deal with StackExchage data collection and manipulation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">search_terms</span><span class="p">:</span> <span class="nb">list</span>
+    <span class="n">main_uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;https://api.stackexchange.com/2.2/questions&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;Object for site </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">main_uri</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+
+<span class="hll">    <span class="k">def</span> <span class="nf">get_questions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterator</span><span class="p">[</span><span class="nb">dict</span><span class="p">]]:</span>
+</span>        <span class="sd">&quot;&quot;&quot;Collect questions from SE and returns an iterator containint the items founf</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n (int, optional): Number of questions to collect from the last 24 hours. Defaults to 100.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># note that this needs to be in epoch</span>
+        <span class="n">time_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time_now</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;fromdate&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()),</span>
+            <span class="s2">&quot;todate&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_now</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()),</span>
+            <span class="s2">&quot;site&quot;</span><span class="p">:</span> <span class="s2">&quot;stackoverflow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sort&quot;</span><span class="p">:</span> <span class="s2">&quot;votes&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="s2">&quot;desc&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tagged&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_terms</span><span class="p">,</span>
+            <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SE_client_id&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SE_client_secret&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SE_key&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SE_key&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No StackExchange API key provided, limited use may apply&quot;</span><span class="p">)</span>
+
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_uri</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">new_questions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_items</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🐍 Collected new questions for the search term&quot;</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">new_questions</span>
+
+            <span class="k">except</span> <span class="p">(</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;error_message&quot;</span><span class="p">]</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;(Unable to connect to Stack Exchage: status code </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+<span class="hll">    <span class="k">def</span> <span class="nf">extract_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+</span><span class="hll">        <span class="sd">&quot;&quot;&quot;Method used to extract the response items. This returns a generator for simplicity.</span>
+</span><span class="hll">
+</span><span class="hll"><span class="sd">        Args:</span>
+</span><span class="hll"><span class="sd">            response (HTTPResponse): Response from the API call</span>
+</span><span class="hll">
+</span><span class="hll"><span class="sd">        Returns:</span>
+</span><span class="hll"><span class="sd">            Iterator[dict]: Generator- dictionary with the response items</span>
+</span><span class="hll">
+</span><span class="hll"><span class="sd">        Yields:</span>
+</span><span class="hll"><span class="sd">            Iterator[dict]: Generator- dictionary with the response items</span>
+</span><span class="hll"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span class="hll">        <span class="k">for</span> <span class="n">question</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;items&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+</span><span class="hll">            <span class="k">yield</span> <span class="p">{</span>
+</span><span class="hll">                <span class="s2">&quot;question_id&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">[</span><span class="s2">&quot;question_id&quot;</span><span class="p">],</span>
+</span><span class="hll">                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">],</span>
+</span><span class="hll">                <span class="s2">&quot;is_answered&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">[</span><span class="s2">&quot;is_answered&quot;</span><span class="p">],</span>
+</span><span class="hll">                <span class="s2">&quot;link&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">[</span><span class="s2">&quot;link&quot;</span><span class="p">],</span>
+</span><span class="hll">                <span class="s2">&quot;owner_reputation&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">[</span><span class="s2">&quot;owner&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;reputation&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+</span><span class="hll">                <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">],</span>
+</span><span class="hll">                <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">],</span>
+</span><span class="hll">            <span class="p">}</span>
+</span></pre></div>
+</div>
+</div>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="floppy-additional-resources-and-docs">
 <h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://github.com/trallard/pycon2020-azure-functions/tree/master/storage-blob-container">ARM template for Blob Storage container</a></p></li>
 <li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings?WT.mc_id=pycon_tutorial-github-taallard">Azure functions triggers and bindings</a></p></li>
 <li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings#supported-bindings?WT.mc_id=pycon_tutorial-github-taallard">Azure functions supported bindings</a></p></li>
 <li><p><a class="reference external" href="http://azure.microsoft.com/documentation/articles/storage-create-storage-account?WT.mc_id=pycon_tutorial-github-taallard">Azure Storage documentation</a></p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-expressions-patterns?WT.mc_id=pycon_tutorial-github-taallard">Binding expressions docs</a></p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python#outputs?WT.mc_id=pycon_tutorial-github-taallard">Azure function reference output</a></p></li>
+<li><p><a class="reference external" href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html">Python type hints cheatsheet</a></p></li>
 </ul>
 </div>
 </div>
@@ -130,7 +438,9 @@
   <ul>
 <li><a class="reference internal" href="#"> Completing the data scenario</a><ul>
 <li><a class="reference internal" href="#light-triggers-and-bindings"> Triggers and bindings</a><ul>
-<li><a class="reference internal" href="#add-azure-blob-storage">1. Add Azure Blob Storage</a></li>
+<li><a class="reference internal" href="#create-azure-blob-storage">1. Create Azure Blob Storage</a></li>
+<li><a class="reference internal" href="#attach-blob-binding">2. Attach Blob binding</a></li>
+<li><a class="reference internal" href="#update-your-function">3. Update your function</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
