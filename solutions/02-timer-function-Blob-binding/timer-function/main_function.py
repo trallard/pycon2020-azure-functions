@@ -80,14 +80,15 @@ def main(
     get_vars()
 
     # as many search terms as wanted - must be a list
-    stackexchange = stack.se_object(["python", "azure-functions"])
+    stackexchange = stack.se_object(["python"])
 
-    se_questions = stackexchange.get_questions()
+    se_questions = stackexchange.run_query(n=200)
 
     write_file(se_questions)
 
     # stores in the Blob container
     with open("out.csv", "r") as f:
+
         outputBlob.set(f.read())
         f.close()
 

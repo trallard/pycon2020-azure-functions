@@ -15,16 +15,18 @@ class se_object:
     """
 
     search_terms: list
+    query_type: str = "and"
     main_uri: str = "https://api.stackexchange.com/2.2/questions"
 
     def __repr__(self) -> str:
         return f"<Object for site {self.main_uri}>"
 
-    def get_questions(self, n=100) -> Optional[Iterator[dict]]:
-        """Collect questions from SE and returns an iterator containint the items founf
+    def create_payload(self, search_terms, n) -> dict:
+
+        """Construct the payload based on the verification step before
         
-        Args:
-            n (int, optional): Number of questions to collect from the last 24 hours. Defaults to 100.            
+        Returns:
+            payload [dict]: payload to be sent over to the API
         """
 
         # note that this needs to be in epoch
@@ -37,14 +39,16 @@ class se_object:
             "site": "stackoverflow",
             "sort": "votes",
             "order": "desc",
-            "tagged": self.search_terms,
+            "tagged": search_terms,
             "client_id": os.environ.get("SE_client_id"),
             "client_secret": os.environ.get("SE_client_secret"),
             "key": os.environ.get("SE_key", None),
+            "pagesize": n,
         }
 
-        if os.environ.get("SE_key", None) is None:
-            logging.info("No StackExchange API key provided, limited use may apply")
+        return payload
+
+    def call_API(self, payload) -> Optional[Iterator[dict]]:
 
         resp = requests.get(self.main_uri, payload)
 
@@ -64,6 +68,48 @@ class se_object:
                 f"(Unable to connect to Stack Exchage: status code {resp.status_code} - {error}"
             )
 
+    def run_query(self, n=100) -> Optional[Iterator[dict]]:
+        """Validate the query, then construct the payload and call the API
+        
+        Args:
+            n (int, optional): Number of questions to collect from the last 24 hours. Defaults to 100. 
+
+        Returns:
+            Optional[Iterator[dict]]: results of the API call.
+        """
+        if os.environ.get("SE_key", None) is None:
+            logging.info("No StackExchange API key provided, limited use may apply")
+
+        if len(self.search_terms) == 1:
+
+            payload = self.create_payload(self.search_terms, n)
+
+            new_questions = self.call_API(payload)
+
+            return new_questions
+
+        elif (len(self.search_terms) > 1) and (self.query_type == "and"):
+            search_items = ";".join(self.search_terms)
+
+            payload = self.create_payload(search_items, n)
+
+            new_questions = self.call_API(payload)
+
+            return new_questions
+
+        elif (len(self.search_terms) > 1) and (self.query_type == "or"):
+            search_items = self.search_terms
+
+            for term in search_items:
+                payload = self.create_payload(term, n)
+
+                new_questions = self.call_API(payload)
+
+            return new_questions
+
+        else:
+            logging.error("Only search supported are: 'and' 'or' types.")
+
     def extract_items(self, response) -> Iterator[dict]:
         """Method used to extract the response items. This returns a generator for simplicity.
         
@@ -77,6 +123,7 @@ class se_object:
             Iterator[dict]: Generator- dictionary with the response items
         """
         for question in response.json().get("items", []):
+            # logging.info(f"{question.get('tags')}")
             yield {
                 "question_id": question["question_id"],
                 "title": question["title"],
