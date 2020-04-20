@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Completing the scenario &#8212; Easy data processing on Azure with Serverless Functions  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Glossary" href="glossary.html" />
+    <link rel="prev" title="Adding Blob storage bindings" href="05_data_export.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="05_data_export.html" title="Previous document"> Adding Blob storage bindings</a>
+        </li>
+        <li>
+          <a href="glossary.html" title="Next document">Glossary</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="d-completing-the-scenario">
+<h1><img alt="3d" class="inline-image" src="_images/3d.svg" /> Completing the scenario<a class="headerlink" href="#d-completing-the-scenario" title="Permalink to this headline">¶</a></h1>
+<p>To finish the scenario we are going to do the following:</p>
+<ul class="simple">
+<li><p>Create a new function that will have as trigger the Blob Storage file creation</p></li>
+<li><p>Trigger the function to clean the data and add it to a database</p></li>
+<li><p>Send automated emails with the URLs from the questions</p></li>
+</ul>
+<p>Let’s go.</p>
+<div class="section" id="create-your-new-function">
+<h2>1. Create your new function<a class="headerlink" href="#create-your-new-function" title="Permalink to this headline">¶</a></h2>
+<p>Creating a new function in an existing functions project is very similar to the process we followed in section <a class="reference internal" href="02_functions_intro.html#functions101"><span class="std std-ref"> Your first Azure function</span></a>.</p>
+<p>Inside the same VS Code workspace we have been using until now:</p>
+<ol class="arabic">
+<li><p>Click on the Azure extension on the sidebar.</p></li>
+<li><p>In the Azure functions section click on the <strong>Create function</strong> icon.</p>
+<blockquote>
+<div><img alt="Create function" class="align-center" src="_images/new_function.png" />
+</div></blockquote>
+</li>
+<li><p>Select the <strong>Azure Blob storage trigger</strong> and <strong>AzureWebJobsStorage</strong>.</p></li>
+<li><p>Finally provide the blob path to be monitored: <code class="docutils literal notranslate"><span class="pre">functionblob/{name}</span></code>.</p></li>
+</ol>
+<p>Your new <cite>function.json</cite> file should look like this:</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">blob-manipulation/function.json</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;scriptFile&quot;</span><span class="p">:</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;bindings&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myblob&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blobTrigger&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can also filter based on file extension, for example <code class="docutils literal notranslate"><span class="pre">functionblob/{name}.csv</span></code></p>
+</div>
+</div>
+<div class="section" id="floppy-additional-resources-and-docs">
+<h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=python?WT.mc_id=pycon_tutorial-github-taallard">Azure Blob Storage trigger docs</a></p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=python#blob-name-patterns">Blob name patterns</a></p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-input?tabs=python">Azure Blob storage input binding</a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="05_data_export.html" title="Previous document"> Adding Blob storage bindings</a>
+        </li>
+        <li>
+          <a href="glossary.html" title="Next document">Glossary</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/images/Bit_BobRoss.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Azure sponsored workshop: PyCon 2020</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=trallard&repo=pycon2020-azure-functions&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"> Completing the scenario</a><ul>
+<li><a class="reference internal" href="#create-your-new-function">1. Create your new function</a></li>
+<li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Tutorial Table of Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html"> Easy data processing on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html"> Setup and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html"> Your first Azure function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_functions_deploy.html"> Deploy your first function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_data_function.html"> Data acquisition with functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_data_export.html"> Adding Blob storage bindings</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Completing the scenario</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#create-your-new-function">1. Create your new function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="05_data_export.html" title="previous chapter"> Adding Blob storage bindings</a></li>
+      <li>Next: <a href="glossary.html" title="next chapter">Glossary</a></li>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Tania Allard.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/06_complete_scenario.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

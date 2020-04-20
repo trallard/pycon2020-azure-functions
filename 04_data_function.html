@@ -18,8 +18,8 @@
     <script src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Blob storage binding" href="05_dataexport.html" />
-    <link rel="prev" title="Deploy your first function" href="03_functionsdeploy.html" />
+    <link rel="next" title="Adding Blob storage bindings" href="05_data_export.html" />
+    <link rel="prev" title="Deploy your first function" href="03_functions_deploy.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -38,10 +38,10 @@
     <ul>
         <li>
           &larr;
-          <a href="03_functionsdeploy.html" title="Previous document"> Deploy your first function</a>
+          <a href="03_functions_deploy.html" title="Previous document"> Deploy your first function</a>
         </li>
         <li>
-          <a href="05_dataexport.html" title="Next document"> Blob storage binding</a>
+          <a href="05_data_export.html" title="Next document"> Adding Blob storage bindings</a>
           &rarr;
         </li>
     </ul>
@@ -84,8 +84,8 @@ touch &lt;your-function-dir&gt;/utils/stack.py
 <div class="section" id="add-methods">
 <h3>2. Add methods<a class="headerlink" href="#add-methods" title="Permalink to this headline">¶</a></h3>
 <p>Now that we have the necessary files we have to update  <code class="docutils literal notranslate"><span class="pre">utils/stack.py</span></code> to handle the requests to the StackExchange API:</p>
-<div class="literal-block-wrapper docutils container" id="utils-stack-py">
-<div class="code-block-caption"><span class="caption-text">utils/stack.py</span><a class="headerlink" href="#utils-stack-py" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">utils/stack.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -110,9 +110,9 @@ touch &lt;your-function-dir&gt;/utils/stack.py
 
     <span class="k">def</span> <span class="nf">get_questions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Collect questions from SE and returns a list</span>
-
+<span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            n (int, optional): Number of questions to collect from the last 24 hours. Defaults to 100.</span>
+<span class="sd">            n (int, optional): Number of questions to collect from the last 24 hours. Defaults to 100.            </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># note that this needs to be in epoch</span>
@@ -157,8 +157,8 @@ touch &lt;your-function-dir&gt;/utils/stack.py
 </div>
 <p>Note how we use the trigger time to set the <code class="docutils literal notranslate"><span class="pre">todate</span></code> and <code class="docutils literal notranslate"><span class="pre">fromdate</span></code> in the StackExchange query.</p>
 <p>So we need to modify the main script for our function too:</p>
-<div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">__init__.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">__init__.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
@@ -176,7 +176,7 @@ touch &lt;your-function-dir&gt;/utils/stack.py
 <span class="k">def</span> <span class="nf">get_vars</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Collect the needed keys to call the APIs and access storage accounts.</span>
 
-
+<span class="sd">    </span>
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: Optional - if dotenv file is present then this is loaded, else the</span>
 <span class="sd">        vars are used directly from the system env</span>
@@ -187,7 +187,7 @@ touch &lt;your-function-dir&gt;/utils/stack.py
         <span class="k">return</span> <span class="n">load_dotenv</span><span class="p">(</span><span class="n">dotenv_path</span><span class="p">)</span>
 
     <span class="k">except</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading directly from the system&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading directly from system&quot;</span><span class="p">)</span>
 
 
 <span class="c1"># -----------------------------------------</span>
@@ -199,9 +199,9 @@ touch &lt;your-function-dir&gt;/utils/stack.py
     <span class="sd">&quot;&quot;&quot;Main function to collect questions from stackexchange.</span>
 <span class="sd">    Note that right now the site is harcoded to &quot;StackOverflow&quot; but this</span>
 <span class="sd">    can be changed in stack.py</span>
-
+<span class="sd">    </span>
 <span class="sd">    Args:</span>
-<span class="sd">        mytimer (func.TimerRequest): Timer trigger for the function, for more</span>
+<span class="sd">        mytimer (func.TimerRequest): Timer trigger for the function, for more </span>
 <span class="sd">        details check function.json</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -247,9 +247,9 @@ touch &lt;your-function-dir&gt;/utils/stack.py
 <ol class="arabic simple" start="2">
 <li><p>Since we are using <em>requests</em> and <em>python-dotenv</em> we need to update the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file:</p></li>
 </ol>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">requirements.txt</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">azure</span><span class="o">-</span><span class="n">functions</span>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">requirements.txt</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">azure</span><span class="o">-</span><span class="n">functions</span>
 <span class="n">python</span><span class="o">-</span><span class="n">dotenv</span><span class="o">==</span><span class="mf">0.13</span><span class="o">.</span><span class="mi">0</span>
 <span class="n">requests</span><span class="o">==</span><span class="mf">2.23</span><span class="o">.</span><span class="mi">0</span>
 </pre></div>
@@ -258,8 +258,8 @@ touch &lt;your-function-dir&gt;/utils/stack.py
 <ol class="arabic simple" start="3">
 <li><p>Finally, we need to create a <code class="docutils literal notranslate"><span class="pre">.env</span></code> file to store API keys and other environment variables for local development and debugging.</p></li>
 </ol>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">.env</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">.env</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stackexchange</span>
 
 <span class="n">SE_client_id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">secret</span><span class="o">&gt;</span>
@@ -304,7 +304,7 @@ touch &lt;your-function-dir&gt;/utils/stack.py
 <div><img alt="Confirm deployment" class="align-center" src="_images/redeploy.png" />
 </div></blockquote>
 </li>
-<li><p>Head over to <a class="reference external" href="https://ms.portal.azure.com">portal.azure.com</a> and follow the same instructions as in <a class="reference internal" href="03_functionsdeploy.html#portalinst"><span class="std std-ref">Using the Azure portal</span></a> to get to your function main page:</p>
+<li><p>Head over to <a class="reference external" href="https://ms.portal.azure.com">portal.azure.com</a> and follow the same instructions as in <a class="reference internal" href="03_functions_deploy.html#portalinst"><span class="std std-ref">Using the Azure portal</span></a> to get to your function main page:</p>
 <blockquote>
 <div><img alt="Function config" class="align-center" src="_images/configuration.png" />
 </div></blockquote>
@@ -343,10 +343,10 @@ Add one by one as a separate value-pair (should look like 2 in image).</p>
     <ul>
         <li>
           &larr;
-          <a href="03_functionsdeploy.html" title="Previous document"> Deploy your first function</a>
+          <a href="03_functions_deploy.html" title="Previous document"> Deploy your first function</a>
         </li>
         <li>
-          <a href="05_dataexport.html" title="Next document"> Blob storage binding</a>
+          <a href="05_data_export.html" title="Next document"> Adding Blob storage bindings</a>
           &rarr;
         </li>
     </ul>
@@ -408,20 +408,21 @@ Add one by one as a separate value-pair (should look like 2 in image).</p>
     </div>
 </div>
 <script>$('#searchbox').show(0);</script><h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<p class="caption"><span class="caption-text">Tutorial Table of Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html"> Easy data processing on Azure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="setup.html"> Setup and installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_introduction.html">Introduction to serverless and Azure functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_functions_intro.html"> Your first Azure function</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_functionsdeploy.html"> Deploy your first function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_functions_deploy.html"> Deploy your first function</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Data acquisition with functions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-details">The details</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#connecting-to-the-stackexchange-api">Connecting to the StackExchange API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="05_dataexport.html"> Blob storage binding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_data_export.html"> Adding Blob storage bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_complete_scenario.html"> Completing the scenario</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 </ul>
 
@@ -429,8 +430,8 @@ Add one by one as a separate value-pair (should look like 2 in image).</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="03_functionsdeploy.html" title="previous chapter"> Deploy your first function</a></li>
-      <li>Next: <a href="05_dataexport.html" title="next chapter"> Blob storage binding</a></li>
+      <li>Previous: <a href="03_functions_deploy.html" title="previous chapter"> Deploy your first function</a></li>
+      <li>Next: <a href="05_data_export.html" title="next chapter"> Adding Blob storage bindings</a></li>
   </ul></li>
 </ul>
 </div>
@@ -446,7 +447,7 @@ Add one by one as a separate value-pair (should look like 2 in image).</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/04_datafunction.rst.txt"
+      <a href="_sources/04_data_function.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
