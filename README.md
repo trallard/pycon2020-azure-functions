@@ -11,13 +11,21 @@ The solutions are located in this repository in the [solutions](./solutions) dir
 
 :sparkles: There is also a video that will be released in the upcoming weeks.
 
+## Table of Contents
+- [⚡️ 🐍 Easy data processing with Azure functions and Python](#️--easy-data-processing-with-azure-functions-and-python)
+  - [📝 Description](#-description)
+  - [🔖 Outline](#-outline)
+  - [💻 Pre-requisites](#-pre-requisites)
+  - [👀 Solutions](#-solutions)
+  - [License](#license)
+
 ## 📝 Description
 
 Serverless computing (also known as function as a service, FaaS) is a design patters where applications are hosted by a third-party service (i.e. Azure) eliminating the need for server software and hardware management by the developer.  
 
 Serverless can be an excellent alternative for Pythonistas interested in data processing as it allows them to focus on their code rather than the cloud infrastructure. This workshop will introduce attendees to Azure Functions for data processing scenarios (including data acquisition, cleaning and transformation and storage for subsequent usage). 
 
-After this tutorial, attendees will have had practical experience with Azure functions for data processing scenarios. Also, they will leave the workshop with a basic function for data processing that could be further modified/extended to suit their needs/requirements. 
+After this tutorial, attendees will have had practical experience with Azure functions for data processing scenarios. Also, they will leave the workshop with a basic function for data processing that could be further modified/extended to suit their needs/requirements.
 
 ## 🔖 Outline
 
@@ -48,7 +56,18 @@ We assume that you:
 - Have some experience with data wrangling and/or data processing (not extensive experience required but have, for example, used libraries like pandas and requests for data wrangling and API access)
 
 - Are comfortable using the command line/terminal (no need to be an expert but should be comfortable enough to navigate file systems and perform necessary Git tasks)
+
+## 👀 Solutions
+
+The solutions can be found in the [solutions directory](./solutions) in thid repository.
+
+- Timer function: [API data acqusition only](./solutions/01-timer-function-data-acquisition/)
+- Timer function: [API + Blob binding](./solutions/02-timer-function-Blob-binding/)
   
+ARM templates included:
+- [Storage account and Blob Storage](./solutions/../storage-blob-container/azuredeploy.json)
+
+
 ## License
 
 The contents in this repo are licensed under the (https://opensource.org/licenses/MIT)(MIT) OSI license.
