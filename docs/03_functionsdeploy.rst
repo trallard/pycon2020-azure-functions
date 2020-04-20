@@ -1,3 +1,5 @@
+.. _deployfn:
+
 |cloud-computing| Deploy your first function
 ==============================================
 

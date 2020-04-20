@@ -135,4 +135,7 @@ rst_epilog = """
 
 .. |azureportal| replace:: `portal.azure.com`_
 .. _portal.azure.com: https://ms.portal.azure.com
+
+.. |repo| replace:: `this tutorial repository`_
+.. _this tutorial repository: https://github.com/trallard/pycon2020-azure-functions
 """
