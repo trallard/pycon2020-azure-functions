@@ -1,4 +1,4 @@
-|pipe| Completing the data scenario
+|pipe| Blob storage binding
 ====================================
 
 You should now have a working function that collects data from the StackExchange API.
@@ -324,7 +324,7 @@ And also the StackExchage script:
 
 If you want, you can follow the steps in section :ref:`localdebug` to run and debug your function locally.
 
-Otherwise you can deploy and execute your function like we did in section :ref:`deployandrun` (except for the variables setting section as your storage details should be there already). 
+Otherwise, you can deploy and execute your function as we did in section :ref:`deployandrun` (except for the variables setting section as your storage details should be there already). 
 
 
 .. tip:: When deploying your function, you can click on the pop-up window **output window** link to track the deployment status/progress.
@@ -332,6 +332,15 @@ Otherwise you can deploy and execute your function like we did in section :ref:`
     .. image:: _static/images/snaps/explore.png
         :align: center
         :alt: Explore deploy
+
+After running your function you can head over to **Storage accounts > <your account> > Containers** and click on your function Blob container.
+
+If all runs smoothly, you should be able to see the created file. 
+
+.. image:: _static/images/snaps/blob_file.png
+        :align: center
+        :alt: Blob file
+
 
 
 |floppy| Additional resources and docs

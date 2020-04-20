@@ -31,13 +31,13 @@ There are multiple ways to check the status of your function. We will do this fr
             :align: center
             :alt: Azure portal home
 
-#. On the sidebar find the **Function app** section and click on it (1 in image) and the on your function nameL
+#. On the sidebar find the **Function app** section and click on it (1 in image) and the on your function name:
 
     .. image:: _static/images/snaps/portal_02.png
             :align: center
-            :alt: Resource group
+            :alt: Function app
 
-#. Click on your function name (see image above) and then on the **monitor** section of the sidebar.
+#. Click on **Monitor** in the new sidebar.
 
     .. image:: _static/images/snaps/portal_03.png
             :align: center
@@ -45,7 +45,7 @@ There are multiple ways to check the status of your function. We will do this fr
 
 #. In the following screen, you should be able to see the status of your function, the runs and their statuses as well as the URL for your app. You can also click on each individual run to check the logs output.
 
-    .. image:: _static/images/snaps/portal_02.png
+    .. image:: _static/images/snaps/portal_04.png
             :align: center
             :alt: Resource group
 
