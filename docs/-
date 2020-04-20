@@ -31,7 +31,7 @@ There are multiple ways to check the status of your function. We will do this fr
             :align: center
             :alt: Azure portal home
 
-#. On the sidebar find the **Function app** section and click on it (1 in image) and the on your function nameL
+#. On the sidebar find the **Function app** section and click on it (1 in image) and the on your function name:
 
     .. image:: _static/images/snaps/portal_02.png
             :align: center

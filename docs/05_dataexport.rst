@@ -322,6 +322,16 @@ And also the StackExchage script:
                             "tags": question["tags"],
                         }
 
+If you want, you can follow the steps in section :ref:`localdebug` to run and debug your function locally.
+
+Otherwise you can deploy and execute your function like we did in section :ref:`deployandrun` (except for the variables setting section as your storage details should be there already). 
+
+
+.. tip:: When deploying your function, you can click on the pop-up window **output window** link to track the deployment status/progress.
+
+    .. image:: _static/images/snaps/explore.png
+        :align: center
+        :alt: Explore deploy
 
 
 |floppy| Additional resources and docs

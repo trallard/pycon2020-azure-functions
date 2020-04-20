@@ -221,6 +221,8 @@ So we need to modify the main script for our function too:
 
 .. warning:: **Do not** commit this .env file to version control. We will learn later on the tutorial how to securely add variables to your Azure functions. 
 
+.. _localdebug:
+
 4. Debugging and executing locally
 *************************************
 
@@ -243,6 +245,8 @@ If everything was correctly updated, then you should see the function output in 
     [15/04/2020 14:03:35] 🐍 Collected 30 new questions for the search term
     [15/04/2020 14:03:35]  INFO: Successfully processed FunctionInvocationRequest, request ID: 4bab6cbc-a5eb-4ce9-9cb5-4580ca431de3, function ID: c8491e7b-4c49-4546-9a0a-5a07ba7e2020, invocation ID: d900f28c-10e5-4e40-8de1-a17079674139
     [15/04/2020 14:03:35] Executed 'Functions.timer-function' (Succeeded, Id=d900f28c-10e5-4e40-8de1-a17079674139)
+
+.. _deployandrun:
 
 5. Deploying your updated function
 ************************************
