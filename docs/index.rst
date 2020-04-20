@@ -9,21 +9,6 @@
 with Serverless Functions
 ---------------------------------------------------------
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Table of Contents:
-   :hidden:
-
-   self
-   setup
-   01_introduction
-   02_functions_intro
-   03_functionsdeploy
-   04_datafunction
-   05_dataexport
-   glossary
-
-
 Welcome to the data processing with Azure functions workshop!
 This was initially planned to be delivered at PyCon US 2020 but is now available online as part of the online efforts by the amazing PyCon staff.
 
@@ -77,3 +62,18 @@ We assume that you:
 
 The setup and other instructions to set your development environment can be found in the :ref:`setup` section of this tutorial.
 Make sure to follow these instructions before continuing with the rest of the tutorial.
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tutorial Table of Contents:
+
+   self
+   setup
+   01_introduction
+   02_functions_intro
+   03_functions_deploy
+   04_data_function
+   05_data_export
+   06_complete_scenario
+   glossary
