@@ -56,7 +56,6 @@
 <p>To finish the scenario we are going to do the following:</p>
 <ul class="simple">
 <li><p>Create a new function that will have as trigger the Blob Storage file creation</p></li>
-<li><p>Trigger the function to clean the data and add it to a database</p></li>
 <li><p>Send automated emails with the URLs from the questions</p></li>
 </ul>
 <p>Let’s go.</p>
@@ -79,16 +78,16 @@
 <div><div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">blob-manipulation/function.json</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;scriptFile&quot;</span><span class="p">:</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;bindings&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myblob&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blobTrigger&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
+  <span class="nt">&quot;scriptFile&quot;</span><span class="p">:</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;bindings&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myblob&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blobTrigger&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -98,6 +97,9 @@
 <p class="admonition-title">Tip</p>
 <p>You can also filter based on file extension, for example <code class="docutils literal notranslate"><span class="pre">functionblob/{name}.csv</span></code></p>
 </div>
+</div>
+<div class="section" id="create-email-binding">
+<h2>2. Create email binding<a class="headerlink" href="#create-email-binding" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="floppy-additional-resources-and-docs">
 <h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
@@ -159,6 +161,7 @@
   <ul>
 <li><a class="reference internal" href="#"> Completing the scenario</a><ul>
 <li><a class="reference internal" href="#create-your-new-function">1. Create your new function</a></li>
+<li><a class="reference internal" href="#create-email-binding">2. Create email binding</a></li>
 <li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
@@ -185,6 +188,7 @@
 <li class="toctree-l1"><a class="reference internal" href="05_data_export.html"> Adding Blob storage bindings</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Completing the scenario</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#create-your-new-function">1. Create your new function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-email-binding">2. Create email binding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>

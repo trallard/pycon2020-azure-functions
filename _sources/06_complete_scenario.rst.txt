@@ -4,7 +4,6 @@
 To finish the scenario we are going to do the following:
 
 - Create a new function that will have as trigger the Blob Storage file creation
-- Trigger the function to clean the data and add it to a database
 - Send automated emails with the URLs from the questions
 
 Let's go.
@@ -28,24 +27,14 @@ Inside the same VS Code workspace we have been using until now:
 
 Your new `function.json` file should look like this:
 
-    .. code-block:: json
+    .. literalinclude:: ../solutions/03-full-pipeline/blob-manipulation/function.json
+        :language: json
         :caption: blob-manipulation/function.json
-
-        {
-            "scriptFile": "__init__.py",
-            "bindings": [
-                {
-                "name": "myblob",
-                "type": "blobTrigger",
-                "direction": "in",
-                "path": "functionblob/{name}",
-                "connection": "AzureWebJobsStorage"
-                }
-            ]
-        }
 
 .. tip:: You can also filter based on file extension, for example ``functionblob/{name}.csv``
 
+2. Create email binding
+------------------------------
 
 |floppy| Additional resources and docs
 ---------------------------------------
