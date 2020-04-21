@@ -1,9 +1,9 @@
 import datetime
 import logging
+from typing import Optional
 
 import azure.functions as func
 from dotenv import find_dotenv, load_dotenv
-from typing import Optional
 
 from .utils import stack
 
