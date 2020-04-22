@@ -7,6 +7,12 @@
       "direction": "in",
       "path": "functionblob/{name}",
       "connection": "AzureWebJobsStorage"
+    },
+    {
+      "type": "sendGrid",
+      "direction": "out",
+      "name": "sendemail",
+      "apiKey": "SendGridAPIKeyAsAppSetting"
     }
   ]
 }
