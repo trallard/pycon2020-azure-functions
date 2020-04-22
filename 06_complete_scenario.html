@@ -71,20 +71,34 @@
 </div></blockquote>
 </li>
 <li><p>Select the <strong>Azure Blob storage trigger</strong> and <strong>AzureWebJobsStorage</strong>.</p></li>
-<li><p>Finally provide the blob path to be monitored: <code class="docutils literal notranslate"><span class="pre">functionblob/{name}</span></code>.</p></li>
+<li><p>Finally provide the blob path to be monitored: <code class="docutils literal notranslate"><span class="pre">functionblob/{name}.csv</span></code>.</p></li>
 </ol>
+<p>As before, I am going to rename the <code class="docutils literal notranslate"><span class="pre">scriptFile</span></code> to <code class="docutils literal notranslate"><span class="pre">blob_manipulation.py</span></code>.</p>
 <p>Your new <cite>function.json</cite> file should look like this:</p>
 <blockquote>
 <div><div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">blob-manipulation/function.json</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="nt">&quot;scriptFile&quot;</span><span class="p">:</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;scriptFile&quot;</span><span class="p">:</span> <span class="s2">&quot;blob_manipulation.py&quot;</span><span class="p">,</span>
   <span class="nt">&quot;bindings&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myblob&quot;</span><span class="p">,</span>
       <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blobTrigger&quot;</span><span class="p">,</span>
       <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}.csv&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sendGrid&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;sendemail&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;apiKey&quot;</span><span class="p">:</span> <span class="s2">&quot;SendGridAPIKeyAsAppSetting&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blob&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;outputBlob&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}_tag_plot.png&quot;</span><span class="p">,</span>
       <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
     <span class="p">}</span>
   <span class="p">]</span>
@@ -93,9 +107,9 @@
 </div>
 </div>
 </div></blockquote>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>You can also filter based on file extension, for example <code class="docutils literal notranslate"><span class="pre">functionblob/{name}.csv</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here we are filtering by file extension and path <code class="docutils literal notranslate"><span class="pre">functionblob/{name}.csv</span></code>.</p>
 </div>
 </div>
 <div class="section" id="create-email-binding">
