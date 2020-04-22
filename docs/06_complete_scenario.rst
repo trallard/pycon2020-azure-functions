@@ -23,7 +23,9 @@ Inside the same VS Code workspace we have been using until now:
             :alt: Create function
 
 #. Select the **Azure Blob storage trigger** and **AzureWebJobsStorage**.
-#. Finally provide the blob path to be monitored: ``functionblob/{name}``.
+#. Finally provide the blob path to be monitored: ``functionblob/{name}.csv``.
+
+As before, I am going to rename the ``scriptFile`` to ``blob_manipulation.py``.
 
 Your new `function.json` file should look like this:
 
@@ -31,7 +33,9 @@ Your new `function.json` file should look like this:
         :language: json
         :caption: blob-manipulation/function.json
 
-.. tip:: You can also filter based on file extension, for example ``functionblob/{name}.csv``
+.. note:: Here we are filtering by file extension and path ``functionblob/{name}.csv``.
+
+
 
 2. Create email binding
 ------------------------------

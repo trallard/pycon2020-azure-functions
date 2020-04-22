@@ -82,7 +82,7 @@ def main(
     # as many search terms as wanted - must be a list
     stackexchange = stack.se_object(["python"])
 
-    se_questions = stackexchange.run_query(n=200)
+    se_questions = stackexchange.run_query(n=100)
 
     write_file(se_questions)
 

@@ -4,21 +4,22 @@
     style="table-layout: fixed;" data-muid="iTBXe9c6QUCujvmJs8hYKr" data-mc-module-version="2019-10-22">
     <tbody>
         <tr>
-            <td style="background-color:#ffffff; padding:10px; line-height:22px; text-align:inherit;" height="100%"
-                valign="top" bgcolor="#ffffff">
+            <td style="background-color:#181036; padding:10px; line-height:22px; text-align:inherit;" height="100%"
+                valign="top" bgcolor="#181036">
                 <div style="font-family: helvetica, sans-serif; font-size: 14px;">
                     <div style="font-size: 14px; font-family: inherit; text-align: inherit;">
-                        <h2 style="font-size: 16px; font-family: helvetica, sans-serif">
+                        <h2
+                            style="font-size: 16px; font-family: helvetica, sans-serif; text-transform:uppercase;color:#efefff;">
                             Questions without answers:</h2>
                     </div>
                 </div>
             </td>
         </tr>
         <tr>
-            <td style="background-color:#ffffff; padding:10px; line-height:22px; text-align:inherit;" height="100%"
-                valign="top" bgcolor="#ffffff">
-                <div style="font-family: helvetica, sans-serif; font-size: 14px;">
-                    <div style="font-size: 14px; font-family: inherit; text-align: inherit;">
+            <td style="background-color:#181036; padding:10px; line-height:22px; text-align:inherit;" height="100%"
+                valign="top" bgcolor="#181036">
+                <div style="font-family: helvetica, sans-serif; font-size: 14px;color:#efefff;">
+                    <div style="font-size: 14px; font-family: inherit; text-align: inherit;color:#efefff;">
                         <ul>
                             {% for question in unanswered %}
                             <li> {{ question['title'] }} - <a href="{{ question['link'] }}"
@@ -31,21 +32,22 @@
             </td>
         </tr>
         <tr>
-            <td style="background-color:#ffffff; padding:10px; line-height:22px; text-align:inherit;" height="100%"
-                valign="top" bgcolor="#ffffff">
+            <td style="background-color:#181036; padding:10px; line-height:22px; text-align:inherit;" height="100%"
+                valign="top" bgcolor="#181036">
                 <div style="font-family: helvetica, sans-serif; font-size: 14px;">
                     <div style="font-size: 14px; font-family: inherit; text-align: inherit;">
-                        <h2 style="font-size: 16px; font-family: helvetica, sans-serif">
+                        <h2
+                            style="font-size: 16px; font-family: helvetica, sans-serif; text-transform:uppercase;color:#efefff;">
                             Questions with answers:</h2>
                     </div>
                 </div>
             </td>
         </tr>
         <tr>
-            <td style="background-color:#ffffff; padding:10px; line-height:22px; text-align:inherit;" height="100%"
-                valign="top" bgcolor="#ffffff">
-                <div style="font-family: helvetica, sans-serif; font-size: 14px;">
-                    <div style="font-size: 14px; font-family: inherit; text-align: inherit;">
+            <td style="background-color:#181036; padding:10px; line-height:22px; text-align:inherit;" height="100%"
+                valign="top" bgcolor="#181036">
+                <div style="font-family: helvetica, sans-serif; font-size: 14px; color:#efefff;">
+                    <div style="font-size: 14px; font-family: inherit; text-align: inherit; color:#efefff;">
                         <ul>
                             {% for question in answered %}
                             <li> {{ question['title'] }} - <a href="{{ question['link'] }}"

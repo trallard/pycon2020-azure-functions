@@ -1,11 +1,11 @@
 {
-  "scriptFile": "__init__.py",
+  "scriptFile": "blob_manipulation.py",
   "bindings": [
     {
       "name": "myblob",
       "type": "blobTrigger",
       "direction": "in",
-      "path": "functionblob/{name}",
+      "path": "functionblob/{name}.csv",
       "connection": "AzureWebJobsStorage"
     },
     {
@@ -13,6 +13,13 @@
       "direction": "out",
       "name": "sendemail",
       "apiKey": "SendGridAPIKeyAsAppSetting"
+    },
+    {
+      "type": "blob",
+      "direction": "out",
+      "name": "outputBlob",
+      "path": "functionblob/{name}_tag_plot.png",
+      "connection": "AzureWebJobsStorage"
     }
   ]
 }

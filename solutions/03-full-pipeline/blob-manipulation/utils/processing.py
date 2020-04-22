@@ -1,19 +1,15 @@
-import os
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from smtplib import SMTP
-
-from datetime import datetime, timezone
-
-from jinja2 import Environment, FileSystemLoader, select_autoescape
-from dataclasses import dataclass
-
-import mplcyberpunk
-import matplotlib.pyplot as plt
-import pandas as pd
 import json
-from pathlib import Path
 import logging
+import os
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from pathlib import Path
+import base64
+
+import matplotlib.pyplot as plt
+import mplcyberpunk
+import pandas as pd
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
 @dataclass
@@ -34,7 +30,7 @@ class funcprocess:
 
         return json.loads(dataframe.to_json(orient="records"))
 
-    def email_body(self, answered, unanswered):
+    def email_body(self, answered, unanswered, fig_path):
 
         unanswered_json = self.data_json(unanswered)
         answered_json = self.data_json(answered)
@@ -50,12 +46,14 @@ class funcprocess:
             autoescape=select_autoescape(["html", "xml"]),
         )
 
+        img_b64 = self.encode_img(fig_path)
+
         template = env.get_template("body.html")
         rendered_template = template.render(
             date_now=date_now,
             answered=unanswered_json,
             unanswered=answered_json,
-            image_path="",
+            img_b64=img_b64,
         ).replace("\n", "")
 
         with open(template_path.joinpath("tests.html"), "w") as f:
@@ -63,21 +61,39 @@ class funcprocess:
 
         return rendered_template
 
-    def create_email(self, answered, unanswered):
+    def encode_img(self, fig_path):
+
+        with open(fig_path, "rb") as f:
+            img = f.read()
+            img_base64 = base64.encodestring(img).decode("utf-8")
+
+            f.close()
+
+        return img_base64
+
+    def create_email(self, answered, unanswered, fig_path):
         to_email = os.environ.get("receiver")
         from_email = os.environ.get("sender")
         subject = "Your daily digest - StackExchange"
 
-        body = self.email_body(answered, unanswered)
+        body = self.email_body(answered, unanswered, fig_path)
 
         # Sendgrid
         message = {
-            "personalizations": [
-                {"to": [{"email": to_email}]},
-                {"from": [{"email": from_email}]},
-            ],
+            "personalizations": [{"to": [{"email": to_email}]}],
             "subject": subject,
-            "content": [{"type": "html", "value": body}],
+            "from": {"email": from_email},
+            "content": [{"type": "text/html", "value": body}],
+            # "attachments": [
+            #     {
+            #         "content": img,
+            #         "content_id": "tag_plots",
+            #         "disposition": "inline",
+            #         "filename": fig_path,
+            #         "name": "Popular tags",
+            #         "type": "image/png",
+            #     }
+            # ],
         }
 
         return json.dumps(message)
@@ -123,7 +139,7 @@ class funcprocess:
         plt.style.use("cyberpunk")
         vapeplot.set_palette("cool")
         plt.rcParams["axes.linewidth"] = 0.8
-        plt.rcParams.update({"font.size": 16})
+        plt.rcParams.update({"font.size": 12})
         foreground = "#efefef"
 
         # creating the plot
@@ -131,6 +147,7 @@ class funcprocess:
         ax = (
             pd.Series([item for sublist in dataframe.tags for item in sublist])
             .value_counts()
+            .head(n=15)
             .plot(kind="barh")
         )
 
@@ -168,9 +185,14 @@ class funcprocess:
 
         if email == True:
 
-            email_item = self.create_email(answered, unanswered)
+            email_item = self.create_email(answered, unanswered, fig_path)
 
-            return email_item
+            outputs = [fig_path, email_item]
+
+            return outputs
 
         else:
-            logging.info("Not sending emails")
+
+            outputs = [fig_path]
+
+            return outputs
