@@ -53,7 +53,7 @@
             
   <div class="section" id="d-completing-the-scenario">
 <h1><img alt="3d" class="inline-image" src="_images/3d.svg" /> Completing the scenario<a class="headerlink" href="#d-completing-the-scenario" title="Permalink to this headline">¶</a></h1>
-<p>To finish the scenario we are going to do the following:</p>
+<p>To finish the scenario, we are going to do the following:</p>
 <ul class="simple">
 <li><p>Create a new function that will have as trigger the Blob Storage file creation</p></li>
 <li><p>Send automated emails with the URLs from the questions</p></li>
@@ -65,7 +65,7 @@
 <p>Inside the same VS Code workspace we have been using until now:</p>
 <ol class="arabic">
 <li><p>Click on the Azure extension on the sidebar.</p></li>
-<li><p>In the Azure functions section click on the <strong>Create function</strong> icon.</p>
+<li><p>In the Azure functions, section click on the <strong>Create function</strong> icon.</p>
 <blockquote>
 <div><img alt="Create function" class="align-center" src="_images/new_function.png" />
 </div></blockquote>
@@ -73,11 +73,11 @@
 <li><p>Select the <strong>Azure Blob storage trigger</strong> and <strong>AzureWebJobsStorage</strong>.</p></li>
 <li><p>Finally provide the blob path to be monitored: <code class="docutils literal notranslate"><span class="pre">functionblob/{name}.csv</span></code>.</p></li>
 </ol>
-<p>As before, I am going to rename the <code class="docutils literal notranslate"><span class="pre">scriptFile</span></code> to <code class="docutils literal notranslate"><span class="pre">blob_manipulation.py</span></code>.</p>
+<p>As before, I am going to rename the <code class="docutils literal notranslate"><span class="pre">scriptFile</span></code> to <code class="docutils literal notranslate"><span class="pre">blob_manipulation.py</span></code> to keep my workspace tidy.</p>
 <p>Your new <cite>function.json</cite> file should look like this:</p>
 <blockquote>
-<div><div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">blob-manipulation/function.json</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div><div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">blob-manipulation/function.json</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;scriptFile&quot;</span><span class="p">:</span> <span class="s2">&quot;blob_manipulation.py&quot;</span><span class="p">,</span>
   <span class="nt">&quot;bindings&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -109,18 +109,77 @@
 </div></blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Here we are filtering by file extension and path <code class="docutils literal notranslate"><span class="pre">functionblob/{name}.csv</span></code>.</p>
+<p>Here we are filtering by file extension and path <code class="docutils literal notranslate"><span class="pre">functionblob/{name}.csv</span></code>. For more patterns, check the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=python#blob-name-patterns">Blob name patterns docs</a>.</p>
 </div>
 </div>
-<div class="section" id="create-email-binding">
-<h2>2. Create email binding<a class="headerlink" href="#create-email-binding" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="add-bindings">
+<h2>2. Add bindings<a class="headerlink" href="#add-bindings" title="Permalink to this headline">¶</a></h2>
+<p>We need to create two more output bindings:</p>
+<ul class="simple">
+<li><p>SendGrid: we will use this to send the daily email</p></li>
+<li><p>Azure Blob Storage: we will save the output figures Here</p></li>
+</ul>
+<div class="section" id="blob-storage">
+<h3>Blob Storage<a class="headerlink" href="#blob-storage" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>Attach a Blob storage binding. We are going to follow the same process as in section <a class="reference internal" href="05_data_export.html#attachblob"><span class="std std-ref">2. Attach Blob binding</span></a>. Follow this similar configuration:</p>
+<blockquote>
+<div><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blob&quot;</span><span class="p">,</span>
+<span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+<span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;outputBlob&quot;</span><span class="p">,</span>
+<span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}_tag_plot.png&quot;</span><span class="p">,</span>
+<span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="sendgrid-by-twilio">
+<h3>SendGrid by Twilio<a class="headerlink" href="#sendgrid-by-twilio" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>Head to <a class="reference external" href="https://ms.portal.azure.com">portal.azure.com</a>. On the left sidebar click on <strong>+ Create a resource</strong>. Then on the Search Bar Type <strong>SendGrid</strong>.</p></li>
+<li><p>Click on the <strong>Create</strong> button.</p>
+<blockquote>
+<div><img alt="Create sendgrid" class="align-center" src="_images/sendgrid.png" />
+</div></blockquote>
+</li>
+<li><p>Fill the details in the create form - make sure to select the same resource group we have been using. As an Azure customer, you get 25000 emails free per month. Once completed, click on <strong>Review + Create ** and **Create</strong>.</p></li>
+<li><p>You will a progress bar on top of your screen, click on it and wait for your deployment to complete. Once completed, click on <strong>Go to resource</strong>.</p>
+<blockquote>
+<div><img alt="Create sendgrid" class="align-center" src="_images/sendgrid2.png" />
+</div></blockquote>
+</li>
+<li><p>Click on the <strong>Manage</strong> tab.</p>
+<blockquote>
+<div><img alt="Sengrid manage" class="align-center" src="_images/sendgrid3.png" />
+</div></blockquote>
+</li>
+<li><p>You will be redirected to your`SendGrid dashboard &lt;<a class="reference external" href="https://app.sendgrid.com">https://app.sendgrid.com</a>&gt;`_. Once there click on <strong>Settings</strong>  &gt; <strong>API Keys</strong> &gt; <strong>Create API Key</strong>.</p>
+<blockquote>
+<div><img alt="Create API key" class="align-center" src="_images/sendgrid4.png" />
+</div></blockquote>
+</li>
+<li><p>In the next screen give your key a name, select <strong>Full Access</strong> and then <strong>Create &amp; view</strong>.</p>
+<blockquote>
+<div><img alt="Create API key" class="align-center" src="_images/sendgrid5.png" />
+</div></blockquote>
+</li>
+</ol>
+<p>Make sure to take note of your API key as we will need it to add the binding.</p>
+</div>
 </div>
 <div class="section" id="floppy-additional-resources-and-docs">
 <h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=python?WT.mc_id=pycon_tutorial-github-taallard">Azure Blob Storage trigger docs</a></p></li>
-<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=python#blob-name-patterns">Blob name patterns</a></p></li>
-<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-input?tabs=python">Azure Blob storage input binding</a></p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=python#blob-name-patterns?WT.mc_id=pycon_tutorial-github-taallard">Blob name patterns</a></p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-input?tabs=python?WT.mc_id=pycon_tutorial-github-taallard">Azure Blob storage input binding</a></p></li>
+<li><p><a class="reference external" href="https://sendgrid.com/docs/">SendGrid by Twilio</a></p></li>
+<li><p><a class="reference external" href="https://github.com/sendgrid/sendgrid-python">SenGrid Python API</a></p></li>
+<li><p><a class="reference external" href="https://github.com/sendgrid/sendgrid-python/blob/master/USAGE.md#post-mailsend">SendGrid API - POST email</a></p></li>
 </ul>
 </div>
 </div>
@@ -175,7 +234,11 @@
   <ul>
 <li><a class="reference internal" href="#"> Completing the scenario</a><ul>
 <li><a class="reference internal" href="#create-your-new-function">1. Create your new function</a></li>
-<li><a class="reference internal" href="#create-email-binding">2. Create email binding</a></li>
+<li><a class="reference internal" href="#add-bindings">2. Add bindings</a><ul>
+<li><a class="reference internal" href="#blob-storage">Blob Storage</a></li>
+<li><a class="reference internal" href="#sendgrid-by-twilio">SendGrid by Twilio</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
@@ -202,7 +265,7 @@
 <li class="toctree-l1"><a class="reference internal" href="05_data_export.html"> Adding Blob storage bindings</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Completing the scenario</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#create-your-new-function">1. Create your new function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#create-email-binding">2. Create email binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-bindings">2. Add bindings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
