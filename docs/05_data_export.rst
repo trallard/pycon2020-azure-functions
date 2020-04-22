@@ -41,6 +41,8 @@ We already created a Storage Account in the :ref:`deployfn` section. The next st
             :align: center
             :alt: Storage dashboard access
 
+.. _attachblob:
+
 2. Attach Blob binding
 ******************************************
 

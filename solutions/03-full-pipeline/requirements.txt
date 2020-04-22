@@ -1,3 +1,8 @@
 azure-functions
 python-dotenv==0.13.0
 requests==2.23.0
+jinja2==2.11.2
+pandas==1.0.3
+mplcyberpunk==0.1.11
+vapeplot==0.0.8
+matplotlib==3.2.1
