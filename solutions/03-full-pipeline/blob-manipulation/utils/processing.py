@@ -84,16 +84,6 @@ class funcprocess:
             "subject": subject,
             "from": {"email": from_email},
             "content": [{"type": "text/html", "value": body}],
-            # "attachments": [
-            #     {
-            #         "content": img,
-            #         "content_id": "tag_plots",
-            #         "disposition": "inline",
-            #         "filename": fig_path,
-            #         "name": "Popular tags",
-            #         "type": "image/png",
-            #     }
-            # ],
         }
 
         return json.dumps(message)
