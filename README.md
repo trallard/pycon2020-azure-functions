@@ -67,6 +67,7 @@ The solutions can be found in the [solutions directory](./solutions) in thid rep
 
 - Timer function: [API data acqusition only](./solutions/01-timer-function-data-acquisition/)
 - Timer function: [API + Blob binding](./solutions/02-timer-function-Blob-binding/)
+- Timer function + Data processing/email sending: [full pipeline](./solutions/03-full-pipeline/)
   
 ARM templates included:
 - [Storage account and Blob Storage](./solutions/../storage-blob-container/azuredeploy.json)

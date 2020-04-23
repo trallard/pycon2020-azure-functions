@@ -7,6 +7,8 @@ Let's start working on the data processing part of the function.
 
 .. tip:: The repository containing all the scripts and solutions to this tutorial can be found at `<https://github.com/trallard/pycon2020-azure-functions>`_.
 
+    👉🏼 The code for this section is located in `<https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/01-timer-function-data-acquisition>`_ 
+
 
 The details
 -------------

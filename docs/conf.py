@@ -55,7 +55,8 @@ master_doc = "index"
 html_sidebars = {
     "**": [
         "about.html",
-        "localtoc.html",
+        "follow.html",
+        "customlocaltoc.html",
         "searchbox.html",
         "navigation.html",
         "relations.html",

@@ -1,6 +1,5 @@
 import logging
 from pathlib import Path
-
 from typing import Iterator, Optional
 
 import azure.functions as func

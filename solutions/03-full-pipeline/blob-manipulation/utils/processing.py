@@ -1,10 +1,10 @@
+import base64
 import json
 import logging
 import os
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-import base64
 
 import matplotlib.pyplot as plt
 import mplcyberpunk
