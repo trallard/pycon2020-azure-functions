@@ -129,7 +129,7 @@
 <div><img alt="Sengrid manage" class="align-center" src="_images/sendgrid3.png" />
 </div></blockquote>
 </li>
-<li><p>You will be redirected to your`SendGrid dashboard &lt;<a class="reference external" href="https://app.sendgrid.com">https://app.sendgrid.com</a>&gt;`_. Once there click on <strong>Settings</strong>  &gt; <strong>API Keys</strong> &gt; <strong>Create API Key</strong>.</p>
+<li><p>You will be redirected to your <a class="reference external" href="https://app.sendgrid.com">SendGrid dashboard</a>. Once there click on <strong>Settings</strong>  &gt; <strong>API Keys</strong> &gt; <strong>Create API Key</strong>.</p>
 <blockquote>
 <div><img alt="Create API key" class="align-center" src="_images/sendgrid4.png" />
 </div></blockquote>
@@ -183,7 +183,7 @@
       <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blob&quot;</span><span class="p">,</span>
       <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
       <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;outputBlob&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}_tag_plot.png&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/figures/{name}_tag_plot.png&quot;</span><span class="p">,</span>
       <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
     <span class="p">}</span>
   <span class="p">]</span>
@@ -192,6 +192,22 @@
 </div>
 </div>
 </div>
+<ol class="arabic">
+<li><p>Update your <code class="docutils literal notranslate"><span class="pre">.env</span></code> file to add the sender and receiver email. (Note the sender must be the same email associated with your SendGrid app).</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">.env</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">SE_client_id</span> <span class="o">=</span> <span class="s2">&quot;******&quot;</span>
+<span class="n">SE_client_secret</span> <span class="o">=</span> <span class="s2">&quot;******&quot;</span>
+<span class="n">MyStorageConnectionAppSetting</span> <span class="o">=</span> <span class="s2">&quot;******&quot;</span>
+<span class="n">receiver</span> <span class="o">=</span> <span class="s2">&quot;******&quot;</span>
+<span class="n">sender</span> <span class="o">=</span> <span class="s2">&quot;******&quot;</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</li>
+</ol>
 </div>
 </div>
 <div class="section" id="updating-your-code-and-requirements">
@@ -206,8 +222,8 @@
 <ol class="arabic">
 <li><p>Similar to section <a class="reference internal" href="05_data_export.html#blobfunction"><span class="std std-ref">3. Update your function</span></a> we will create a <code class="docutils literal notranslate"><span class="pre">utils</span></code> directory with a <code class="docutils literal notranslate"><span class="pre">processing.py</span></code> script in:</p>
 <blockquote>
-<div><div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">blob-manipulation/utils/processing.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div><div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">blob-manipulation/utils/processing.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -266,9 +282,6 @@
             <span class="n">img_b64</span><span class="o">=</span><span class="n">img_b64</span><span class="p">,</span>
         <span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">template_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;tests.html&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rendered_template</span><span class="p">)</span>
-
         <span class="k">return</span> <span class="n">rendered_template</span>
 
     <span class="k">def</span> <span class="nf">encode_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig_path</span><span class="p">):</span>
@@ -294,16 +307,6 @@
             <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="n">subject</span><span class="p">,</span>
             <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">from_email</span><span class="p">},</span>
             <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text/html&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">body</span><span class="p">}],</span>
-            <span class="c1"># &quot;attachments&quot;: [</span>
-            <span class="c1">#     {</span>
-            <span class="c1">#         &quot;content&quot;: img,</span>
-            <span class="c1">#         &quot;content_id&quot;: &quot;tag_plots&quot;,</span>
-            <span class="c1">#         &quot;disposition&quot;: &quot;inline&quot;,</span>
-            <span class="c1">#         &quot;filename&quot;: fig_path,</span>
-            <span class="c1">#         &quot;name&quot;: &quot;Popular tags&quot;,</span>
-            <span class="c1">#         &quot;type&quot;: &quot;image/png&quot;,</span>
-            <span class="c1">#     }</span>
-            <span class="c1"># ],</span>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
@@ -413,8 +416,8 @@
 </li>
 <li><p>And update our <code class="docutils literal notranslate"><span class="pre">blob_manipulation.py</span></code> script:</p>
 <blockquote>
-<div><div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">blob-manipulation/blob_manipulation.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div><div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">blob-manipulation/blob_manipulation.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span>
@@ -486,6 +489,7 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wrangling_out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
 
         <span class="n">sendemail</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">wrangling_out</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;📨 Email has been sent&quot;</span><span class="p">)</span>
 
     <span class="c1"># stores in the Blob container</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">wrangling_out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -507,9 +511,54 @@
 </div>
 </div></blockquote>
 </li>
-</ol>
-<p>We are now ready to debug your functions locally 🎉!</p>
+<li><p>Finally make sure to update your <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file:</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">requirements.txt</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">azure</span><span class="o">-</span><span class="n">functions</span>
+<span class="n">python</span><span class="o">-</span><span class="n">dotenv</span><span class="o">==</span><span class="mf">0.13</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">requests</span><span class="o">==</span><span class="mf">2.23</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">jinja2</span><span class="o">==</span><span class="mf">2.11</span><span class="o">.</span><span class="mi">2</span>
+<span class="n">pandas</span><span class="o">==</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">3</span>
+<span class="n">mplcyberpunk</span><span class="o">==</span><span class="mf">0.1</span><span class="o">.</span><span class="mi">11</span>
+<span class="n">vapeplot</span><span class="o">==</span><span class="mf">0.0</span><span class="o">.</span><span class="mi">8</span>
+<span class="n">matplotlib</span><span class="o">==</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">1</span>
+</pre></div>
 </div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<p>We are now ready to debug the functions locally 🎉!</p>
+</div>
+<div class="section" id="running-and-debugging-locally">
+<h2>4. Running and debugging locally<a class="headerlink" href="#running-and-debugging-locally" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Press <kbd class="kbd docutils literal notranslate">F5</kbd>. You should see the function being started in the  <strong>output terminal</strong> in VS Code.</p></li>
+<li><p>Click on the  <strong>Azure</strong>  extension then on the <strong>Azure functions</strong> section right-click on the <cite>timer-function</cite> &gt; <strong>Execute function now</strong>.</p></li>
+</ol>
+<p>This will trigger the execution of your timer function and the Blob function once the <cite>.csv</cite> file is added to your blob.</p>
+</div>
+<div class="section" id="deploying-your-function">
+<h2>5. Deploying your function<a class="headerlink" href="#deploying-your-function" title="Permalink to this headline">¶</a></h2>
+<p>If you remember correctly we first created a functions project and then added the processing function. This allows us to deploy both functions directly within the same app project.</p>
+<blockquote>
+<div><img alt="Deploy project" class="align-center" src="_images/project.png" />
+</div></blockquote>
+<p>We will follow the same process as before:</p>
+<ol class="arabic">
+<li><p>Deploy from the Azure functions extension in VS Code.</p></li>
+<li><p>Head to <a class="reference external" href="https://ms.portal.azure.com">portal.azure.com</a> &gt; <strong>Function App</strong> &gt; &lt;your function app&gt; &gt; <strong>Configuration</strong> and we will add the new variables we added to this function: <code class="docutils literal notranslate"><span class="pre">receiver,</span> <span class="pre">sender,</span> <span class="pre">SendGridAPIKeyAsAppSetting</span></code>.</p>
+<blockquote>
+<div><img alt="Create variables" class="align-center" src="_images/envs2.png" />
+</div></blockquote>
+</li>
+</ol>
+<p>You can now trigger your function from the portal!!!</p>
+</div>
+<div class="section" id="you-have-completed-the-tutorial">
+<h2>You have completed the tutorial!!! 🎉<a class="headerlink" href="#you-have-completed-the-tutorial" title="Permalink to this headline">¶</a></h2>
+<div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/l4HodBpDmoMA5p9bG" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/thisisgiphy-reaction-audience-l4HodBpDmoMA5p9bG">via GIPHY</a></p></div>
 <div class="section" id="floppy-additional-resources-and-docs">
 <h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -574,7 +623,7 @@
 <p><a href="https://twitter.com/ixek" class="twitter-follow-button" data-show-count="false">Follow @ixek</a>
     <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
 </p>
-<h3><a href="index.html">In this page:</a></h3>
+<h3 id="localtoc"><a href="index.html">In this page:</a></h3>
 <ul>
 <li><a class="reference internal" href="#"> Completing the scenario</a><ul>
 <li><a class="reference internal" href="#create-your-new-function">1. Create your new function</a></li>
@@ -584,6 +633,9 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#updating-your-code-and-requirements">3. Updating your code and requirements</a></li>
+<li><a class="reference internal" href="#running-and-debugging-locally">4. Running and debugging locally</a></li>
+<li><a class="reference internal" href="#deploying-your-function">5. Deploying your function</a></li>
+<li><a class="reference internal" href="#you-have-completed-the-tutorial">You have completed the tutorial!!! 🎉</a></li>
 <li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
@@ -612,6 +664,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#create-your-new-function">1. Create your new function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#add-bindings">2. Add bindings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#updating-your-code-and-requirements">3. Updating your code and requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-and-debugging-locally">4. Running and debugging locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploying-your-function">5. Deploying your function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#you-have-completed-the-tutorial">You have completed the tutorial!!! 🎉</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
