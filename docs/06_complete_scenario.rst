@@ -10,7 +10,7 @@ Let's go.
 
 .. tip:: The repository containing all the scripts and solutions to this tutorial can be found at `<https://github.com/trallard/pycon2020-azure-functions>`_.
 
-    👉🏼 The code for this section is located in `<https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/03-full-pipeline>`_ 
+    👉🏼 The code for this section is in `<https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/03-full-pipeline>`_ 
 
 
 1. Create your new function
@@ -38,8 +38,8 @@ As before, I am going to rename the ``scriptFile`` to ``blob_manipulation.py`` t
 ------------------------------
 We need to create two more output bindings:
 
-- SendGrid: we will use this to send the daily email
-- Azure Blob Storage: we will save the output figures Here
+- SendGrid: to send an email with the report
+- Azure Blob Storage: to save the output of the functions
 
 Blob Storage
 ******************************
@@ -95,7 +95,7 @@ SendGrid by Twilio
 
     Make sure to take note of your API key as we will need it to add the binding.
 
-#. Back in **VS Code**: let's create the binding. Click on the **Azure extentions** tab in the sidebar. Then in Azure functions **right-click** on the newly created function (o.e. blob-manipulation** followed by **Add binding...**.
+#. Back in **VS Code**: let's create the binding. Click on the **Azure extensions** tab in the sidebar. Then in Azure functions **right-click** on the newly created function (o.e. blob-manipulation** followed by **Add binding...**.
 
     .. image:: _static/images/snaps/sendgridbind.png
         :align: center
@@ -167,13 +167,13 @@ We are now ready to debug the functions locally 🎉!
 #. Press :kbd:`F5`. You should see the function being started in the  **output terminal** in VS Code. 
 #. Click on the  **Azure**  extension then on the **Azure functions** section right-click on the `timer-function` > **Execute function now**.
 
-This will trigger the execution of your timer function and the Blob function once the `.csv` file is added to your blob. 
+This will trigger the execution of your timer function and the Blob function once the `.csv.` the file is added to your blob. 
 
 
 5. Deploying your function
 ---------------------------------------
 
-If you remember correctly we first created a functions project and then added the processing function. This allows us to deploy both functions directly within the same app project.
+If you remember correctly, we first created a functions project and then added the processing function. This allows us to deploy both functions directly within the same app project.
 
     .. image:: _static/images/snaps/project.png
             :align: center
