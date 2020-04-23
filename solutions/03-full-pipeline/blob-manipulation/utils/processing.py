@@ -56,9 +56,6 @@ class funcprocess:
             img_b64=img_b64,
         ).replace("\n", "")
 
-        with open(template_path.joinpath("tests.html"), "w") as f:
-            f.write(rendered_template)
-
         return rendered_template
 
     def encode_img(self, fig_path):

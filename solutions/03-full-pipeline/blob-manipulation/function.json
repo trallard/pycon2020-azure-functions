@@ -18,7 +18,7 @@
       "type": "blob",
       "direction": "out",
       "name": "outputBlob",
-      "path": "functionblob/{name}_tag_plot.png",
+      "path": "functionblob/figures/{name}_tag_plot.png",
       "connection": "AzureWebJobsStorage"
     }
   ]

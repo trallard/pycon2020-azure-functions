@@ -69,6 +69,7 @@ def main(
     if len(wrangling_out) == 2:
 
         sendemail.set(wrangling_out[1])
+        logging.info("📨 Email has been sent")
 
     # stores in the Blob container
     with open(wrangling_out[0], "rb") as f:

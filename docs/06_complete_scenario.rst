@@ -81,7 +81,7 @@ SendGrid by Twilio
         :align: center
         :alt: Sengrid manage
 
-#. You will be redirected to your`SendGrid dashboard <https://app.sendgrid.com>`_. Once there click on **Settings**  > **API Keys** > **Create API Key**.
+#. You will be redirected to your `SendGrid dashboard <https://app.sendgrid.com>`_. Once there click on **Settings**  > **API Keys** > **Create API Key**.
 
     .. image:: _static/images/snaps/sendgrid4.png
         :align: center
@@ -117,6 +117,18 @@ SendGrid by Twilio
         :language: json
         :caption: blob-manipulation/function.json
 
+#. Update your ``.env`` file to add the sender and receiver email. (Note the sender must be the same email associated with your SendGrid app).
+
+    .. code-block:: python
+        :caption: .env 
+
+        SE_client_id = "******"
+        SE_client_secret = "******"
+        MyStorageConnectionAppSetting = "******"
+        receiver = "******"
+        sender = "******"
+
+
 3. Updating your code and requirements
 ---------------------------------------
 
@@ -140,10 +152,50 @@ Let's update the code to perform the following tasks:
         :caption: blob-manipulation/blob_manipulation.py
         :emphasize-lines: 38-42
 
-We are now ready to debug your functions locally 🎉!
+
+#. Finally make sure to update your ``requirements.txt`` file:
+
+    .. literalinclude:: ../solutions/03-full-pipeline/requirements.txt
+        :language: python
+        :caption: requirements.txt
+
+We are now ready to debug the functions locally 🎉!
+
+4. Running and debugging locally
+---------------------------------------
+
+#. Press :kbd:`F5`. You should see the function being started in the  **output terminal** in VS Code. 
+#. Click on the  **Azure**  extension then on the **Azure functions** section right-click on the `timer-function` > **Execute function now**.
+
+This will trigger the execution of your timer function and the Blob function once the `.csv` file is added to your blob. 
 
 
+5. Deploying your function
+---------------------------------------
 
+If you remember correctly we first created a functions project and then added the processing function. This allows us to deploy both functions directly within the same app project.
+
+    .. image:: _static/images/snaps/project.png
+            :align: center
+            :alt: Deploy project
+
+We will follow the same process as before:
+
+#. Deploy from the Azure functions extension in VS Code.
+#. Head to |azureportal| > **Function App** > <your function app> > **Configuration** and we will add the new variables we added to this function: ``receiver, sender, SendGridAPIKeyAsAppSetting``.
+
+    .. image:: _static/images/snaps/envs2.png
+            :align: center
+            :alt: Create variables
+
+You can now trigger your function from the portal!!!
+
+You have completed the tutorial!!! 🎉
+---------------------------------------
+
+.. raw:: html
+
+    <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/l4HodBpDmoMA5p9bG" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/thisisgiphy-reaction-audience-l4HodBpDmoMA5p9bG">via GIPHY</a></p>
 
 |floppy| Additional resources and docs
 ---------------------------------------

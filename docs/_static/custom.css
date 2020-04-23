@@ -65,9 +65,13 @@ div.sphinxsidebar h1 a:hover {
     border: none;
 }
 
-/* div.sphinxsidebar h3 {
+div.sphinxsidebar h3 {
     display: none;
-} */
+}
+
+#localtoc {
+    display: inline-block;
+}
 
 div.sphinxsidebar a {
     color: #636AF2;
