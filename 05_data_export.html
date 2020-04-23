@@ -60,6 +60,11 @@
 <li><p>Create a second function that identifies the addition of a file to Azure Blob storage and triggers a second function</p></li>
 <li><p>Create a database to store our cleaned data and modify the function to store the database</p></li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The repository containing all the scripts and solutions to this tutorial can be found at <a class="reference external" href="https://github.com/trallard/pycon2020-azure-functions">https://github.com/trallard/pycon2020-azure-functions</a>.</p>
+<p>👉🏼 The code for this section is located in <a class="reference external" href="https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/02-timer-function-Blob-binding">https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/02-timer-function-Blob-binding</a></p>
+</div>
 <div class="section" id="light-triggers-and-bindings">
 <h2><img alt="light" class="inline-image" src="_images/video-game.svg" /> Triggers and bindings<a class="headerlink" href="#light-triggers-and-bindings" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -151,7 +156,7 @@
 </ol>
 </div>
 <div class="section" id="update-your-function">
-<h3>3. Update your function<a class="headerlink" href="#update-your-function" title="Permalink to this headline">¶</a></h3>
+<span id="blobfunction"></span><h3>3. Update your function<a class="headerlink" href="#update-your-function" title="Permalink to this headline">¶</a></h3>
 <p>We now need to update the function so that:</p>
 <ul class="simple">
 <li><p>Save the collected API items in a CSV file</p></li>
@@ -416,7 +421,6 @@
                 <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">],</span>
                 <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">],</span>
             <span class="p">}</span>
-
 </pre></div>
 </div>
 </div>
@@ -492,9 +496,14 @@
 
 
 
+<p><iframe src="https://ghbtns.com/github-btn.html?user=trallard&type=follow&count=false" allowtransparency="true"
+        frameborder="0" scrolling="0" width="200" height="20"></iframe></p>
 
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+<p><a href="https://twitter.com/ixek" class="twitter-follow-button" data-show-count="false">Follow @ixek</a>
+    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+</p>
+<h3><a href="index.html">In this page:</a></h3>
+<ul>
 <li><a class="reference internal" href="#"> Adding Blob storage bindings</a><ul>
 <li><a class="reference internal" href="#light-triggers-and-bindings"> Triggers and bindings</a><ul>
 <li><a class="reference internal" href="#create-azure-blob-storage">1. Create Azure Blob Storage</a></li>

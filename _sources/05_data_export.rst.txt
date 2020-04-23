@@ -9,6 +9,11 @@ In this section, we will:
 - Create a second function that identifies the addition of a file to Azure Blob storage and triggers a second function
 - Create a database to store our cleaned data and modify the function to store the database
 
+.. tip:: The repository containing all the scripts and solutions to this tutorial can be found at `<https://github.com/trallard/pycon2020-azure-functions>`_.
+
+    👉🏼 The code for this section is located in `<https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/02-timer-function-Blob-binding>`_ 
+
+
 |light| Triggers and bindings
 --------------------------------
 
@@ -81,6 +86,8 @@ Once completed, your ``function.json`` file should look like this:
                 "AzureWebJobs.timer-function.Disabled": "false"
             }
         }
+
+.. _blobfunction: 
 
 3. Update your function
 *****************************

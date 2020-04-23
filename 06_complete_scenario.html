@@ -59,6 +59,11 @@
 <li><p>Send automated emails with the URLs from the questions</p></li>
 </ul>
 <p>Let’s go.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The repository containing all the scripts and solutions to this tutorial can be found at <a class="reference external" href="https://github.com/trallard/pycon2020-azure-functions">https://github.com/trallard/pycon2020-azure-functions</a>.</p>
+<p>👉🏼 The code for this section is located in <a class="reference external" href="https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/03-full-pipeline">https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/03-full-pipeline</a></p>
+</div>
 <div class="section" id="create-your-new-function">
 <h2>1. Create your new function<a class="headerlink" href="#create-your-new-function" title="Permalink to this headline">¶</a></h2>
 <p>Creating a new function in an existing functions project is very similar to the process we followed in section <a class="reference internal" href="02_functions_intro.html#functions101"><span class="std std-ref"> Your first Azure function</span></a>.</p>
@@ -74,39 +79,6 @@
 <li><p>Finally provide the blob path to be monitored: <code class="docutils literal notranslate"><span class="pre">functionblob/{name}.csv</span></code>.</p></li>
 </ol>
 <p>As before, I am going to rename the <code class="docutils literal notranslate"><span class="pre">scriptFile</span></code> to <code class="docutils literal notranslate"><span class="pre">blob_manipulation.py</span></code> to keep my workspace tidy.</p>
-<p>Your new <cite>function.json</cite> file should look like this:</p>
-<blockquote>
-<div><div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">blob-manipulation/function.json</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="nt">&quot;scriptFile&quot;</span><span class="p">:</span> <span class="s2">&quot;blob_manipulation.py&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;bindings&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myblob&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blobTrigger&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}.csv&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sendGrid&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;sendemail&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;apiKey&quot;</span><span class="p">:</span> <span class="s2">&quot;SendGridAPIKeyAsAppSetting&quot;</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blob&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;outputBlob&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}_tag_plot.png&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
-    <span class="p">}</span>
-  <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div></blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Here we are filtering by file extension and path <code class="docutils literal notranslate"><span class="pre">functionblob/{name}.csv</span></code>. For more patterns, check the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=python#blob-name-patterns">Blob name patterns docs</a>.</p>
@@ -165,11 +137,378 @@
 <li><p>In the next screen give your key a name, select <strong>Full Access</strong> and then <strong>Create &amp; view</strong>.</p>
 <blockquote>
 <div><img alt="Create API key" class="align-center" src="_images/sendgrid5.png" />
+<p>Make sure to take note of your API key as we will need it to add the binding.</p>
+</div></blockquote>
+</li>
+<li><p>Back in <strong>VS Code</strong>: let’s create the binding. Click on the <strong>Azure extentions</strong> tab in the sidebar. Then in Azure functions <strong>right-click</strong> on the newly created function (o.e. blob-manipulation** followed by <strong>Add binding…</strong>.</p>
+<blockquote>
+<div><img alt="Create new binding" class="align-center" src="_images/sendgridbind.png" />
+</div></blockquote>
+</li>
+<li><p>Select the following options:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Binding direction</strong>: out</p></li>
+<li><p><strong>Select binding</strong>: SendGrid</p></li>
+<li><p><strong>Name to identify binding</strong>: sendemail</p></li>
+<li><p><strong>Select setting from “local.settings.json</strong>: Click on <strong>+ Create new local app setting</strong> and name it SendGridAPIKeyAsAppSetting</p></li>
+<li><p><strong>To email, from email and subject</strong>: press enter as we will specify in the code</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Update your SendGrid API key in your <code class="docutils literal notranslate"><span class="pre">local.setting.json</span></code> file.</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>After completing these sections your <code class="docutils literal notranslate"><span class="pre">function.json</span></code> file should look like this:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">blob-manipulation/function.json</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;scriptFile&quot;</span><span class="p">:</span> <span class="s2">&quot;blob_manipulation.py&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;bindings&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myblob&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blobTrigger&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}.csv&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sendGrid&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;sendemail&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;apiKey&quot;</span><span class="p">:</span> <span class="s2">&quot;SendGridAPIKeyAsAppSetting&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;blob&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;outputBlob&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;functionblob/{name}_tag_plot.png&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;AzureWebJobsStorage&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="updating-your-code-and-requirements">
+<h2>3. Updating your code and requirements<a class="headerlink" href="#updating-your-code-and-requirements" title="Permalink to this headline">¶</a></h2>
+<p>Let’s update the code to perform the following tasks:</p>
+<ul class="simple">
+<li><p>Get the added csv file (Blob Storage)</p></li>
+<li><p>Perform some basic manipulations with pandas</p></li>
+<li><p>Create a plot with the top 15 tags used in the questions collected</p></li>
+<li><p>Send an email with the new questions and the created plot</p></li>
+</ul>
+<ol class="arabic">
+<li><p>Similar to section <a class="reference internal" href="05_data_export.html#blobfunction"><span class="std std-ref">3. Update your function</span></a> we will create a <code class="docutils literal notranslate"><span class="pre">utils</span></code> directory with a <code class="docutils literal notranslate"><span class="pre">processing.py</span></code> script in:</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">blob-manipulation/utils/processing.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">mplcyberpunk</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">FileSystemLoader</span><span class="p">,</span> <span class="n">select_autoescape</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">funcprocess</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to perform the data processing functions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">data_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a  json from the dataframe for use by the jinja2 template</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            dataframe (df): clean dataset</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            json: json version of the dataframe with the SE items</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">dataframe</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">email_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">answered</span><span class="p">,</span> <span class="n">unanswered</span><span class="p">,</span> <span class="n">fig_path</span><span class="p">):</span>
+
+        <span class="n">unanswered_json</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_json</span><span class="p">(</span><span class="n">unanswered</span><span class="p">)</span>
+        <span class="n">answered_json</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_json</span><span class="p">(</span><span class="n">answered</span><span class="p">)</span>
+        <span class="n">date_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">dir_path</span> <span class="o">=</span> <span class="n">project_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">template_path</span> <span class="o">=</span> <span class="n">dir_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;templates&quot;</span><span class="p">)</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Templates located in </span><span class="si">{</span><span class="n">template_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span>
+            <span class="n">loader</span><span class="o">=</span><span class="n">FileSystemLoader</span><span class="p">(</span><span class="n">template_path</span><span class="p">),</span>
+            <span class="n">autoescape</span><span class="o">=</span><span class="n">select_autoescape</span><span class="p">([</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">]),</span>
+        <span class="p">)</span>
+
+        <span class="n">img_b64</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encode_img</span><span class="p">(</span><span class="n">fig_path</span><span class="p">)</span>
+
+        <span class="n">template</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;body.html&quot;</span><span class="p">)</span>
+        <span class="n">rendered_template</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+            <span class="n">date_now</span><span class="o">=</span><span class="n">date_now</span><span class="p">,</span>
+            <span class="n">answered</span><span class="o">=</span><span class="n">unanswered_json</span><span class="p">,</span>
+            <span class="n">unanswered</span><span class="o">=</span><span class="n">answered_json</span><span class="p">,</span>
+            <span class="n">img_b64</span><span class="o">=</span><span class="n">img_b64</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">template_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;tests.html&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rendered_template</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rendered_template</span>
+
+    <span class="k">def</span> <span class="nf">encode_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig_path</span><span class="p">):</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fig_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">img_base64</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">encodestring</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">img_base64</span>
+
+    <span class="k">def</span> <span class="nf">create_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">answered</span><span class="p">,</span> <span class="n">unanswered</span><span class="p">,</span> <span class="n">fig_path</span><span class="p">):</span>
+        <span class="n">to_email</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;receiver&quot;</span><span class="p">)</span>
+        <span class="n">from_email</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sender&quot;</span><span class="p">)</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="s2">&quot;Your daily digest - StackExchange&quot;</span>
+
+        <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">email_body</span><span class="p">(</span><span class="n">answered</span><span class="p">,</span> <span class="n">unanswered</span><span class="p">,</span> <span class="n">fig_path</span><span class="p">)</span>
+
+        <span class="c1"># Sendgrid</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;personalizations&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;to&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">to_email</span><span class="p">}]}],</span>
+            <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="n">subject</span><span class="p">,</span>
+            <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">from_email</span><span class="p">},</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text/html&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">body</span><span class="p">}],</span>
+            <span class="c1"># &quot;attachments&quot;: [</span>
+            <span class="c1">#     {</span>
+            <span class="c1">#         &quot;content&quot;: img,</span>
+            <span class="c1">#         &quot;content_id&quot;: &quot;tag_plots&quot;,</span>
+            <span class="c1">#         &quot;disposition&quot;: &quot;inline&quot;,</span>
+            <span class="c1">#         &quot;filename&quot;: fig_path,</span>
+            <span class="c1">#         &quot;name&quot;: &quot;Popular tags&quot;,</span>
+            <span class="c1">#         &quot;type&quot;: &quot;image/png&quot;,</span>
+            <span class="c1">#     }</span>
+            <span class="c1"># ],</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+
+        <span class="n">processed</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">processed</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;owner_reputation&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;machine-learning&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">processed</span>
+
+    <span class="k">def</span> <span class="nf">is_answered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+        <span class="n">unanswered</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dataframe</span><span class="p">[</span><span class="s2">&quot;is_answered&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span><span class="p">]</span>
+            <span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;is_answered&quot;</span><span class="p">])</span>
+        <span class="p">)</span>
+
+        <span class="n">answered</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dataframe</span><span class="p">[</span><span class="s2">&quot;is_answered&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">]</span>
+            <span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;is_answered&quot;</span><span class="p">])</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">answered</span><span class="p">,</span> <span class="n">unanswered</span>
+
+    <span class="k">def</span> <span class="nf">create_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">mplcyberpunk</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="kn">import</span> <span class="nn">vapeplot</span>
+
+        <span class="c1"># general settings</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;cyberpunk&quot;</span><span class="p">)</span>
+        <span class="n">vapeplot</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;cool&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.linewidth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.8</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;font.size&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
+        <span class="n">foreground</span> <span class="o">=</span> <span class="s2">&quot;#efefef&quot;</span>
+
+        <span class="c1"># creating the plot</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">tags</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">])</span>
+            <span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;barh&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># customise</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Tags&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">foreground</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">foreground</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_smart_bounds</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_smart_bounds</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">foreground</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">foreground</span><span class="p">)</span>
+
+        <span class="n">date_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">fig_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">date_now</span><span class="si">}</span><span class="s2">-tags-count.png&quot;</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fig_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">dpi</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fig_path</span>
+
+    <span class="k">def</span> <span class="nf">data_wrangle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Call the helper methods to process the data in the Blob</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            dataframe (df): Dataframe with the SE items</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">processed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_data</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
+
+        <span class="c1"># split if answered or not</span>
+        <span class="n">answered</span><span class="p">,</span> <span class="n">unanswered</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_answered</span><span class="p">(</span><span class="n">processed</span><span class="p">)</span>
+
+        <span class="c1"># create plots</span>
+        <span class="n">fig_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_plot</span><span class="p">(</span><span class="n">processed</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">email</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+
+            <span class="n">email_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_email</span><span class="p">(</span><span class="n">answered</span><span class="p">,</span> <span class="n">unanswered</span><span class="p">,</span> <span class="n">fig_path</span><span class="p">)</span>
+
+            <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">fig_path</span><span class="p">,</span> <span class="n">email_item</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">outputs</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">fig_path</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">outputs</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</li>
+<li><p>And update our <code class="docutils literal notranslate"><span class="pre">blob_manipulation.py</span></code> script:</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">blob-manipulation/blob_manipulation.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">azure.functions</span> <span class="k">as</span> <span class="nn">func</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">processing</span>
+
+<span class="c1"># --------------------------</span>
+<span class="c1"># Helper methods</span>
+<span class="c1"># --------------------------</span>
+
+
+<span class="k">def</span> <span class="nf">get_vars</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Collect the needed keys to call the APIs and access storage accounts.</span>
+
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Optional - if dotenv file is present then this is loaded, else the</span>
+<span class="sd">        vars are used directly from the system env</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dotenv_path</span> <span class="o">=</span> <span class="n">find_dotenv</span><span class="p">(</span><span class="s2">&quot;.env&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Dotenv located, loading vars from local instance&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">load_dotenv</span><span class="p">(</span><span class="n">dotenv_path</span><span class="p">)</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading directly from system&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># --------------------------</span>
+<span class="c1"># Main method</span>
+<span class="c1"># --------------------------</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span>
+<span class="hll">    <span class="n">myblob</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">InputStream</span><span class="p">,</span>
+</span><span class="hll">    <span class="n">sendemail</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">Out</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+</span><span class="hll">    <span class="n">context</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span>
+</span><span class="hll">    <span class="n">outputBlob</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">Out</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span>
+</span><span class="hll"><span class="p">):</span>
+</span>    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;⚡️ Python blob trigger function processed blob </span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Name: </span><span class="si">{</span><span class="n">myblob</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Blob Size: </span><span class="si">{</span><span class="n">myblob</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2"> bytes&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">get_vars</span><span class="p">()</span>
+
+    <span class="c1"># pass the object</span>
+    <span class="n">created_file</span> <span class="o">=</span> <span class="n">myblob</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># read the csv file from the blob</span>
+        <span class="n">se_items</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">created_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EXCEPTION: Unable to read input: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">254</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EXCEPTION: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+
+    <span class="c1"># use the data processing methods</span>
+    <span class="n">processor</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">funcprocess</span><span class="p">()</span>
+
+    <span class="n">wrangling_out</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">data_wrangle</span><span class="p">(</span><span class="n">se_items</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wrangling_out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+
+        <span class="n">sendemail</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">wrangling_out</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># stores in the Blob container</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">wrangling_out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+        <span class="n">outputBlob</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># set logging format - personal preference</span>
+    <span class="n">log_fmt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">log_fmt</span><span class="p">)</span>
+
+    <span class="c1"># call main function</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
 </div></blockquote>
 </li>
 </ol>
-<p>Make sure to take note of your API key as we will need it to add the binding.</p>
-</div>
+<p>We are now ready to debug your functions locally 🎉!</p>
 </div>
 <div class="section" id="floppy-additional-resources-and-docs">
 <h2><img alt="floppy" class="inline-image" src="_images/save-file.svg" /> Additional resources and docs<a class="headerlink" href="#floppy-additional-resources-and-docs" title="Permalink to this headline">¶</a></h2>
@@ -229,9 +568,14 @@
 
 
 
+<p><iframe src="https://ghbtns.com/github-btn.html?user=trallard&type=follow&count=false" allowtransparency="true"
+        frameborder="0" scrolling="0" width="200" height="20"></iframe></p>
 
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+<p><a href="https://twitter.com/ixek" class="twitter-follow-button" data-show-count="false">Follow @ixek</a>
+    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+</p>
+<h3><a href="index.html">In this page:</a></h3>
+<ul>
 <li><a class="reference internal" href="#"> Completing the scenario</a><ul>
 <li><a class="reference internal" href="#create-your-new-function">1. Create your new function</a></li>
 <li><a class="reference internal" href="#add-bindings">2. Add bindings</a><ul>
@@ -239,6 +583,7 @@
 <li><a class="reference internal" href="#sendgrid-by-twilio">SendGrid by Twilio</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#updating-your-code-and-requirements">3. Updating your code and requirements</a></li>
 <li><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>
@@ -266,6 +611,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Completing the scenario</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#create-your-new-function">1. Create your new function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#add-bindings">2. Add bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-your-code-and-requirements">3. Updating your code and requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#floppy-additional-resources-and-docs"> Additional resources and docs</a></li>
 </ul>
 </li>

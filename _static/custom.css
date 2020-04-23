@@ -65,9 +65,9 @@ div.sphinxsidebar h1 a:hover {
     border: none;
 }
 
-div.sphinxsidebar h3 {
+/* div.sphinxsidebar h3 {
     display: none;
-}
+} */
 
 div.sphinxsidebar a {
     color: #636AF2;
@@ -77,6 +77,13 @@ div.sphinxsidebar a {
 div.sphinxsidebar ul.current {
     list-style: decimal-leading-zero!important;
     color: rgb(62, 118, 131);
+    margin-left: 30px;
+}
+
+div.sphinxsidebar ul ul,
+div.sphinxsidebar ul.want-points {
+    margin-left: 20px;
+    list-style: none;
 }
 
 /*  Code and references */
@@ -208,9 +215,13 @@ p.caption {
 @media screen and (max-width: 875px) {
     div.sphinxsidebar {
         background: rgb(101, 168, 184);
+        width: 200%;
+        padding-left: 30px;
     }
     div.sphinxsidebar h1.logo, div.sphinxsidebar p.blurb{
         text-align: left;
+        color: white;
+        text-decoration: underline;
     }
     div.sphinxsidebar h1 a {
         color: #262626;
