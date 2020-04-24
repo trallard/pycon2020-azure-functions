@@ -120,29 +120,6 @@ Azure CLI and functions core tool
 
     For more detailed instructions, visit the `corresponding docs <https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=linux%2Ccsharp%2Cbash?WT.mc_id=pycon_tutorial-github-taallard>`_.
 
-
-Additional packages
----------------------
-
-You will need to install some packages to follow along with this tutorial.
-To install them follow these steps:
-
-1. Clone the tutorial repository `Repo <https://github.com/trallard>`_
-
-  From the command line (bash):
-
-  .. code-block:: bash
-
-      git clone https://github/trallard
-
-      # Change to the directory
-      cd azure-functions-pycon
-
-2. Install the main dependencies:
-
-  .. code-block:: bash
-
-
 Other accounts
 ----------------
 
@@ -160,10 +137,10 @@ We will use the StackOverFlow API to collect data. For this you will need to reg
 #. The next screen will display your apps details. Make sure to keep the key and the client secret safe at all times.
 
 
-GitHub
-*******************
+.. GitHub
+.. *******************
 
-You will need a GitHub account also to keep your code in version control and to create a GitHub action to deploy your function.
+.. You will need a GitHub account also to keep your code in version control and to create a GitHub action to deploy your function.
 
-If you do not have an account yet head over to `<https://github.com>`_  and register for a new account.
+.. If you do not have an account yet head over to `<https://github.com>`_  and register for a new account.
 
