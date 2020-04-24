@@ -62,7 +62,7 @@
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>The repository containing all the scripts and solutions to this tutorial can be found at <a class="reference external" href="https://github.com/trallard/pycon2020-azure-functions">https://github.com/trallard/pycon2020-azure-functions</a>.</p>
-<p>👉🏼 The code for this section is located in <a class="reference external" href="https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/03-full-pipeline">https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/03-full-pipeline</a></p>
+<p>👉🏼 The code for this section is in <a class="reference external" href="https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/03-full-pipeline">https://github.com/trallard/pycon2020-azure-functions/tree/master/solutions/03-full-pipeline</a></p>
 </div>
 <div class="section" id="create-your-new-function">
 <h2>1. Create your new function<a class="headerlink" href="#create-your-new-function" title="Permalink to this headline">¶</a></h2>
@@ -88,8 +88,8 @@
 <h2>2. Add bindings<a class="headerlink" href="#add-bindings" title="Permalink to this headline">¶</a></h2>
 <p>We need to create two more output bindings:</p>
 <ul class="simple">
-<li><p>SendGrid: we will use this to send the daily email</p></li>
-<li><p>Azure Blob Storage: we will save the output figures Here</p></li>
+<li><p>SendGrid: to send an email with the report</p></li>
+<li><p>Azure Blob Storage: to save the output of the functions</p></li>
 </ul>
 <div class="section" id="blob-storage">
 <h3>Blob Storage<a class="headerlink" href="#blob-storage" title="Permalink to this headline">¶</a></h3>
@@ -140,7 +140,7 @@
 <p>Make sure to take note of your API key as we will need it to add the binding.</p>
 </div></blockquote>
 </li>
-<li><p>Back in <strong>VS Code</strong>: let’s create the binding. Click on the <strong>Azure extentions</strong> tab in the sidebar. Then in Azure functions <strong>right-click</strong> on the newly created function (o.e. blob-manipulation** followed by <strong>Add binding…</strong>.</p>
+<li><p>Back in <strong>VS Code</strong>: let’s create the binding. Click on the <strong>Azure extensions</strong> tab in the sidebar. Then in Azure functions <strong>right-click</strong> on the newly created function (o.e. blob-manipulation** followed by <strong>Add binding…</strong>.</p>
 <blockquote>
 <div><img alt="Create new binding" class="align-center" src="_images/sendgridbind.png" />
 </div></blockquote>
@@ -537,11 +537,11 @@
 <li><p>Press <kbd class="kbd docutils literal notranslate">F5</kbd>. You should see the function being started in the  <strong>output terminal</strong> in VS Code.</p></li>
 <li><p>Click on the  <strong>Azure</strong>  extension then on the <strong>Azure functions</strong> section right-click on the <cite>timer-function</cite> &gt; <strong>Execute function now</strong>.</p></li>
 </ol>
-<p>This will trigger the execution of your timer function and the Blob function once the <cite>.csv</cite> file is added to your blob.</p>
+<p>This will trigger the execution of your timer function and the Blob function once the <cite>.csv.</cite> the file is added to your blob.</p>
 </div>
 <div class="section" id="deploying-your-function">
 <h2>5. Deploying your function<a class="headerlink" href="#deploying-your-function" title="Permalink to this headline">¶</a></h2>
-<p>If you remember correctly we first created a functions project and then added the processing function. This allows us to deploy both functions directly within the same app project.</p>
+<p>If you remember correctly, we first created a functions project and then added the processing function. This allows us to deploy both functions directly within the same app project.</p>
 <blockquote>
 <div><img alt="Deploy project" class="align-center" src="_images/project.png" />
 </div></blockquote>
