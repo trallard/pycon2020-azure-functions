@@ -10,6 +10,7 @@ python = "^3.7"
 sphinx = "^3.0.1"
 sphinx-autobuild = "^0.7.1"
 sphinx-tabs = "^1.1.13"
+pitaya-smoothie = "^0.1.0"
 
 [tool.poetry.dev-dependencies]
 sphinx = "^3.0.1"
@@ -18,6 +19,11 @@ tox = "^3.14.6"
 recommonmark = "^0.6.0"
 sphinx-copybutton = "^0.2.10"
 sphinx-tabs = "^1.1.13"
+
+
+[tool.poetry.plugins."pygments.styles"]
+pitaya_smoothie = "pitaya_smoothie:PitayaSmoothie"
+
 
 [build-system]
 requires = ["poetry>=0.12"]
