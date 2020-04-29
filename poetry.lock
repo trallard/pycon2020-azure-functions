@@ -306,7 +306,7 @@ description = "\"A professional syntax highlighting theme inspired by the Ultrav
 name = "pitaya-smoothie"
 optional = false
 python-versions = ">=3.7,<4.0"
-version = "0.1.0"
+version = "0.1.2"
 
 [package.dependencies]
 twine = ">=3.1.1,<4.0.0"
@@ -779,7 +779,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "716dee52b9c4315c10bbf9bbf0270df4b10262514be2895a9df246a87e603f56"
+content-hash = "4d1d2769dc7c7c71ba347b5ef30b5cadef50de508b442e108cbed6a4298acb12"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -964,8 +964,8 @@ pathtools = [
     {file = "pathtools-0.1.2.tar.gz", hash = "sha256:7c35c5421a39bb82e58018febd90e3b6e5db34c5443aaaf742b3f33d4655f1c0"},
 ]
 pitaya-smoothie = [
-    {file = "pitaya-smoothie-0.1.0.tar.gz", hash = "sha256:1f97cfa9322c35cd9991ec261a74007512fb2e77d4fcf547dd6af7fa5224d8be"},
-    {file = "pitaya_smoothie-0.1.0-py3-none-any.whl", hash = "sha256:5ec96f9b1617f9d4b161960f0adc0b3e0539ba863ea29fc893bb69b62bcfe72a"},
+    {file = "pitaya-smoothie-0.1.2.tar.gz", hash = "sha256:1f3289612506580b1ee8ad612ba3edbcedf7bb896595733593051481ef0dcd03"},
+    {file = "pitaya_smoothie-0.1.2-py3-none-any.whl", hash = "sha256:d56c6dd346da87e28a2980c59eb9fa4f0c33b03ff09b3aff21c2c7a00c791c29"},
 ]
 pkginfo = [
     {file = "pkginfo-1.5.0.1-py2.py3-none-any.whl", hash = "sha256:a6d9e40ca61ad3ebd0b72fbadd4fba16e4c0e4df0428c041e01e06eb6ee71f32"},
