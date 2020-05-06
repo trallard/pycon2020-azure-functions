@@ -92,4 +92,4 @@ Make sure to follow these instructions before continuing with the rest of the tu
    04_data_function
    05_data_export
    06_complete_scenario
-   glossary
+   resources
