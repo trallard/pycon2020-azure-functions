@@ -42,6 +42,22 @@ Outline
    - Updating your function to collect data
    - Data cleaning, aggregation and storage
 
+Resources
+***********
+
+#. There is a video version of the tutorial that can be found on the PyCon Youtube channel:
+
+   .. raw:: html
+
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/PV7iy6FPjAY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+#. The repository with all the solutions to the tutorial sections is located at `<https://github.com/trallard/pycon2020-azure-functions>`_. 
+
+#. The accompanying slides can be found on SpeakerDeck, you can read or download them there:
+
+   .. raw:: html
+
+      <iframe id="talk_frame_634998" src="//speakerdeck.com/player/3cca413b0553419ba1194696f18384f9" width="710" height="399" style="border:0; padding:0; margin:0; background:transparent;" frameborder="0" allowtransparency="true" allowfullscreen="allowfullscreen" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 Pre-requisites
 *********************
